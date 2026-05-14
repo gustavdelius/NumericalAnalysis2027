@@ -1,0 +1,22 @@
+<script>
+(function() {
+  if (localStorage.getItem("alt-font") === "1") {
+    document.documentElement.classList.add("alt-font");
+  }
+})();
+
+document.addEventListener("DOMContentLoaded", function() {
+  if (localStorage.getItem("alt-font") === "1") {
+    document.documentElement.classList.add("alt-font");
+  }
+
+  var fontToggleButton = document.querySelector('a.quarto-navigation-tool[aria-label="Toggle Dyslexic Font"]');
+  if (fontToggleButton) {
+    fontToggleButton.addEventListener("click", function(e) {
+      e.preventDefault();
+      var active = document.documentElement.classList.toggle("alt-font");
+      localStorage.setItem("alt-font", active ? "1" : "0");
+    });
+  }
+});
+</script>

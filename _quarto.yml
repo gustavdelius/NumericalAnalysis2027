@@ -1,0 +1,89 @@
+project:
+  type: book
+  output-dir: docs
+  post-render: ./render_chapter_pdfs.sh
+  preview:
+    browser: true
+    port: 3706
+    watch-inputs: true
+
+book:
+  title: "Numerical Analysis"
+  subtitle: A Learning Guide
+  author:
+    - name: Gustav Delius
+      email: gustav.delius@york.ac.uk
+      affiliation:
+      - name: Department of Mathematics, University of York
+    - name: Eric Sullivan
+      affiliation: Mathematics Faculty at Carroll College
+
+  date: today
+  license: CC BY-NC-SA
+  downloads: pdf
+  favicon: faviconNA.webp
+  twitter-card: true
+  open-graph: true
+  sidebar:
+    tools:
+      - icon: house-door-fill
+        href: https://vle.york.ac.uk/ultra/courses/_115112_1/outline
+        text: VLE
+      - icon: mortarboard-fill
+        href: https://maths.york.ac.uk/moodle/course/view.php?id=2727
+        text: Moodle quizzes
+      - icon: text-paragraph
+        text: "Toggle Dyslexic Font"
+        href: "#toggle-dyslexic-font"
+  chapters:
+    - index.qmd
+    - nmNumbers.qmd
+    - nmFunctions.qmd
+    - nmRoots1.qmd
+    - nmRoots2.qmd
+    - nmCalculus.qmd
+    - nmOptimisation.qmd
+    - nmODE1.qmd
+    - nmODE2.qmd
+    - nmPDE1.qmd
+    - nmPDE2.qmd
+  appendices:
+    - nmPython.qmd
+    - ex_exam_solns.qmd
+    - nmLinAlg.qmd
+    - nmAutoDiff.qmd
+    - nmPDE3.qmd
+
+bibliography: references.bib
+
+format:
+  html:
+    theme:
+      light: cosmo
+      dark: darkly
+    css: fonts.css
+    include-after-body: toggle-font.html
+    link-external-newwindow: true
+    toc-depth: 4
+    filters:
+      - chapter-pdf.lua
+  pdf:
+    documentclass: scrbook
+    papersize: a4
+    toc: true
+    number-sections: true
+    fig-align: left
+    filters:
+      - chapter-pdf.lua
+    execute:
+      echo: false
+
+toc: true
+number-sections: true
+crossref:
+  eq-prefix: Eq.
+fig-align: left
+
+execute:
+  cache: true
+  freeze: auto
