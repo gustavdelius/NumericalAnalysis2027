@@ -31,6 +31,7 @@
 ## Chapter 5 Calculus
 - [ ] Take out Exercise 5.13 about writing the inefficient version of ForwardDiff and go straight to the vectorised case.
 - [ ] Students took a long time on the Differentiation section. Streamline.
+- [ ]Add a question to the Integration feedback quiz for Exercise 5.37
 
 ## Chapter 6 Optimisation
 - [ ] Use gradient descent for regression

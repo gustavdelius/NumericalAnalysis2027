@@ -1,6 +1,6 @@
-# Numerical Analysis 2026
+# Numerical Analysis 2027
 
-This repository contains the Quarto source for the Numerical Analysis 2026 book.
+This repository contains the Quarto source for the Numerical Analysis 2027 book.
 
 ## Features
 
