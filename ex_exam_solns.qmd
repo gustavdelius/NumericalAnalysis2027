@@ -6,7 +6,7 @@ In this appendix you find example solutions to the exam-style questions.
 
 **(a) Machine Precision**
 
-Machine precision is the gap between the number 1 and the next larger floating point number. With 4 bits for the mantissa, the smallest number greater than $1$ that can be represented is $1.0001_2$. So machine precision is $\epsilon = 0.0001_2=1/16$. The machine precision is the upper bound for the relative rounding error.
+Machine precision is the gap between the number 1 and the next larger floating point number. With 4 bits for the mantissa, the smallest number greater than $1$ that can be represented is $1.0001_2$. So machine precision is $\epsilon = 0.0001_2=1/16$. The **relative** rounding error can never be larger than $\epsilon/2$.
 
 **(b) Conversion of 13.5**
 
@@ -321,7 +321,7 @@ since $1 - ha > 1$ (as $a < 0$). Therefore $|R| < 1$ for all $h > 0$, so $|x_n| 
 **(c) Local Truncation Error of Backward Euler**
 
 The local truncation error is defined as the residual when the exact solution is substituted into the numerical scheme:
-$$\tau_n = \frac{x(t_{n+1}) - x(t_n)}{h} - f\!\left(t_{n+1},\, x(t_{n+1})\right).$$
+$$\tau_n =\frac{1}{h}|x(t_{n+1})-x_{n+1}|= \left|\frac{x(t_{n+1}) - x(t_n)}{h} - f\!\left(t_{n+1},\, x(t_{n+1})\right)\right|.$$
 Taylor-expanding $x(t_{n+1})$ about $t_n$:
 $$x(t_{n+1}) = x(t_n) + h\,x'(t_n) + \frac{h^2}{2}x''(t_n) + \mathcal{O}(h^3),$$
 so
@@ -329,7 +329,7 @@ $$\frac{x(t_{n+1}) - x(t_n)}{h} = x'(t_n) + \frac{h}{2}x''(t_n) + \mathcal{O}(h^
 Since $f(t_{n+1}, x(t_{n+1})) = x'(t_{n+1})$, Taylor-expanding $x'$ gives:
 $$x'(t_{n+1}) = x'(t_n) + h\,x''(t_n) + \mathcal{O}(h^2).$$
 Substituting:
-$$\tau_n = x'(t_n) + \frac{h}{2}x''(t_n) - x'(t_n) - h\,x''(t_n) + \mathcal{O}(h^2) = -\frac{h}{2}x''(t_n) + \mathcal{O}(h^2) = \mathcal{O}(h).$$
+$$\tau_n = \left| x'(t_n) + \frac{h}{2}x''(t_n) - x'(t_n) - h\,x''(t_n)\right| + \mathcal{O}(h^2) = -\frac{h}{2}|x''(t_n)|  + \mathcal{O}(h^2) = \mathcal{O}(h).$$
 
 **(d) Runge-Kutta 4**
 
