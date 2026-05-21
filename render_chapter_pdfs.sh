@@ -4,6 +4,8 @@
 # they appear in the full book.
 OUTPUT_DIR="${QUARTO_PROJECT_OUTPUT_DIR:-docs}"
 
+python3 -m pip install pypdf pyyaml -q --disable-pip-version-check
+
 python3 << 'PYEOF'
 import os
 import sys

@@ -13,6 +13,7 @@ This repository contains the Quarto source for the Numerical Analysis 2027 book.
 - `_quarto.yml`: Main configuration file.
 - `chapter-pdf.lua`: Lua filter that injects the PDF download link into the HTML version.
 - `render_chapter_pdfs.sh`: Script that extracts individual chapter PDFs from the full book PDF using `qpdf`, preserving chapter numbers and styling.
+- `publish_chapter.sh`: Script that renders the book and pushes a single chapter to the `gh-pages` branch.
 - `fonts.css` & `toggle-font.html`: Implementation of the dyslexic font toggle.
 - `docs/`: The output directory where the website and all PDFs are generated.
 
@@ -25,18 +26,26 @@ quarto render
 ```
 This command automatically triggers `./render_chapter_pdfs.sh` via a `post-render` hook in `_quarto.yml`. This script handles the generation of individual chapter PDFs in the `docs/` folder.
 
-### 2. Selective Chapter PDF Rendering
-To update only the individual chapter PDFs without a full site rebuild (requires the full book PDF to already exist in `docs/`):
-```bash
-./render_chapter_pdfs.sh
-```
-Extraction is fast, so all chapter PDFs are always regenerated.
-
-### 3. Publishing to GitHub Pages
+### 2. Publishing to GitHub Pages
 To render and publish to GitHub Pages:
 ```bash
 quarto publish gh-pages
 ```
+
+### 3. Publishing a Single Chapter
+
+Because all pages share book navigation, Quarto always rebuilds the full site — `quarto render <file>.qmd` still triggers a full render. However, with `freeze: auto` set in `_quarto.yml`, code cells in unchanged chapters are not re-executed, so a full render is fast after a text-only fix.
+
+To render and then publish changes to **only one chapter** to GitHub Pages:
+
+```bash
+./publish_chapter.sh ex_exam_solns
+```
+
+The script runs `quarto render` (skipping re-execution of frozen chapters), then uses a temporary git worktree to copy just `<chapter>.html` (and its companion `<chapter>_files/` directory, if present) and `<chapter>.pdf` to the `gh-pages` branch and pushes.
+
+**Note:** This does *not* update the full book PDF. If the PDF also needs updating, run a full `quarto publish gh-pages` afterwards.
+
 
 ## Technical Requirements
 
