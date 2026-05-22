@@ -329,7 +329,7 @@ $$\frac{x(t_{n+1}) - x(t_n)}{h} = x'(t_n) + \frac{h}{2}x''(t_n) + \mathcal{O}(h^
 Since $f(t_{n+1}, x(t_{n+1})) = x'(t_{n+1})$, Taylor-expanding $x'$ gives:
 $$x'(t_{n+1}) = x'(t_n) + h\,x''(t_n) + \mathcal{O}(h^2).$$
 Substituting:
-$$\tau_n = \left| x'(t_n) + \frac{h}{2}x''(t_n) - x'(t_n) - h\,x''(t_n)\right| + \mathcal{O}(h^2) = -\frac{h}{2}|x''(t_n)|  + \mathcal{O}(h^2) = \mathcal{O}(h).$$
+$$\tau_n = \left| x'(t_n) + \frac{h}{2}x''(t_n) - x'(t_n) - h\,x''(t_n)\right| + \mathcal{O}(h^2) = \frac{h}{2}|x''(t_n)|  + \mathcal{O}(h^2) = \mathcal{O}(h).$$
 
 **(d) Runge-Kutta 4**
 
