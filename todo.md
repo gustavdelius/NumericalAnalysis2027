@@ -1,22 +1,18 @@
 # Ideas for improvements
 
 ## General
-- [ ] Plan some classroom discussion for each session.
-- [ ] Add an exam-style question to each chapter.
-- [ ] Set all assessment quizzes to allow corrections with a 30% penalty.
-- [ ] Add a pen icon to exercises to be done with pen and paper and a keyboard icon to those requiring coding.
+- [ ] Plan some classroom discussion and some group task for each session.
+- [ ] Add exercises for lectured material.
+- [ ] Thin out Problems and Projects sections.
 - [ ] Use docstrings consistently throughout the example code.
 - [ ] Be consistent about whether to append errors to a list or put them into a numpy vector. I prefer vector.
 - [ ] Follow standard Python style conventions, in particular in function names.
 - [ ] Harmonise the presentation of Taylor's theorem throughout the notes.
-- [ ] Consider moving the Optimisation chapter before the Calculus chapter.
 - [ ] Add import of matplotlib to all code blocks that use `plt`
 - [ ] In all iterative methods, write the function to return a list of all iterates, not just the last one.
-
-## Possible new material
-- [ ] The module page says I will be teaching " interpolation of data points using polynomials and splines"
-- [ ] Add FFT somewhere
-- [ ] Add Monte Carlo integration
+- [ ] Test each assessment quiz thoroughly
+- [ ] Check that all plots, especially in quizzes, have gridlines.
+- [ ] Make internal exercise labels agree with exercise numbering to make maintenance easier in future.
 
 ## Chapter 1 Essential Python
 - [ ] Check whether all info about Colab and Gemini is still up-to-date.
@@ -31,7 +27,8 @@
 ## Chapter 5 Calculus
 - [ ] Take out Exercise 5.13 about writing the inefficient version of ForwardDiff and go straight to the vectorised case.
 - [ ] Students took a long time on the Differentiation section. Streamline.
-- [ ]Add a question to the Integration feedback quiz for Exercise 5.37
+- [ ] Add a question to the Integration feedback quiz for Exercise 5.37
+- [ ] Be prepared to delay assessment of integration to week 6.
 
 ## Chapter 6 Optimisation
 - [ ] Use gradient descent for regression
