@@ -29,7 +29,7 @@ Let us start with solving optimisation problems where the quantity to be optimis
 
     -   determine the critical point that gives the maximum volume.
 
-    Check that your answer is $10/3$.
+    Check that your answer is $x=20/3$.
 
 ![Folds to make a cardboard box](figures/Optimisation/CardboardBox.png){#fig-3.8 alt="Folds to make a cardboard box" height=6cm}
 :::
