@@ -355,7 +355,7 @@ Now that we have a handle on how the forward-difference approximation scheme for
 ------------------------------------------------------------------------
 
 ::: {#exr-3.17}
-💻 🎓 We want to build a Python function that accepts:
+💻 🎓 We want to build a Python function `ForwardDiff(f, a, b, N)` that accepts:
 
 -   a mathematical function,
 
@@ -367,32 +367,34 @@ The function will return the forward-difference approximation of the first deriv
 
 1.  First of all, why can we not compute the forward-difference approximation of the derivative at the last point?
 
-2.  Next, fill in the blanks in the partially complete code below and update the comments to say what each line does.
+2.  We could loop over all of the $x$ values, but it is much *smarter* (and faster) to use NumPy arrays. NumPy operations act on all the elements of an array at once and hence we can do all of the function evaluations and all the subtractions and divisions at once without a loop. The line of code `x = np.linspace(a,b,N+1)` builds a numpy vector of $N+1$ values of $x$ starting at $a$ and ending at $b$. Then `y = f(x)` builds a vector with the function values at all the elements in `x`. In the following questions remember that Python indexes all lists starting at 0. Also remember that you can call on the last element of a list using an index of `-1`. Finally, remember that if you do `x[p:q]` in Python you will get a list of `x` values starting at index `p` and ending at index `q-1`.
+
+    1.  What will we get if we evaluate the code `y[1:]`?
+
+    2.  What will we get if we evaluate the code `y[:-1]`?
+
+    3.  What will we get if we evaluate the code `y[1:] - y[:-1]`?
+
+    4.  What will we get if we evaluate the code `(y[1:] - y[:-1]) / h`?
+
+3.  Use the insight from part (2) to complete the code below and update the comments to say what each line does.
 
 ``` python
 import numpy as np
-import matplotlib.pyplot as plt
 def ForwardDiff(f,a,b,N):
     x = np.linspace(a,b,N+1) # What does this line of code do?
     # What's up with the N+1 in the previous line?
     h = x[1] - x[0] # What does this line of code do?
-    df = [] # What does this line of code do?
-    for j in np.arange(len(x)-1): # What does this line of code do?
-        # What's up with the -1 in the definition of the loop?
-
-        # Now we want to build the approximation
-        # (f(x+h) - f(x)) / h.
-        # Obviously "x+h" is just the next item in the list of
-        # x values so when we do f(x+h) mathematically we should
-        # write f(x[j+1]) in Python (explain this).
-        # Fill in the question marks below
-        df.append((f(???) - f(???)) / h )
+    y = f(x) # What does this line of code do?
+    df = # your line of code goes here
     return df
 ```
 
-3.  Now we want to call upon this function to build the first-order approximation of the first derivative for some function. We will use the function $f(x) = \sin(x)$ on the interval $[0,2\pi]$ with 100 subintervals (since we know what the answer should be). Complete the code below to call upon your `ForwardDiff()` function and to plot $f(x)$, $f'(x)$, and the approximation of $f'(x)$.
+4.  Now we want to call upon this function to build the first-order approximation of the first derivative for some function. We will use the function $f(x) = \sin(x)$ on the interval $[0,2\pi]$ with 100 subintervals (since we know what the answer should be). Complete the code below to call upon your `ForwardDiff()` function and to plot $f(x)$, $f'(x)$, and the approximation of $f'(x)$.
 
 ``` python
+import numpy as np
+import matplotlib.pyplot as plt
 f = lambda x: np.sin(x)
 exact_df = lambda x: np.cos(x)
 a = ???
@@ -417,7 +419,7 @@ plt.legend(['f(x) = sin(x)',
 plt.show()
 ```
 
-4.  Implement your completed code and then test it in several ways:
+5.  Implement your completed code and then test it in several ways:
 
     a.  Test your code on functions where you know the derivative. Be sure that you get the plots that you expect.
 
@@ -425,34 +427,6 @@ plt.show()
 
     c.  Test your code with a small number of subintervals, $N$. What do you observe?
 
-:::
-
-------------------------------------------------------------------------
-
-::: {#exr-3.18}
-💻 Now let us build the first derivative function in a much *smarter* way -- using NumPy arrays in Python. Instead of looping over all of the $x$ values, we can take advantage of the fact that NumPy operations can act on all the elements of an array at once and hence we can do all of the function evaluations and all the subtractions and divisions at once without a loop.
-
-1.  The line of code `x = np.linspace(a,b,N+1)` builds a numpy vector of $N+1$ values of $x$ starting at $a$ and ending at $b$. Then `y = f(x)` builds a vector with the function values at all the elements in `x`. In the following questions remember that Python indexes all lists starting at 0. Also remember that you can call on the last element of a list using an index of `-1`. Finally, remember that if you do `x[p:q]` in Python you will get a list of `x` values starting at index `p` and ending at index `q-1`.
-
-    1.  What will we get if we evaluate the code `y[1:]`?
-
-    2.  What will we get if we evaluate the code `y[:-1]`?
-
-    3.  What will we get if we evaluate the code `y[1:] - y[:-1]`?
-
-    4.  What will we get if we evaluate the code `(y[1:] - y[:-1]) / h`?
-
-2.  Use the insight from part (1) to simplify your first-order first derivative function to look like the code below.
-
-``` python
-def ForwardDiff(f,a,b,N):
-    x = np.linspace(a,b,N+1)
-    h = x[1] - x[0]
-    y = f(x)
-    df = # your line of code goes here?
-    return df
-```
-3. Test your new function by checking that the plots from the previous exercise still look the same.
 :::
 
 ::: {#exr-3.19}
