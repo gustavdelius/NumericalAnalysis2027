@@ -216,14 +216,14 @@ In this section we will look at the convergence rate of Newton's method and we w
 We saw in @exm-2.1b how we could empirically determine the rate of convergence of the bisection method by plotting the error in the new iterate on the $y$-axis and the error in the old iterate on the $x$-axis of a log-log plot. Take a look at that example again and make sure you understand the code and the explanation of the plot. Then, to investigate the rate of convergence of Newton's method you can do the same thing.
 
 ::: {#exr-newton_error_tracking}
-💻 🎓 Because your `newton()` function from @exr-2.38 returns the list of all iterates, you can calculate the absolute errors between the iterates and the exact solution from that list, just as we did for the bisection method in @exm-2.1.
+💻 🎓 Because your `newton()` function from @exr-2.38 returns the list of all iterates, you can calculate the vector of absolute errors between the iterates and the exact solution from that list, just as we did for the bisection method in @exm-2.1, with `np.abs(np.array(iterates) - x_exact)`.
 
 Use this to list the error progression for Newton's method for finding the root of $f(x) = x^2 - 2$ with the initial guess $x_0 = 1$ and tolerance $10^{-10}$. You should find that the error goes down extremely quickly and that for the final iteration Python can no longer detect a difference between the new iterate and its own value for $\sqrt{2}$.
 :::
 
 ::: {#exr-2.45}
 
-1.  💻 Plot the errors you calculated in @exr-newton_error_tracking using the `plot_error_progression()` function that we wrote in @exm-2.1b. Note that you will first need to remove the zeros from the error list, otherwise you will get an error. You can remind yourself of how to work with lists in @sec-lists.
+1.  💻 Plot the errors you calculated in @exr-newton_error_tracking using the `plot_error_progression()` function that we wrote in @exm-2.1b. Note that you will first need to remove the zeros from the error vector, otherwise you will get an error when taking the logarithm. You can do this with `errors = errors[errors > 0]`, which keeps only the entries of the NumPy array `errors` that are greater than zero.
 
 2.  💬 Give a thorough explanation for how to interpret the plot that you just made.
 
@@ -311,7 +311,7 @@ Up to this point we have done analysis work on the bisection method and Newton's
 ------------------------------------------------------------------------
 
 ::: {#exr-2.50}
-💻 Calculate the absolute errors between the iterates returned by your secant function from @exr-2.49 and the exact solution, as we did for the bisection method in @exm-2.1.
+💻 Calculate the vector of absolute errors between the iterates returned by your secant function from @exr-2.49 and the exact solution, as we did for the bisection method in @exm-2.1.
 
 Use this to list the error progression for the secant method for finding the root of $f(x) = x^2 - 2$ with the starting points $x_0 = 1$ and $x_1 = 3$. Use a tolerance of $10^{-10}$. Use the `plot_error_progression()` function that we wrote in @exm-2.1b to plot the error progression.
 :::
