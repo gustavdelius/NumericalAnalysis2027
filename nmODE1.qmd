@@ -277,37 +277,18 @@ Euler's method is a first order method for approximating the solution to the dif
 ::: {#exr-5.17}
 #### Harmonic Oscillator
 
-🖋 💻 If a mass is hanging from a spring then Newton's second law, $\sum F=ma$, gives us the differential equation $mx'' = F_{restoring} + F_{damping}$ where $x$ is the displacement of the mass from equilibrium, $m$ is the mass of the object hanging from the spring, $F_{restoring}$ is the force pulling the mass back to equilibrium, and $F_{damping}$ is the force due to friction or air resistance that slows the mass down.
-
-1.  Which of the following is a good candidate for a restoring force in a spring? Defend your answer.
-
-    a.  $F_{restoring} = -kx$: The restoring force is proportional to the displacement away from equilibrium.
-
-    b.  $F_{restoring} = -kx'$: The restoring force is proportional to the velocity of the mass.
-
-    c.  $F_{restoring} = -kx''$: The restoring force is proportional to the acceleration of the mass.
-
-2.  Which of the following is a good candidate for a damping force in a spring? Defend your answer.
-
-    a.  $F_{damping} = -bx$: The damping force is proportional to the displacement away from equilibrium.
-
-    b.  $F_{damping} = -bx'$: The damping force is proportional to the velocity of the mass.
-
-    c.  $F_{damping} = -bx''$: The damping force is proportional to the acceleration of the mass.
-
-3.  Put your answers to parts (1) and (2) together and simplify to form a second-order differential equation for position:
+🖋 💻 If a mass is hanging from a spring then Newton's second law, $\sum F=ma$, gives us the differential equation $mx'' = F_{restoring} + F_{damping}$ where $x$ is the displacement of the mass from equilibrium, $m$ is the mass of the object hanging from the spring, $F_{restoring}$ is the force pulling the mass back to equilibrium, and $F_{damping}$ is the force due to friction or air resistance that slows the mass down. The restoring force is proportional to the displacement away from equilibrium, $F_{restoring} = -kx$, where $k$ is the spring constant, and the damping force is proportional to the velocity of the mass, $F_{damping} = -bx'$, where $b$ is the damping coefficient. So the position of the mass satisfies the second-order differential equation
 \begin{equation}
- \underline{\hspace{0.25in}} x'' = \underline{\hspace{0.25in}} x' + \underline{\hspace{0.25in}} x
+ m x'' = -b x' - k x.
 \end{equation}
 
-
-4. 🎓 If we want to solve a second order differential equation numerically we need to convert it to first order differential equations (Euler's method is only designed to deal with first order differential equations, not second order). To do so we can introduce a new variable, $x_1$, such that $x_1 = x'$. For the sake of notational consistency we define $x_0 = x$. The result is a system of first-order differential equations.
+1. 🎓 If we want to solve a second order differential equation numerically we need to convert it to first order differential equations (Euler's method is only designed to deal with first order differential equations, not second order). To do so we can introduce a new variable, $x_1$, such that $x_1 = x'$. For the sake of notational consistency we define $x_0 = x$. The result is a system of first-order differential equations.
 \begin{equation}
 \begin{aligned} x_0' &= x_1 \\ x_1' &= \underline{\hspace{2in}}\end{aligned}
 \end{equation}
 
 
-5.  The code and Euler's method algorithm that we have created thus far in this chapter are only designed to work with a single differential equation instead of a system, so we need to make some modifications. We can discretize the system of differential equations using Euler's method so that
+2.  The code and Euler's method algorithm that we have created thus far in this chapter are only designed to work with a single differential equation instead of a system, so we need to make some modifications. We can discretize the system of differential equations using Euler's method so that
 \begin{equation}
  \boldsymbol{x}' = F(t,\boldsymbol{x})
 \end{equation}
@@ -317,7 +298,7 @@ Euler's method is a first order method for approximating the solution to the dif
 \end{equation}
 
 
-6.  We now need to discretize the derivatives in the system. As with 1D Euler's method, we will use a first-order approximation of the first derivative so that
+3.  We now need to discretize the derivatives in the system. As with 1D Euler's method, we will use a first-order approximation of the first derivative so that
 \begin{equation}
  \frac{\boldsymbol{x}_{n+1} - \boldsymbol{x}_n }{h} = F(t_n,\boldsymbol{x}_n) + \mathcal{O}(h).
 \end{equation}
@@ -327,7 +308,7 @@ Euler's method is a first order method for approximating the solution to the dif
 \end{equation}
 
 
-7.  The following Python function will implement Euler's method. Complete the code.
+4.  The following Python function will implement Euler's method. Complete the code.
 
 ``` python
 def euler(F, x0, t0, tmax, dt):
@@ -368,7 +349,7 @@ def euler(F, x0, t0, tmax, dt):
     return t, x
 ```
 
-8.  To use the `euler()` function to solve the system of equations from part (4), complete the following code. Use a mass of $m=2$kg, a damping force of $b=40$kg/s, and a spring constant of $k=128$N/m. Consider an initial position of $x=0$ (equilibrium) and an initial velocity of $x_1 = 0.6$m/s.
+5.  To use the `euler()` function to solve the system of equations from part (1), complete the following code. Use a mass of $m=2$kg, a damping force of $b=40$kg/s, and a spring constant of $k=128$N/m. Consider an initial position of $x=0$ (equilibrium) and an initial velocity of $x_1 = 0.6$m/s.
 
 ``` python
 m = 2
@@ -382,7 +363,7 @@ dt = 0.01 # your choice.  pick something small
 t, x = euler(F, x0, t0, tmax, dt)
 ```
 
-9. 🎓 Complete the following code to make a plot that shows both position and velocity versus time.
+6. 🎓 Complete the following code to make a plot that shows both position and velocity versus time.
 
 ``` python
 plt.plot(t, x[???, ???], 'b-', t, x[???, ???], 'r--')
@@ -394,7 +375,7 @@ plt.ylabel('position and velocity')
 plt.show()
 ```
 
-10. Complete the following code to make a second plot, called a phase plot, that shows position versus velocity. In a phase plot, time is implicit (not one of the axes).
+7. Complete the following code to make a second plot, called a phase plot, that shows position versus velocity. In a phase plot, time is implicit (not one of the axes).
 
 ``` python
 plt.plot(x[???, ???], x[???, ???])
