@@ -151,18 +151,18 @@ def euler_1d(f, x0, t0, tmax, dt):
     Solves a first-order ordinary differential equation using the Euler method.
 
     Parameters:
-        f    : function, the function defining the differential equation. It should
-               take two arguments, the independent variable t and the dependent
-               variable x, and return the derivative of x with respect to t.
-        x0   : float, the initial value of the dependent variable.
-        t0   : float, the initial value of the independent variable.
-        tmax : float, the maximum value of the independent variable.
-        dt   : float, the time step.
+        f (function): The function defining the differential equation. It
+            should take two arguments, the independent variable t and the
+            dependent variable x, and return the derivative of x with
+            respect to t.
+        x0 (float): The initial value of the dependent variable.
+        t0 (float): The initial value of the independent variable.
+        tmax (float): The maximum value of the independent variable.
+        dt (float): The time step.
 
     Returns:
-       tuple containing two numpy arrays:
-            - t : vector of time values.
-            - x : vector of solution values at each time value.
+        t (NumPy array): Vector of time values.
+        x (NumPy array): Vector of solution values at each time value.
     """
     # We need an integer number of steps so we round the number of steps
     # and then adjust dt to match.
@@ -336,20 +336,21 @@ def euler(F, x0, t0, tmax, dt):
     using the Euler method.
 
     Parameters:
-        F : function, the function defining the system of differential equations.
-            It should take two arguments, the independent variable t and the
-            dependent variable x (as a 1D numpy array), and return the
-            derivative of x with respect to t (as a 1D numpy array).
-        x0 : numpy vector, the initial values of the dependent variables.
-        t0 : float, the initial value of the independent variable.
-        tmax : float, the maximum value of the independent variable.
-        dt : float, the time step.
+        F (function): The function defining the system of differential
+            equations. It should take two arguments, the independent
+            variable t and the dependent variable x (as a 1D NumPy array),
+            and return the derivative of x with respect to t (as a 1D
+            NumPy array).
+        x0 (NumPy array): The initial values of the dependent variables.
+        t0 (float): The initial value of the independent variable.
+        tmax (float): The maximum value of the independent variable.
+        dt (float): The time step.
 
     Returns:
-        tuple containing two numpy arrays:
-            - t : vector of time values.
-            - x : array of solutions at each time value. Each column of x
-                  corresponds to a different dependent variable.
+        t (NumPy array): Vector of time values.
+        x (NumPy array): Array of solutions at each time value. Each row
+            of x holds the values of the dependent variables at one time
+            and each column corresponds to a different dependent variable.
     """
     # We need an integer number of steps so we round the number of steps
     # and then adjust dt to match.
@@ -521,18 +522,18 @@ def midpoint_1d(f, x0, t0, tmax, dt):
     the midpoint method.
 
     Parameters:
-        f    : function, the function defining the differential equation. It should
-               take two arguments, the independent variable t and the dependent
-               variable x, and return the derivative of x with respect to t.
-        x0   : float, the initial value of the dependent variable.
-        t0   : float, the initial value of the independent variable.
-        tmax : float, the maximum value of the independent variable.
-        dt   : float, the time step.
+        f (function): The function defining the differential equation. It
+            should take two arguments, the independent variable t and the
+            dependent variable x, and return the derivative of x with
+            respect to t.
+        x0 (float): The initial value of the dependent variable.
+        t0 (float): The initial value of the independent variable.
+        tmax (float): The maximum value of the independent variable.
+        dt (float): The time step.
 
     Returns:
-       tuple containing two numpy arrays:
-            - t : vector of time values.
-            - x : vector of solution values at each time value.
+        t (NumPy array): Vector of time values.
+        x (NumPy array): Vector of solution values at each time value.
     """
     N = round((tmax - t0)/dt)
     dt = (tmax - t0)/N
@@ -956,6 +957,7 @@ Find a numerical solution to the system of equations using your `euler()` functi
 
 ``` python
 def euler(f,x0,t0,tmax,dt):
+    """Solve x' = f(t, x) with Euler's method, returning lists t and x."""
     t = [t0]
     x = [x0]
     steps = int(np.floor((tmax-t0)/dt))
@@ -967,6 +969,7 @@ def euler(f,x0,t0,tmax,dt):
 
 ``` python
 def euler(f,x0,t0,tmax,dt):
+    """Solve x' = f(t, x) with Euler's method, returning arrays t and x."""
     N = round((tmax - t0)/dt)
     dt = (tmax - t0)/N
     t = np.linspace(t0, tmax, N+1)

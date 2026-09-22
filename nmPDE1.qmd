@@ -172,12 +172,17 @@ U[?,?]
 import plotly.graph_objects as go
 
 def plot_solution_1d(t, x, U):
-    """Plots the numerical approximation to a function u(t,x).
+    """
+    Plots the numerical approximation to a function u(t,x).
 
-    Args:
-        t: A vector of time values.
-        x: A vector of spatial values.
-        U: A 2D array approximating the solution u(t,x) at each grid point.
+    Parameters:
+        t (NumPy array): A vector of time values.
+        x (NumPy array): A vector of spatial values.
+        U (NumPy array): A 2D array approximating the solution u(t,x)
+            at each grid point.
+
+    Returns:
+        plotly Figure: A 3D surface plot of the solution.
     """
     fig = go.Figure(data=[go.Surface(z=U, x=x, y=t)])
     fig.update_layout(
@@ -197,12 +202,17 @@ from matplotlib import animation, rc
 from IPython.display import HTML
 
 def animate_solution_1d(t, x, U):
-    """Animates the numerical approximation to a function u(t,x).
+    """
+    Animates the numerical approximation to a function u(t,x).
 
-    Args:
-        t: A vector of time values.
-        x: A vector of spatial values.
-        U: A 2D array approximating the solution u(t,x) at each grid point.
+    Parameters:
+        t (NumPy array): A vector of time values.
+        x (NumPy array): A vector of spatial values.
+        U (NumPy array): A 2D array approximating the solution u(t,x)
+            at each grid point.
+
+    Returns:
+        FuncAnimation: An animation of u against x as t evolves.
     """
     fig, ax = plt.subplots()
     plt.close()
@@ -237,27 +247,30 @@ def animate_solution_1d(t, x, U):
 
 ``` python
 def heat1d(u_0, D=0.1, t_0=0, t_max=1, N_t=100, x_left=0, x_right=1, N_x=20):
-    """Solves the 1D heat equation using the forward difference method.
+    """
+    Solves the 1D heat equation using the forward difference method.
 
     This function solves the 1D heat equation with given initial and 
     boundary conditions. It also prints a diagnostic message stating
     the step sizes `dt` and `dx` used and the value of `a = D*dt/dx**2`.
 
-    Args:
-        u_0: A function giving the initial condition u(0,x).
-        D: The diffusion coefficient. Defaults to 0.1.
-        t_0: The initial time. Defaults to 0.
-        t_max: The maximum time. Defaults to 1.
-        N_t: The number of time steps. Defaults to 100.
-        x_left: The left boundary of the spatial domain. Defaults to 0.
-        x_right: The right boundary of the spatial domain. Defaults to 1.
-        N_x: The number of spatial steps. Defaults to 20.
+    Parameters:
+        u_0 (function): A function giving the initial condition u(0,x).
+        D (float): The diffusion coefficient. Defaults to 0.1.
+        t_0 (float): The initial time. Defaults to 0.
+        t_max (float): The maximum time. Defaults to 1.
+        N_t (int): The number of time steps. Defaults to 100.
+        x_left (float): The left boundary of the spatial domain.
+            Defaults to 0.
+        x_right (float): The right boundary of the spatial domain.
+            Defaults to 1.
+        N_x (int): The number of spatial steps. Defaults to 20.
 
     Returns:
-        A tuple containing the following:
-            t: A vector of time values.
-            x: A vector of spatial values.
-            U: A 2D array approximating the solution u(t,x) at each grid point.
+        t (NumPy array): A vector of time values.
+        x (NumPy array): A vector of spatial values.
+        U (NumPy array): A 2D array approximating the solution u(t,x)
+            at each grid point.
     """
     # Your code goes here
 ```
@@ -512,8 +525,22 @@ import numpy as np
 
 def solve_heat1d(u_0, D, tmax, dt, xmax, dx):
     """
-    Solves the 1D heat equation.
-    u_0 is a function giving the initial condition.
+    Solves the 1D heat equation u_t = D u_xx on [0, xmax] with
+    u = 0 at both boundaries, using the explicit scheme.
+
+    Parameters:
+        u_0 (function): A function giving the initial condition u(0,x).
+        D (float): The diffusion coefficient.
+        tmax (float): The maximum time.
+        dt (float): The time step.
+        xmax (float): The right boundary of the spatial domain.
+        dx (float): The spatial step.
+
+    Returns:
+        t (NumPy array): A vector of time values.
+        x (NumPy array): A vector of spatial values.
+        U (NumPy array): A 2D array approximating the solution u(t,x)
+            at each grid point.
     """
     t = np.arange(0, tmax + dt, dt)
     x = np.arange(0, xmax + dx, dx)

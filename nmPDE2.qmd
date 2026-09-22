@@ -127,6 +127,20 @@ from mpl_toolkits.mplot3d import Axes3D
 from IPython.display import HTML
 
 def animate_solution_2d(t, x, y, U):
+    """
+    Animates the numerical approximation to a function u(t,x,y).
+
+    Parameters:
+        t (NumPy array): A vector of time values.
+        x (NumPy array): A vector of x values.
+        y (NumPy array): A vector of y values.
+        U (NumPy array): A 3D array approximating the solution u(t,x,y)
+            at each grid point, with U[n, i, j] approximating
+            u(t[n], x[i], y[j]).
+
+    Returns:
+        HTML: An animation of the surface u(t,x,y) as t evolves.
+    """
     Y, X = np.meshgrid(y, x)
 
     # Set up the figure and axis
@@ -288,6 +302,19 @@ U[:,-1] = BCright(t) # set up the right boundary condition
 
 ``` python         
 def coeffMatrix(M,a): # we are using M=len(x) as the first input
+  """
+  Builds the coefficient matrix for the implicit scheme for the
+  1D heat equation.
+
+  Parameters:
+      M (int): The number of spatial points, including the boundary
+          points.
+      a (float): The coefficient a = D*dt/dx**2.
+
+  Returns:
+      NumPy array: The (M-2) x (M-2) tridiagonal coefficient matrix
+          acting on the values at the interior spatial points.
+  """
   A = np.zeros((M-2, M-2))
   # why are we using M-2 x M-2 for the size?
   A[0,0] = # top left entry
@@ -499,8 +526,23 @@ import numpy as np
 
 def solve_heat2d(u_0, D, tmax, dt, L, dx):
     """
-    Solves the 2D heat equation on [0,L]x[0,L].
-    u_0 is a function u_0(X, Y) giving the initial condition.
+    Solves the 2D heat equation u_t = D (u_xx + u_yy) on [0,L]x[0,L]
+    with u = 0 on the boundary, using the explicit scheme.
+
+    Parameters:
+        u_0 (function): A function u_0(X, Y) giving the initial condition.
+        D (float): The diffusion coefficient.
+        tmax (float): The maximum time.
+        dt (float): The time step.
+        L (float): The side length of the square domain.
+        dx (float): The spatial step in both the x and y directions.
+
+    Returns:
+        t (NumPy array): A vector of time values.
+        x (NumPy array): A vector of x values.
+        y (NumPy array): A vector of y values.
+        U (NumPy array): A 3D array approximating the solution u(t,x,y)
+            at each grid point.
     """
     t = np.arange(0, tmax + dt, dt)
     x = np.arange(0, L + dx, dx)

@@ -283,7 +283,10 @@ import matplotlib.pyplot as plt
 
 def plot_forward_difference_errors(f, x, exact, H):
     """
-    Plot the absolute error in the finite-difference approximation
+    Plot the absolute error in the forward-difference approximation of f'(x).
+
+    Produces a log-log plot with the step sizes on the x axis and the
+    absolute error on the y axis.
 
     Parameters:
         f (function): Function whose derivative we approximate
@@ -291,9 +294,6 @@ def plot_forward_difference_errors(f, x, exact, H):
         exact (float): The exact value of f'(x)
         H (vector): We will calculate the error at each of the
                     entries of this vector
-    Returns:
-        A plot with the step sizes on the x axis and the
-        absolute error on the y axis
     """
 
     # Create list of errors
@@ -373,6 +373,19 @@ The function will return the forward-difference approximation of the first deriv
 import numpy as np
 import matplotlib.pyplot as plt
 def ForwardDiff(f,a,b,N):
+    """
+    Approximate the first derivative of f on [a,b] using forward differences.
+
+    Parameters:
+        f (function): Function whose derivative we approximate
+        a (float): Left endpoint of interval
+        b (float): Right endpoint of interval
+        N (int): Number of subintervals
+
+    Returns:
+        list: Approximations of f'(x) at all N+1 equally spaced points
+              in [a,b] except the right endpoint
+    """
     x = np.linspace(a,b,N+1) # What does this line of code do?
     # What's up with the N+1 in the previous line?
     h = x[1] - x[0] # What does this line of code do?
@@ -446,6 +459,19 @@ plt.show()
 
 ``` python
 def ForwardDiff(f,a,b,N):
+    """
+    Approximate the first derivative of f on [a,b] using forward differences.
+
+    Parameters:
+        f (function): Function whose derivative we approximate
+        a (float): Left endpoint of interval
+        b (float): Right endpoint of interval
+        N (int): Number of subintervals
+
+    Returns:
+        NumPy array: Approximations of f'(x) at all N+1 equally spaced
+                     points in [a,b] except the right endpoint
+    """
     x = np.linspace(a,b,N+1)
     h = x[1] - x[0]
     y = f(x)
@@ -509,7 +535,10 @@ d.  Play with the number of subintervals, $N$, and demonstrate the fact that we 
 def plot_max_forward_difference_errors(f, f_prime, a, b, H):
     """
     Plot the maximum absolute error in the forward difference
-    approximation for the first derivative of f on the interval [a,b]
+    approximation for the first derivative of f on the interval [a,b].
+
+    Produces a log-log plot with the step sizes on the x axis and the
+    maximum absolute error on the y axis.
 
     Parameters:
         f (function): Function whose derivative we approximate
@@ -517,9 +546,6 @@ def plot_max_forward_difference_errors(f, f_prime, a, b, H):
         a (float): Left endpoint of interval
         b (float): Right endpoint of interval
         H (vector): Vector of step sizes h
-    Returns:
-        A plot with the step sizes on the x axis and the
-        absolute error on the y axis
     """
 
     # Your code here
@@ -970,7 +996,11 @@ import matplotlib.pyplot as plt
 
 def plot_riemann_errors(f, a, b, exact, DX):
     """
-    Plot the absolute error in the Riemann sum approximation
+    Plot the absolute error in the left, right and midpoint Riemann sum
+    approximations.
+
+    Produces a log-log plot with the step sizes on the x axis and the
+    absolute error on the y axis.
 
     Parameters:
         f (function): Function whose integral we approximate
@@ -979,9 +1009,6 @@ def plot_riemann_errors(f, a, b, exact, DX):
         exact (float): The exact value of the integral
         DX (vector): We will calculate the error at each of the
                      step sizes in this vector
-    Returns:
-        A plot with the step sizes on the x axis and the
-        absolute error on the y axis
     """
 
     # Create lists of errors

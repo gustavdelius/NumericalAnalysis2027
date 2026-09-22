@@ -143,11 +143,11 @@ def exp_approx(x, n):
     Computes the nth order Taylor series approximation of e^x at x=0.
 
     Parameters:
-    x (float): The value at which to evaluate the approximation.
-    n (int): The order of the Taylor series expansion.
+        x (float): The value at which to evaluate the approximation.
+        n (int): The order of the Taylor series expansion.
 
     Returns:
-    float: The nth order Taylor approximation of e^x.
+        float: The nth order Taylor approximation of e^x.
     """
     if n < 0:
         raise ValueError("n must be at least 0")
@@ -263,11 +263,11 @@ def log_approx(x, n):
     Computes the nth order Taylor series approximation of log(x) at x=1.
 
     Parameters:
-    x (float): The value at which to evaluate the approximation.
-    n (int): The order of the Taylor series expansion.
+        x (float): The value at which to evaluate the approximation.
+        n (int): The order of the Taylor series expansion.
 
     Returns:
-    float: The nth order Taylor approximation of log(x).
+        float: The nth order Taylor approximation of log(x).
     """
     if n < 0:
         raise ValueError("n must be at least 0")
@@ -860,15 +860,15 @@ def two_layer_network(x, biases, output_weights, output_bias=0):
     Evaluates a two-layer neural network approximation.
 
     Parameters:
-    x (float or array): The value or values at which to evaluate the network.
-    biases (list or array): Biases for hidden layer
-        These determine the knot points: x_i = -b_i
-    output_weights (list or array) : Weights for output layer
-    output_bias (float): Bias for output layer (default: 0)
+        x (float or array): The value or values at which to evaluate
+            the network.
+        biases (list or array): Biases for hidden layer.
+            These determine the knot points: x_i = -b_i
+        output_weights (list or array): Weights for output layer
+        output_bias (float): Bias for output layer (default: 0)
 
     Returns:
-    --------
-    float or array: The output of the neural network.
+        float or array: The output of the neural network.
     """
     f_nn = output_bias * np.ones_like(x)  # bias term
     for i in range(len(biases)):
@@ -918,20 +918,21 @@ import matplotlib.pyplot as plt
 def plot_neural_network(biases, output_weights, output_bias=0,
                         x_range=(0, np.pi), target_func=np.sin):
     """
-    Plot a two-layer neural network approximation.
+    Plot a two-layer neural network approximation together with the
+    target function, and print the maximum absolute error.
 
     Parameters:
-    biases (list or array): Biases for hidden layer
-        These determine the knot points: x_i = -b_i
-    output_weights (list or array) : Weights for output layer
-    output_bias (float): Bias for output layer (default: 0)
-    x_range : tuple
-        (x_min, x_max) for plotting (default: (0, np.pi))
-    target_func : function
-        The target function to approximate (default: np.sin)
+        biases (list or array): Biases for hidden layer.
+            These determine the knot points: x_i = -b_i
+        output_weights (list or array): Weights for output layer
+        output_bias (float): Bias for output layer (default: 0)
+        x_range (tuple): (x_min, x_max) for plotting
+            (default: (0, np.pi))
+        target_func (function): The target function to approximate
+            (default: np.sin)
 
     Returns:
-    float: Maximum absolute error
+        float: Maximum absolute error
     """
     x = np.linspace(x_range[0], x_range[1], 500)
 
@@ -1182,6 +1183,7 @@ Use this to complete the code below and use the plot to check that the resulting
 
 ```python
 def shallow_2_peak_network(x):
+    """2-peak sawtooth function built as a shallow network."""
     biases = [.....]
     output_weights = [.....]
     return two_layer_network(x, biases, output_weights)
@@ -1236,7 +1238,7 @@ Then, our 2-peak sawtooth is simply $f(x) = g(g(x))$.
 **a)** First, create a single-peak as a shallow network with three hidden neurons.
 ```python
 def g(x):
-    """ Single triangular peak """
+    """Single triangular peak."""
     biases = [.....]
     output_weights = [.....]
     return two_layer_network(x, biases, output_weights)

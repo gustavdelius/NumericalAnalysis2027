@@ -145,8 +145,8 @@ import numpy as np
 from scipy.integrate import odeint
 import matplotlib.pyplot as plt
 
-# SIR model differential equations
 def sir_model(y, t, N, beta, gamma):
+    """Right-hand side of the SIR model differential equations."""
     S, I, R = y
     dSdt = -beta * S * I / N
     dIdt = beta * S * I / N - gamma * I

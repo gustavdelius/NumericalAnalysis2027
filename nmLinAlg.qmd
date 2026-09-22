@@ -320,6 +320,16 @@ Write a Python function that accepts two vectors (defined as `numpy` arrays) and
 ``` python         
 import numpy as np
 def myDotProduct(u,v):
+    """
+    Compute the dot product of two vectors without using loops.
+
+    Parameters:
+        u (NumPy array): The first vector
+        v (NumPy array): The second vector, of the same length as u
+
+    Returns:
+        float: The dot product of u and v
+    """
     return # the dot product formula uses a product inside a sum.
 ```
 
@@ -469,6 +479,16 @@ Partial code is given below. Fill in all of the details and give ample comments 
 ``` python         
 import numpy as np
 def myMatrixMult(A,B):
+    """
+    Compute the matrix product AB using dot products.
+
+    Parameters:
+        A (NumPy array): An n x p matrix
+        B (NumPy array): A p x m matrix
+
+    Returns:
+        NumPy array: The n x m matrix product AB
+    """
     # Get the shapes of the matrices A and B.
     # Then write an if statement that catches size mismatches 
     # in the matrices.  Next build a zeros matrix that is the 
@@ -833,6 +853,17 @@ The following Python function takes a square matrix $A$ and outputs the matrices
 
 ``` python         
 def myLU(A):
+    """
+    Compute the LU factorisation of a square matrix (without row swaps).
+
+    Parameters:
+        A (NumPy array): A square matrix
+
+    Returns:
+        L (NumPy array): A lower-triangular matrix with ones on the
+            main diagonal
+        U (NumPy array): An upper-triangular matrix such that A = LU
+    """
     n = A.shape[0] # get the dimension of the matrix A
     L = np.eye(n) # Build the identity part of L
     U = np.copy(A) # start the U matrix as a copy of A
@@ -932,6 +963,17 @@ The code below gives a full implementation of the **Forward Substitution** algor
 
 ``` python    
 def lsolve(L, b):
+    """
+    Solve Ly = b for y using forward substitution.
+
+    Parameters:
+        L (NumPy array): A lower-triangular matrix with ones on the
+            main diagonal
+        b (NumPy array): The right-hand side vector
+
+    Returns:
+        NumPy array: The solution vector y
+    """
     # L is assumed to be a lower-triangular np.array
     n = b.size # what does this do?
     y = np.zeros(n) # what does this do?
@@ -1026,6 +1068,16 @@ The following code solves the problem $U \boldsymbol{x} = \boldsymbol{y}$ using 
 
 ``` python    
 def usolve(U, y):
+    """
+    Solve Ux = y for x using backward substitution.
+
+    Parameters:
+        U (NumPy array): An upper-triangular matrix
+        y (NumPy array): The right-hand side vector
+
+    Returns:
+        NumPy array: The solution vector x
+    """
     # U is assumed to be an upper-triangular np.array
     n = y.size
     x = np.zeros(n)
@@ -1463,6 +1515,17 @@ Now we are ready to build general code for the $QR$ factorization. The following
 ``` python    
 import numpy as np
 def myQR(A):
+    """
+    Compute the QR factorisation of a square matrix using the
+    Gram-Schmidt process.
+
+    Parameters:
+        A (NumPy array): A square matrix
+
+    Returns:
+        Q (NumPy array): An orthogonal matrix
+        R (NumPy array): An upper-triangular matrix such that A = QR
+    """
     n = A.shape[0]
     Q = np.zeros( (n,n) )
     for j in range( ??? ): # The outer loop goes over the columns
@@ -1858,6 +1921,19 @@ Go through @thm-4.5 carefully and describe what we need to do in each step and w
 ``` python         
 import numpy as np
 def myPower(A, tol = 1e-8):
+    """
+    Approximate the dominant eigenvalue and a corresponding unit
+    eigenvector of A using the power method.
+
+    Parameters:
+        A (NumPy array): A square matrix
+        tol (float): The tolerance for the stopping rule
+
+    Returns:
+        x (NumPy array): An approximate unit eigenvector for the
+            dominant eigenvalue
+        L (float): An approximation of the dominant eigenvalue
+    """
     n = A.shape[0]
     x = np.random.randn(n)
     x = # turn x into a unit vector
