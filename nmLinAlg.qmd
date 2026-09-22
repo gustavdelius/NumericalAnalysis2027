@@ -319,7 +319,7 @@ Write a Python function that accepts two vectors (defined as `numpy` arrays) and
 
 ``` python         
 import numpy as np
-def myDotProduct(u,v):
+def my_dot_product(u,v):
     return # the dot product formula uses a product inside a sum.
 ```
 
@@ -328,7 +328,7 @@ def myDotProduct(u,v):
 ------------------------------------------------------------------------
 
 ::: {#exr-4.6}
-Test your `myDotProduct()` function on several dot products to make sure that it works. Example code to find the dot product between 
+Test your `my_dot_product()` function on several dot products to make sure that it works. Example code to find the dot product between 
 \begin{equation}
  \boldsymbol{u} = \begin{pmatrix} 1 \\ 2\\ 3\end{pmatrix} \quad \text{and} \quad \boldsymbol{v} = \begin{pmatrix} 4\\5\\6\end{pmatrix} 
 \end{equation}
@@ -337,7 +337,7 @@ Test your `myDotProduct()` function on several dot products to make sure that it
 ``` python         
 u = np.array([1,2,3])
 v = np.array([4,5,6])
-myDotProduct(u,v)
+my_dot_product(u,v)
 ```
 
 :::
@@ -345,12 +345,12 @@ myDotProduct(u,v)
 ------------------------------------------------------------------------
 
 ::: {#exr-4.7}
-Try sending Python lists instead of `numpy` arrays into your `myDotProduct` function. What happens? Why does it happen? What is the cautionary tale here? Modify your `myDotProduct()` function one more time so that it starts by converting the input vectors into `numpy` arrays.
+Try sending Python lists instead of `numpy` arrays into your `my_dot_product` function. What happens? Why does it happen? What is the cautionary tale here? Modify your `my_dot_product()` function one more time so that it starts by converting the input vectors into `numpy` arrays.
 
 ``` python         
 u = [1,2,3]
 v = [4,5,6]
-myDotProduct(u,v)
+my_dot_product(u,v)
 ```
 
 :::
@@ -358,7 +358,7 @@ myDotProduct(u,v)
 ------------------------------------------------------------------------
 
 ::: {#exr-4.8}
-The `numpy` library in Python has a built-in command for doing the dot product: `np.dot()`. Test the `np.dot()` command and be sure that it does the same thing as your `myDotProduct()` function.
+The `numpy` library in Python has a built-in command for doing the dot product: `np.dot()`. Test the `np.dot()` command and be sure that it does the same thing as your `my_dot_product()` function.
 
 :::
 
@@ -468,7 +468,7 @@ Partial code is given below. Fill in all of the details and give ample comments 
 
 ``` python         
 import numpy as np
-def myMatrixMult(A,B):
+def my_matrix_mult(A,B):
     # Get the shapes of the matrices A and B.
     # Then write an if statement that catches size mismatches 
     # in the matrices.  Next build a zeros matrix that is the 
@@ -492,7 +492,7 @@ Use the following test code to determine if you actually get the correct matrix 
 ``` python         
 A = np.array([[1,2],[3,4],[5,6]])
 B = np.array([[7,8,9],[10,11,12]])
-AB = myMatrixMult(A,B)
+AB = my_matrix_mult(A,B)
 print(AB)
 ```
 
@@ -501,14 +501,14 @@ print(AB)
 ------------------------------------------------------------------------
 
 ::: {#exr-4.12}
-Try your `myMatrixMult()` function on several other matrix multiplication problems.
+Try your `my_matrix_mult()` function on several other matrix multiplication problems.
 
 :::
 
 ------------------------------------------------------------------------
 
 ::: {#exr-4.13}
-Build in an error catch so that your `myMatrixMult()` function catches when the input matrices do not have compatible sizes for multiplication. Write your code so that it returns an appropriate error message in this special case.
+Build in an error catch so that your `my_matrix_mult()` function catches when the input matrices do not have compatible sizes for multiplication. Write your code so that it returns an appropriate error message in this special case.
 
 :::
 
@@ -832,7 +832,7 @@ It remains to implement the $LU$ decomposition (also called the $LU$ factorizati
 The following Python function takes a square matrix $A$ and outputs the matrices $L$ and $U$ such that $A = LU$. The entire code is given to you. It will be up to you in the next exercise to pick apart every step of the function.
 
 ``` python         
-def myLU(A):
+def my_lu(A):
     n = A.shape[0] # get the dimension of the matrix A
     L = np.eye(n) # Build the identity part of L
     U = np.copy(A) # start the U matrix as a copy of A
@@ -880,7 +880,7 @@ Go to @exm-4.LU and go through every iteration of every loop **by hand** startin
 ------------------------------------------------------------------------
 
 ::: {#exr-4.25}
-Apply your new `myLU` code to other square matrices and verify that indeed $A$ is the product of the resulting $L$ and $U$ matrices. You can produce a random matrix with `np.random.randn(n,n)` where `n` is the number of rows and columns of the matrix. For example, `np.random.randn(10,10)` will produce a random $10 \times 10$ matrix with entries chosen from the normal distribution with centre 0 and standard deviation 1. Random matrices are just as good as any other when testing your algorithm.
+Apply your new `my_lu` code to other square matrices and verify that indeed $A$ is the product of the resulting $L$ and $U$ matrices. You can produce a random matrix with `np.random.randn(n,n)` where `n` is the number of rows and columns of the matrix. For example, `np.random.randn(10,10)` will produce a random $10 \times 10$ matrix with entries chosen from the normal distribution with centre 0 and standard deviation 1. Random matrices are just as good as any other when testing your algorithm.
 
 :::
 
@@ -1159,7 +1159,7 @@ We have successfully take row reduction and turned into some fast matrix multipl
 Let $A$ be a square matrix in $\mathbb{R}^{n \times n}$ and let $\boldsymbol{x}, \boldsymbol{b} \in \mathbb{R}^n$. To solve the problem $A \boldsymbol{x} =\boldsymbol{b}$,
 
 1.  Factor $A$ into lower and upper-triangular matrices $A = LU$.\
-    `L, U = myLU(A)`
+    `L, U = my_lu(A)`
 
 2.  The system can now be written as $LU \boldsymbol{x} = \boldsymbol{b}$. Substitute $U \boldsymbol{x} = \boldsymbol{y}$ and solve the system $L \boldsymbol{y} = \boldsymbol{b}$ with forward substitution.  `y = lsolve(L,b)`
 
@@ -1462,7 +1462,7 @@ Now we are ready to build general code for the $QR$ factorization. The following
 
 ``` python    
 import numpy as np
-def myQR(A):
+def my_qr(A):
     n = A.shape[0]
     Q = np.zeros( (n,n) )
     for j in range( ??? ): # The outer loop goes over the columns
@@ -1483,7 +1483,7 @@ def myQR(A):
 A = np.array( ... )
 # or you can build A with use np.random.randn() 
 # Often time random matrices are good test cases
-Q, R = myQR(A)
+Q, R = my_qr(A)
 error = np.linalg.norm(A - Q @ R)
 print(error)
 ```
@@ -1857,7 +1857,7 @@ Go through @thm-4.5 carefully and describe what we need to do in each step and w
 
 ``` python         
 import numpy as np
-def myPower(A, tol = 1e-8):
+def my_power(A, tol = 1e-8):
     n = A.shape[0]
     x = np.random.randn(n)
     x = # turn x into a unit vector
@@ -1879,7 +1879,7 @@ def myPower(A, tol = 1e-8):
 ------------------------------------------------------------------------
 
 ::: {#exr-4.62}
-Test your `myPower()` function on several matrices where you know the eigenstructure. Then try the `myPower()` function on larger random matrices. You can check that it is working using `np.linalg.eig()` (be sure to normalize the vectors in the same way so you can compare them.)
+Test your `my_power()` function on several matrices where you know the eigenstructure. Then try the `my_power()` function on larger random matrices. You can check that it is working using `np.linalg.eig()` (be sure to normalize the vectors in the same way so you can compare them.)
 
 :::
 
@@ -1999,11 +1999,11 @@ import numpy as np
 # in this problem it will be easiest to start with numpy matrices
 A = np.array([[1, 0, 1], [2, 3, 5], [-1, -3, -3]])
 b = np.array([[3],[7],[3]])
-Augmented = np.c_[A,b] # augment b onto the right hand side of A
+augmented = np.c_[A,b] # augment b onto the right hand side of A
 
-Msymbolic = sp.Matrix(Augmented)
-MsymbolicRREF = Msymbolic.rref()
-print(MsymbolicRREF)
+M_symbolic = sp.Matrix(augmented)
+M_symbolic_rref = M_symbolic.rref()
+print(M_symbolic_rref)
 ```
 
 To time code you can use code like the following.
@@ -2105,7 +2105,7 @@ Create a loop that does the following:
 
 4.  Find Python's answer to the problem $A\boldsymbol{x}=\boldsymbol{b}$ =0 using the command `exact = np.linalg.solve(A,b)`
 
-5.  Write code that uses your three $LU$ functions (`myLU`, `lsolve`, `usolve`) to find a solution to the equation $A\boldsymbol{x}=\boldsymbol{b}$.
+5.  Write code that uses your three $LU$ functions (`my_lu`, `lsolve`, `usolve`) to find a solution to the equation $A\boldsymbol{x}=\boldsymbol{b}$.
 
 6.  Find the error between your answer and the exact answer using the code `np.linalg.norm(x - exact)`
 
@@ -2149,7 +2149,7 @@ Notice that $A$ has a tiny, but non-zero, value in the first entry.
 
 1.  Solve the linear system $A \boldsymbol{x}=\boldsymbol{b}$ by hand.
 
-2.  Use your `myLU`, `lsolve`, and `usolve` functions to solve this problem using the LU decomposition method.
+2.  Use your `my_lu`, `lsolve`, and `usolve` functions to solve this problem using the LU decomposition method.
 
 3.  Compare your answers to parts (a) and (b). What went wrong?
 

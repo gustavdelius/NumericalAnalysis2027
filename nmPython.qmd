@@ -172,12 +172,12 @@ In Python, elements in a list do not need to be the same type. You can mix integ
 In this example we see a list of several items that have different data types: float, integer, string, and complex. Note that the imaginary number $i$ is represented by $1j$ in Python. This use of $j$ instead of $i$ is common in some scientific disciplines and is just another thing that we Mathematicians will need to get used to in Python.
 
 ``` python         
-MixedList = [1.0, 7, 'Bob', 1-1j]
-print(MixedList)
-print(type(MixedList[0]))
-print(type(MixedList[1]))
-print(type(MixedList[2]))
-print(type(MixedList[3])) 
+mixed_list = [1.0, 7, 'Bob', 1-1j]
+print(mixed_list)
+print(type(mixed_list[0]))
+print(type(mixed_list[1]))
+print(type(mixed_list[2]))
+print(type(mixed_list[3])) 
 # Notice that we use 1j for the imaginary number "i".
 ```
 
@@ -369,8 +369,8 @@ When you are done with the loop, just back out of the indention. There is no nee
 ::: {#exm-A.8}
 Print the names in a list.
 ``` python         
-NamesList = ['Alice','Billy','Charlie','Dom','Enrique','Francisco']
-for name in NamesList:
+names_list = ['Alice','Billy','Charlie','Dom','Enrique','Francisco']
+for name in names_list:
     print(name)
 ```
 :::
@@ -386,10 +386,10 @@ Create a list of the perfect squares from 1 to 9.
 
 ``` python         
 # create a list of the perfect squares from 1 to 9
-CoolList = [x**2 for x in range(1,10)]
-print(CoolList)
+cool_list = [x**2 for x in range(1,10)]
+print(cool_list)
 # Then print the sum of this list
-print("The sum of the first 9 perfect squares is", sum(CoolList))
+print("The sum of the first 9 perfect squares is", sum(cool_list))
 ```
 
 :::
@@ -476,10 +476,10 @@ print("done")
 Now let us use a while loop to build the sequence of Fibonacci numbers and stop when the newest number in the sequence is greater than 1000. Notice that we want to keep looping until the condition that the last term is greater than 1000 -- this is the perfect task for a `while` loop, instead of a `for` loop, since we do not know how many steps it will take before we start the task
 
 ``` python         
-Fib = [1,1]
-while Fib[-1] <= 1000:
-    Fib.append(Fib[-1] + Fib[-2])
-print("The last few terms in the list are:\n",Fib[-3:])
+fib = [1,1]
+while fib[-1] <= 1000:
+    fib.append(fib[-1] + fib[-2])
+print("The last few terms in the list are:\n",fib[-3:])
 ```
 
 :::
@@ -503,16 +503,16 @@ Conditional (`if`) statements allow you to run a piece of code only under certai
 Let us look at a simple example of an `if` statement in Python.
 
 ``` python         
-Name = "Alice"
-if Name == "Alice":
+name = "Alice"
+if name == "Alice":
     print("Hello, Alice.  Isn't it a lovely day to learn Python?")
 else:
     print("You're not Alice.  Where is Alice?")
 ```
 
 ``` python         
-Name = "Billy"
-if Name == "Alice":
+name = "Billy"
+if name == "Alice":
     print("Hello, Alice.  Isn't it a lovely day to learn Python?")
 else:
     print("You're not Alice.  Where is Alice?")

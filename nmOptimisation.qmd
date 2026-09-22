@@ -731,12 +731,12 @@ ydata = np.array([2.37, 4.14, 12.22, 23.68])
 b = 2
 c = 0.75
 A = # give a numpy array of values for a
-SumSqRes = [] # this is storage for the sum of the sq. residuals
+sum_sq_res = [] # this is storage for the sum of the sq. residuals
 for a in A:
   guess = a*xdata**2 + b*xdata + c
   residuals = # write code to calculate the residuals
-  SumSqRes.append( ??? ) # calculate the sum of the squ. residuals
-plt.plot(A, SumSqRes)
+  sum_sq_res.append( ??? ) # calculate the sum of the squ. residuals
+plt.plot(A, sum_sq_res)
 plt.grid()
 plt.xlabel('Value of a')
 plt.ylabel('Sum of squared residuals')
@@ -786,7 +786,7 @@ from scipy.optimize import minimize
 xdata = np.array([0, 1, 2, 3])
 ydata = np.array([2.37, 4.14, 12.22, 23.68])
 
-def SSRes(parameters):
+def ss_res(parameters):
   # In the next line of code we want to build our 
   # quadratic approximation y = ax^2 + bx + c
   # We are sending in a list of parameters so 
@@ -798,18 +798,18 @@ def SSRes(parameters):
   return np.sum(residuals**2)
 
 
-BestParameters = minimize(SSRes,[1,1,1])
-print("The best values of a, b, and c are: \n",BestParameters.x)
+best_parameters = minimize(ss_res,[1,1,1])
+print("The best values of a, b, and c are: \n",best_parameters.x)
 # If you want to print the diagnostics then use the line below:
-# print("The minimisation diagnostics are: \n",BestParameters)
+# print("The minimisation diagnostics are: \n",best_parameters)
 ```
 
 ``` python         
 plt.plot(xdata,ydata,'bo')
 x = np.linspace(0,4,100)
-y = BestParameters.x[0]*x**2 + \
-    BestParameters.x[1]*x + \
-    BestParameters.x[2]
+y = best_parameters.x[0]*x**2 + \
+    best_parameters.x[1]*x + \
+    best_parameters.x[2]
 plt.plot(x,y,'r--')
 plt.grid()
 plt.xlabel('x')
