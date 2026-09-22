@@ -170,7 +170,7 @@ def animate_solution_2d(t, x, y, U):
 ::: {#exr-6.2db}
 💻 🎓 In order for the forward difference solution to the 2D heat equation on a square domain to be stable we need $D \Delta t / \Delta x^2 < \underline{\hspace{0.5in}}$.
 
-Experiment with several parameters to empirically determine the bound. It is again a simple fraction that you should be able to guess.
+Experiment with several parameters to empirically determine the bound. It is again a simple fraction that you should be able to guess. As in the 1D case, the easiest way to spot an instability is to look at a plot of the solution at the final time step, for example a 3D surface plot of `U[-1,:,:]`, rather than at the animation of the whole time evolution.
 
 :::
 
