@@ -583,9 +583,9 @@ c. What is the maximum step size that forward Euler can use on this equation and
 ::: {#exr-5.56}
 💻 💬 Investigate the stiffness of $x'=-100x+\sin t$ with $x(0)=0$ numerically.
 
-a. Solve the equation using forward Euler with step sizes $h=0.1$, $h=0.01$, and $h=0.001$. Plot all three numerical solutions together with the exact solution on the interval $t\in[0,1]$. What do you observe?
+a. Solve the equation using forward Euler with the step sizes $h=0.01$, $h=0.02$, and $h=0.03$. These are just below, exactly at, and just above the maximum stable step size that you found in @exr-5.55. Plot the numerical solutions together with the exact solution on the interval $t\in[0,1]$. Because one of the solutions grows very large, it is best to make a separate plot for each step size. What do you observe? Look carefully at the solution for $h=0.02$: what happens to the numerical solution exactly at the stability limit?
 b. Repeat with the backward Euler method using the same step sizes. What do you observe?
-c. Repeat with the RK4 method. What is the largest step size for which RK4 remains stable on this problem? (Hint: the stability region of RK4 reaches approximately $z\approx -2.8$ along the negative real axis.) Compare with what you found for forward Euler.
+c. Repeat with the RK4 method. Is RK4 stable for all three step sizes? What is the largest step size for which RK4 remains stable on this problem? (Hint: the stability region of RK4 reaches approximately $z\approx -2.8$ along the negative real axis.) Compare with what you found for forward Euler.
 d. 💬 Explain in your own words why an implicit method is preferable for stiff equations.
 :::
 
@@ -630,9 +630,9 @@ c. For $\gamma=100$, how small must the step size $h$ be for the forward Euler m
 ::: {#exr-5.58}
 💻 Solve the stiff system from @exm-5.57 numerically with $\gamma=100$ on the interval $t\in[0,5]$.
 
-a. Solve the system with the forward Euler method and step sizes $h=0.1$, $h=0.01$, and $h=0.001$. You can use your code from @exr-5.17. At which step size does forward Euler first produce a stable solution?
+a. Solve the system with the forward Euler method and step sizes $h=0.01$, $h=0.02$, and $h=0.03$, which are just below, exactly at, and just above the stability limit that you found in @exr-5.57. You can use your code from @exr-5.17. Which of these step sizes give a stable solution? Look at the plots of both $u(t)$ and $v(t)$: what happens to the velocity $v$ exactly at the stability limit $h=0.02$?
 
-b. Solve the system with the backward Euler method using the same step sizes. Does backward Euler remain stable even for $h=0.1$? You can use the following function for the higher-dimensional backward Euler method:
+b. Solve the system with the backward Euler method using the same step sizes. Does backward Euler remain stable for all three step sizes? What about much larger step sizes such as $h=0.1$ or $h=0.5$? You can use the following function for the higher-dimensional backward Euler method:
 
 ```python
 import numpy as np
