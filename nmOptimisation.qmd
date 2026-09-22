@@ -325,7 +325,7 @@ If you choose $x_0=3$ as your starting point and a learning rate of $0.001$, wha
 ::: {#exr-3.54}
 💻 You will now explore how the error decreases as the number of gradient descent steps increases.
 
-1. Use your `gradient_descent_1d()` function from @exr-3.53 to calculate the list of iterates, and from that the list of absolute errors between the iterates and the exact minimum, as you did for Newton's method in @exr-newton_error_tracking. 
+1. Use your `gradient_descent_1d()` function from @exr-3.53 to calculate the list of iterates, and from that the vector of absolute errors between the iterates and the exact minimum, as you did for Newton's method in @exr-newton_error_tracking. 
 2. Print the errors when applied to the function $f(x)=\cos(x)$ with a starting value of $x_0=3$, a learning rate of $\alpha = 0.1$ and a tolerance of $10^{-12}$. Make sure you use the correct exact minimum in your error calculations, namely the one that you expect gradient descent to find.
 3. Use your `plot_error_progression()` function that we wrote in @exm-2.1b to make a plot of the log of the absolute error at iteration $n+1$ against the log of the absolute error at iteration $n$. You should observe that the points line up approximately along a straight line.
 4. 🎓 Read off the slope of the straight line fitted to the points.
@@ -735,11 +735,11 @@ ydata = np.array([2.37, 4.14, 12.22, 23.68])
 b = 2
 c = 0.75
 A = # give a numpy array of values for a
-SumSqRes = [] # this is storage for the sum of the sq. residuals
-for a in A:
+SumSqRes = np.zeros(len(A)) # storage for the sums of the sq. residuals
+for i, a in enumerate(A):
   guess = a*xdata**2 + b*xdata + c
   residuals = # write code to calculate the residuals
-  SumSqRes.append( ??? ) # calculate the sum of the squ. residuals
+  SumSqRes[i] = ??? # calculate the sum of the squ. residuals
 plt.plot(A, SumSqRes)
 plt.grid()
 plt.xlabel('Value of a')

@@ -296,11 +296,11 @@ def plot_forward_difference_errors(f, x, exact, H):
         absolute error on the y axis
     """
 
-    # Create list of errors
-    AbsError = [] # start off with a blank list of errors
-    for h in H:
+    # Create vector to hold the errors
+    AbsError = np.zeros(len(H))
+    for i, h in enumerate(H):
         approx = (f(x+h) - f(x))/h
-        AbsError.append(abs(approx - exact))
+        AbsError[i] = abs(approx - exact)
 
     # Make a loglog plot
     plt.loglog(H, AbsError, 'b*')
@@ -984,16 +984,16 @@ def plot_riemann_errors(f, a, b, exact, DX):
         absolute error on the y axis
     """
 
-    # Create lists of errors
-    error_left = []
-    error_right = []
-    error_midpoint = []
+    # Create vectors to hold the errors
+    error_left = np.zeros(len(DX))
+    error_right = np.zeros(len(DX))
+    error_midpoint = np.zeros(len(DX))
 
-    for dx in DX:
+    for i, dx in enumerate(DX):
         N = int(np.round((b - a) / dx))
-        error_left.append(abs(RiemannSum(f, a, b, N, method='left') - exact))
-        error_right.append(abs(RiemannSum(f, a, b, N, method='right') - exact))
-        error_midpoint.append(abs(RiemannSum(f, a, b, N, method='midpoint') - exact))
+        error_left[i] = abs(RiemannSum(f, a, b, N, method='left') - exact)
+        error_right[i] = abs(RiemannSum(f, a, b, N, method='right') - exact)
+        error_midpoint[i] = abs(RiemannSum(f, a, b, N, method='midpoint') - exact)
 
     # Make a loglog plot
     plt.loglog(DX, error_left, 'b*', label='Left Sum', markersize=14)
