@@ -43,7 +43,7 @@ These tools together provide all of the computational power that we will need. A
 
 ## Python Programming Basics {#sec-python_basics}
 
-If you are already very practised in using Python then you can jump straight to @sec-python_exercises with the coding exercises. But if you are new to Python or your Python skills are a bit rusty, then you will benefit from working through all the examples and exercises below, making sure you copy and paste all the code into your Colab notebook and run it there, and then critically evaluate and understand the output.
+[If you are already very practised in using Python then you can jump straight to @sec-python_exercises with the coding exercises. But if]{.content-visible when-format="html"}[If]{.content-visible unless-format="html"} you are new to Python or your Python skills are a bit rusty, then you will benefit from working through all the examples and exercises below, making sure you copy and paste all the code into your Colab notebook and run it there, and then critically evaluate and understand the output.
 
 ### Variables {#sec-variables}
 
@@ -570,7 +570,7 @@ Write code to give the Collatz Sequence
 \begin{equation}
 x_{n+1} = \left\{ \begin{array}{ll} x_n / 2, & \text{$x_n$ is even} \\ 3 x_n + 1, & \text{otherwise} \end{array} \right.
 \end{equation}
- starting with a positive integer of your choosing. The sequence will converge^[Actually, it is still an open mathematical question whether every integer seed will converge to 1. The Collatz sequence has been checked for many millions of initial seeds and they all converge to 1, but there is no mathematical proof that it will always happen. You will check the conjecture numerically in @exr-1.50] to 1 so your code should stop when the sequence reaches 1.
+ starting with a positive integer of your choosing. The sequence will converge^[Actually, it is still an open mathematical question whether every integer seed will converge to 1. The Collatz sequence has been checked for many millions of initial seeds and they all converge to 1, but there is no mathematical proof that it will always happen.[ You will check the conjecture numerically in @exr-1.50.]{.content-visible when-format="html"}] to 1 so your code should stop when the sequence reaches 1.
  
  **Hints:** To test whether a number `x` is even you can test whether the remainder after dividing by 2 is zero with `(x % 2) == 0`. Also you will want to use the integer division `//` when calculating $x_n/2$.
 
