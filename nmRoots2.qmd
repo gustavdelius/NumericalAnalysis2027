@@ -8,7 +8,7 @@ In the bisection method (@sec-bisection) we used only the sign of the function a
 
 ### Intuition
 
-Root finding is really the process of finding the $x$-intercept of the function. If the function is complicated (e.g. highly nonlinear or does not lend itself to traditional by-hand techniques) then we can approximate the $x$-intercept by creating a Taylor series approximation of the function at a nearby point and then finding the $x$-intercept of that simpler Taylor series. The simplest non-trivial Taylor series is a linear function: a tangent line.
+Root finding is really the process of finding the $x$-intercept of the function. If the function is complicated (e.g. highly nonlinear or does not lend itself to traditional by-hand techniques) then we can approximate the $x$-intercept by approximating the function by a truncated Taylor series (a Taylor polynomial, see @thm-taylor) at a nearby point and then finding the $x$-intercept of that simpler polynomial. The simplest non-trivial Taylor polynomial is a linear function: a tangent line.
 
 ------------------------------------------------------------------------
 
@@ -407,20 +407,20 @@ If $g'(p)=\dots =g^{(m-1)}(p)=0$, then $\{x_{n}\}$ has the order of convergence 
 :::
 
 ::: proof
-Expanding $g(x_{n})$ in a Taylor series at the point $p$, we obtain:
+Applying Taylor's theorem (@thm-taylor) to $g$, centred at the point $p$ and with the Taylor polynomial of degree $m-1$, we obtain:
 $$
 \begin{split}
 x_{n+1}=g(x_{n}) &= g(p) + (x_{n}-p)g'(p)+\dots  \\
 &\qquad + \frac{(x_{n}-p)^{m -1}}{(m -1)!}g^{(m -1)}(p)\\
 &\qquad + \frac{(x_{n}-p)^{m}}{m!}g^{(m)}(\xi_n) \\
-&=p+\frac{(x_{n}-p)^{m}}{(m)!}g^{(m)}(\xi_n),
+&=p+\frac{(x_{n}-p)^{m}}{m!}g^{(m)}(\xi_n),
 \end{split}
 $$  {#eq-nonlin36}
 where $\xi_n$ is between $x_{n}$ and $p$ and, therefore, in $[a,b]$ ($x_{n}\in[a,b]$ at least for sufficiently large $n$).
 Then we have
 $$
 \begin{split}
-E_{n+1}&=\vert x_{n+1}-p\vert=\vert g(x_{n})-p\vert= \left\vert\frac{(x_{n}-p)^{m}}{(m)!}g^{(m)}(\xi_n)\right\vert\\
+E_{n+1}&=\vert x_{n+1}-p\vert=\vert g(x_{n})-p\vert= \left\vert\frac{(x_{n}-p)^{m}}{m!}g^{(m)}(\xi_n)\right\vert\\
 &= E_{n}^m \frac{\vert g^{(m)}(\xi_n)\vert}{m!}.
 \end{split}
 $$  {#eq-nonlin37}
@@ -618,7 +618,7 @@ In @fig-2.12 you see six different log-log plots of the new error against the ol
 ::: {#exr-2.60}
 There are many other root-finding techniques beyond the four that we have studied thus far. We can build these methods using Taylor series as follows:
 
-Near $x=x_0$ the function $f(x)$ is approximated by the Taylor series
+Near $x=x_0$ the function $f(x)$ is approximated by its Taylor polynomial of degree $N$ (see @thm-taylor)
 $$
 f(x) \approx y = f(x_0) + \sum_{n=1}^N \frac{f^{(n)}(x_0)}{n!} (x-x_0)^n
 $$
