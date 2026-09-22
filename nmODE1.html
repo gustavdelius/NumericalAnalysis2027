@@ -1,0 +1,1774 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.9.37">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>7&nbsp; ODE 1 – Numerical Analysis</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./nmODE2.html" rel="next">
+<link href="./nmOptimisation.html" rel="prev">
+<link href="./faviconNA.webp" rel="icon">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-d0ae9245876894da5ac7e18953ecc5cc.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-67e563c3f8baddecfc039ce11a1d00ae.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark-1f488f7e8e709e0b68510d46faa14ddc.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="site_libs/bootstrap/bootstrap-67e563c3f8baddecfc039ce11a1d00ae.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="fonts.css">
+<meta property="og:title" content="7&nbsp; ODE 1 – Numerical Analysis">
+<meta property="og:description" content="">
+<meta property="og:image" content="figures/ODE/EulerSlope1.png">
+<meta property="og:site_name" content="Numerical Analysis">
+<meta name="twitter:title" content="7&nbsp; ODE 1 – Numerical Analysis">
+<meta name="twitter:description" content="">
+<meta name="twitter:image" content="figures/ODE/EulerSlope1.png">
+<meta name="twitter:card" content="summary_large_image">
+</head>
+
+<body class="nav-sidebar floating quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const darkModeDefault = authorPrefersDark;
+      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./nmODE1.html"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">ODE 1</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Numerical Analysis</a> 
+        <div class="sidebar-tools-main tools-wide">
+    <a href="https://vle.york.ac.uk/ultra/courses/_115112_1/outline" title="VLE" class="quarto-navigation-tool px-1" aria-label="VLE"><i class="bi bi-house-door-fill"></i></a>
+    <a href="https://maths.york.ac.uk/moodle/course/view.php?id=2727" title="Moodle quizzes" class="quarto-navigation-tool px-1" aria-label="Moodle quizzes"><i class="bi bi-mortarboard-fill"></i></a>
+    <a href="./#toggle-dyslexic-font" title="Toggle Dyslexic Font" class="quarto-navigation-tool px-1" aria-label="Toggle Dyslexic Font"><i class="bi bi-text-paragraph"></i></a>
+    <a href="./Numerical-Analysis.pdf" title="Download PDF" class="quarto-navigation-tool px-1" aria-label="Download PDF"><i class="bi bi-file-pdf"></i></a>
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Introduction</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./nmNumbers.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Numbers</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./nmFunctions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Functions</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./nmRoots1.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Roots 1</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./nmRoots2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Roots 2</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./nmCalculus.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Calculus</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./nmOptimisation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Optimisation</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./nmODE1.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">ODE 1</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./nmODE2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">ODE 2</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./nmPDE1.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">PDE 1</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./nmPDE2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">PDE 2</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Appendices</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./nmPython.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Python</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ex_exam_solns.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">Exam solutions</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./nmLinAlg.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">C</span>&nbsp; <span class="chapter-title">Linear Algebra</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./nmAutoDiff.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">D</span>&nbsp; <span class="chapter-title">Automatic Differentiation</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./nmPDE3.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">E</span>&nbsp; <span class="chapter-title">PDE 3</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#eulers-method" id="toc-eulers-method" class="nav-link active" data-scroll-target="#eulers-method"><span class="header-section-number">7.1</span> Euler’s Method</a></li>
+  <li><a href="#higher-order-equations-and-systems-of-equations" id="toc-higher-order-equations-and-systems-of-equations" class="nav-link" data-scroll-target="#higher-order-equations-and-systems-of-equations"><span class="header-section-number">7.2</span> Higher-order equations and systems of equations</a></li>
+  <li><a href="#the-midpoint-method" id="toc-the-midpoint-method" class="nav-link" data-scroll-target="#the-midpoint-method"><span class="header-section-number">7.3</span> The Midpoint Method</a></li>
+  <li><a href="#sec-instabilities" id="toc-sec-instabilities" class="nav-link" data-scroll-target="#sec-instabilities"><span class="header-section-number">7.4</span> Numerical Instabilities</a></li>
+  <li><a href="#sec-alg-summaries-ode1" id="toc-sec-alg-summaries-ode1" class="nav-link" data-scroll-target="#sec-alg-summaries-ode1"><span class="header-section-number">7.5</span> Algorithm Summaries</a></li>
+  <li><a href="#sec-truncation-ode" id="toc-sec-truncation-ode" class="nav-link" data-scroll-target="#sec-truncation-ode"><span class="header-section-number">7.6</span> Truncation Errors</a>
+  <ul>
+  <li><a href="#truncation-error-in-eulers-method" id="toc-truncation-error-in-eulers-method" class="nav-link" data-scroll-target="#truncation-error-in-eulers-method"><span class="header-section-number">7.6.1</span> Truncation Error in Euler’s Method</a></li>
+  <li><a href="#truncation-error-in-the-midpoint-method" id="toc-truncation-error-in-the-midpoint-method" class="nav-link" data-scroll-target="#truncation-error-in-the-midpoint-method"><span class="header-section-number">7.6.2</span> Truncation Error in the Midpoint Method</a></li>
+  </ul></li>
+  <li><a href="#exam-style-question" id="toc-exam-style-question" class="nav-link" data-scroll-target="#exam-style-question"><span class="header-section-number">7.7</span> Exam-Style Question</a></li>
+  <li><a href="#problems" id="toc-problems" class="nav-link" data-scroll-target="#problems"><span class="header-section-number">7.8</span> Problems</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span id="sec-ode" class="quarto-section-identifier"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">ODE 1</span></span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div style="margin-top: -10px; margin-bottom: 20px;"><a href="nmODE1.pdf" class="btn btn-sm btn-outline-primary" title="Download Chapter PDF"><i class="bi bi-file-earmark-pdf"></i> Download Chapter PDF</a></div>
+<blockquote class="blockquote">
+<p><em>The mathematical discipline of differential equations furnishes the explanation of all those elementary manifestations of nature which involve time.</em><br>
+–<a href="https://en.wikipedia.org/wiki/Sophus_Lie">Norwegian Mathematician Sophus Lie</a></p>
+</blockquote>
+<p>The topic of this chapter is to find <em>approximate solutions</em> to <em>ordinary differential equations</em>.</p>
+<p>Let us briefly recall what an ordinary differential equation (ODE) is. A rather arbitrarily chosen example for an ODE (here, of second order) is <span id="eq-odeexample"><span class="math display">\[
+y''(x) +  4 y'(x) + \sqrt[3]{y(x)} + \cos(x) = 0.
+\tag{7.1}\]</span></span> Equations like this are normally satisfied by many functions <span class="math inline">\(y(x)\)</span>: the problem has many solutions. In order to specify a uniquely solvable problem, one needs to fix <em>initial values</em>, i.e., the value of <span class="math inline">\(y\)</span> and its first derivative at some point, say, at <span class="math inline">\(x=0\)</span>: <span id="eq-ivpexample"><span class="math display">\[
+y''(x) +  4 y'(x) + \sqrt[3]{y(x)} + \cos(x) = 0, \quad y(0)=1,\; y'(0)=-2.
+\tag{7.2}\]</span></span> This is a so-called <em>initial-value problem</em> (IVP). Another variant is to specify the value of <span class="math inline">\(y(x)\)</span>, but not of its derivative, at two different points: <span id="eq-bvpexample"><span class="math display">\[
+y''(x) +  4 y'(x) + \sqrt[3]{y(x)} + \cos(x) = 0, \quad y(0)=2,\; y(1)=1.
+\tag{7.3}\]</span></span> This is called a <em>boundary value problem</em> (BVP).</p>
+<p>Both IVPs and BVPs have a unique solution (under certain mathematical conditions). However, while one can show on abstract grounds that these solutions exist, it is often not practicable to find an explicit expression for them. The best one can hope for is to approximate the solution numerically.</p>
+<p>So what <em>is</em> a numerical solution to a differential equation?<br>
+When solving a differential equation with analytic techniques the goal is to find an expression for the solution in terms of known functions. In a numerical solution the goal is typically to divide the domain for the solution function into a fine partition by introducing a grid of points, just like we did with numerical differentiation and integration, and then to approximate the solution to the differential equation at each point in that partition. Hence, the end result will be a list of approximate solution values at the grid points.</p>
+<p>In this chapter we will examine some of the more common ways to create approximations of solutions to initial value problems. Moreover, we will lean heavily on Taylor Series to give us ways to accurately measure the order of the errors that we make in the process.</p>
+<p>In this chapter we will often think of the argument of the function described by the ODE as time, but of course the methods are agnostic to the interpretation of the independent variable.</p>
+<p>We will first concentrate on first-order differential equations of the form <span class="math inline">\(x' = f(t,x)\)</span>. The geometric interpretation of this is that we are looking for a function <span class="math inline">\(x(t)\)</span> whose slope at every point <span class="math inline">\((t,x)\)</span> is known to us, given by <span class="math inline">\(f(t,x)\)</span>.</p>
+<section id="eulers-method" class="level2" data-number="7.1">
+<h2 data-number="7.1" class="anchored" data-anchor-id="eulers-method"><span class="header-section-number">7.1</span> Euler’s Method</h2>
+<div id="exr-5.9" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 7.1</strong></span> 🖋 Consider the differential equation <span class="math inline">\(x' = -0.5x\)</span> with the initial condition <span class="math inline">\(x(0) = 6\)</span>.</p>
+<ol type="a">
+<li><p>Since we know that <span class="math inline">\(x(0) = 6\)</span> and we know that <span class="math inline">\(x'(0) = -0.5 x(0)\)</span> we can approximate the value of <span class="math inline">\(x\)</span> at some future time step. Let us go 1 unit forward in time. That is, approximate <span class="math inline">\(x(1)\)</span> knowing that <span class="math inline">\(x(0) = 6\)</span> and <span class="math inline">\(x'(0) = -3\)</span>.<br>
+Hint: We know a value, a slope, and the size of the step that we would like to move in the <span class="math inline">\(t\)</span> direction. <span class="math display">\[\begin{equation}
+x(1) \approx \underline{\hspace{1in}}
+\end{equation}\]</span></p></li>
+<li><p>Use your answer from part (a) for time <span class="math inline">\(t=1\)</span> to approximate the <span class="math inline">\(x\)</span> value at time <span class="math inline">\(t=2\)</span>. Then use that value to approximate the value at time <span class="math inline">\(t=3\)</span>. Repeat the process to approximate the value of <span class="math inline">\(x\)</span> at times <span class="math inline">\(t=2, 3, 4\)</span>. Record your answers in the table below. Then find the analytic solution to this differential equation and record the <span class="math inline">\(x\)</span> values at the appropriate times.</p></li>
+</ol>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th><span class="math inline">\(t\)</span></th>
+<th><strong>0</strong></th>
+<th><strong>1</strong></th>
+<th><strong>2</strong></th>
+<th><strong>3</strong></th>
+<th><strong>4</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Approximation of <span class="math inline">\(x(t)\)</span></td>
+<td>6</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td>Exact value of <span class="math inline">\(x(t)\)</span></td>
+<td>6</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<ol start="3" type="a">
+<li><p>The “approximations of <span class="math inline">\(x\)</span>” that you found in part (b) are a <strong>numerical approximation</strong> of the solution to the differential equation. You should notice that your numerical solution is pretty far off from the actual solution for most values of <span class="math inline">\(t\)</span>. Why? What could be the sources of this error and how could we fix it?</p></li>
+<li><p>In <a href="#fig-5.1" class="quarto-xref">Figure&nbsp;<span>7.1</span></a> you see a slope field and the exact solution to the differential equation <span class="math inline">\(x' = -0.5x\)</span> with <span class="math inline">\(x(0) = 6\)</span>. Mark your approximate solutions at times <span class="math inline">\(t=1\)</span>, <span class="math inline">\(t=2\)</span>, <span class="math inline">\(\ldots\)</span>, <span class="math inline">\(t=4\)</span> on the plot and connect them with straight lines.</p>
+<ol type="1">
+<li><p>Why are we using straight lines to connect the points?</p></li>
+<li><p>What do you notice about your approximate solutions?</p></li>
+<li><p>Why is it helpful to have the slope field in the background on this plot?</p></li>
+</ol></li>
+</ol>
+<div id="fig-5.1" class="quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-5.1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/ODE/EulerSlope1.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-5.1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;7.1: Plot your approximate solution on top of the slope field and the exact solution.
+</figcaption>
+</figure>
+</div>
+</div>
+<hr>
+<div id="exr-5.10" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 7.2</strong></span> 🖋 In <a href="#fig-5.2" class="quarto-xref">Figure&nbsp;<span>7.2</span></a> you see the analytic solution with initial condition <span class="math inline">\(x(0)=5\)</span> and a slope field for an unknown differential equation.</p>
+<ol type="a">
+<li><p>Use the slope field and a step size of <span class="math inline">\(\Delta t=1\)</span> to plot approximate solution values at <span class="math inline">\(t=1\)</span>, <span class="math inline">\(t=2\)</span>, <span class="math inline">\(\ldots\)</span>, <span class="math inline">\(t=10\)</span>. Connect your points with straight lines. The collection of line segments that you just drew is an approximation to the solution of the unknown differential equation.</p></li>
+<li><p>Use the slope field and a step size of <span class="math inline">\(\Delta t = 0.5\)</span> to plot approximate solution values at <span class="math inline">\(t=0.5\)</span>, <span class="math inline">\(t=1\)</span>, <span class="math inline">\(t=1.5\)</span>, <span class="math inline">\(\ldots\)</span>, <span class="math inline">\(t=10\)</span>. Again, connect your points with straight lines to get an approximation of the solution to the unknown differential equation.</p></li>
+<li><p>If you could take <span class="math inline">\(\Delta t\)</span> to be very very small, what difference would you see graphically between the exact solution and your collection of line segments? Why?</p></li>
+</ol>
+<div id="fig-5.2" class="quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-5.2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/ODE/EulerSlope2.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-5.2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;7.2: Plot your approximate solution on top of the slope field and the exact solution.
+</figcaption>
+</figure>
+</div>
+</div>
+<hr>
+<p>The notion of approximating solutions to differential equations is simple in principle:</p>
+<ul>
+<li><p>make a discrete approximation to the derivative and</p></li>
+<li><p>step forward through time as a difference equation.</p></li>
+</ul>
+<p>The challenging part is making the approximation to the derivative(s). There are many methods for approximating derivatives, and that is exactly where we will start.</p>
+<hr>
+<div id="def-5.4" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 7.1 (Euler’s Method)</strong></span> Euler’s Method is a technique for approximating the solution to the differential equation <span class="math inline">\(x'(t) = f(t,x(t))\)</span>. Recall from <a href="nmCalculus.html#exr-3.11" class="quarto-xref">Exercise&nbsp;<span>5.9</span></a> that the first derivative of a function can be discretized as <span class="math display">\[\begin{equation}
+x'(t) = \frac{x(t+h) - x(t)}{h} + \mathcal{O}(h)
+\end{equation}\]</span> where <span class="math inline">\(h = \Delta t\)</span> is the step size (or the size of each partition in the domain), so the differential equation <span class="math inline">\(x'(t) = f(t,x(t))\)</span> becomes <span class="math display">\[\begin{equation}
+\frac{x(t+h) - x(t)}{h} \approx f(t,x(t)).
+\end{equation}\]</span> Rewriting as a difference equation, letting <span class="math inline">\(x_{n+1} = x(t_n+h)\)</span> and <span class="math inline">\(x_n = x(t_n)\)</span>, we get <span class="math display">\[\begin{equation}
+x_{n+1} = x_n + h f(t_n,x_n)
+\end{equation}\]</span></p>
+</div>
+<hr>
+<p>A way to think about Euler’s method is that at a given point, the slope is approximated by the value of the right-hand side of the differential equation and then we step forward <span class="math inline">\(h\)</span> units in time following that slope. <a href="#fig-5.3" class="quarto-xref">Figure&nbsp;<span>7.3</span></a> shows a depiction of the idea. Notice in the figure that in regions of high curvature Euler’s method will deviate a lot from the exact solution to the differential equation. However, taking the limit as <span class="math inline">\(h\)</span> tends to <span class="math inline">\(0\)</span> theoretically gives the exact solution at the trade off of needing infinite computational resources.</p>
+<div id="fig-5.3" class="quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-5.3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/ODE/Euler.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-5.3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;7.3: Numerical solutions to a differential equation using Euler’s method.
+</figcaption>
+</figure>
+</div>
+<hr>
+<div id="exr-5.11" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 7.3</strong></span> 💬 Why would Euler’s method do poorly in regions where the solution exhibits high curvature?</p>
+</div>
+<hr>
+<div id="exr-5.11b" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 7.4</strong></span> 🖋 🎓 Consider the differential equation <span class="math inline">\(x'(t) = -2x(t)/3 + 4t\)</span> with initial condition <span class="math inline">\(x(0)=6\)</span>. By hand perform four steps of the Euler method with stepsize <span class="math inline">\(h=1/2\)</span> to obtain an approximation for <span class="math inline">\(x(1/2),x(1),x(3/2)\)</span> and <span class="math inline">\(x(2)\)</span>.</p>
+</div>
+<hr>
+<div id="exr-5.12" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 7.5</strong></span> 💻 🎓 Write code to implement Euler’s method for initial value problems. Your function should accept as input a Python function <span class="math inline">\(f(t,x)\)</span>, an initial condition, a start time, an end time, and the value of <span class="math inline">\(h = \Delta t\)</span>. The output should be vectors for <span class="math inline">\(t\)</span> and <span class="math inline">\(x\)</span> that you can easily plot to show the numerical solution. The code below will get you started.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> euler_1d(f, x0, t0, tmax, dt):</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co">    Solves a first-order ordinary differential equation using the Euler method.</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co">    Parameters:</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co">        f    : function, the function defining the differential equation. It should</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co">               take two arguments, the independent variable t and the dependent</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co">               variable x, and return the derivative of x with respect to t.</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co">        x0   : float, the initial value of the dependent variable.</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="co">        t0   : float, the initial value of the independent variable.</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="co">        tmax : float, the maximum value of the independent variable.</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="co">        dt   : float, the time step.</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="co">    Returns:</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="co">       tuple containing two numpy arrays:</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="co">            - t : vector of time values.</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="co">            - x : vector of solution values at each time value.</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>    <span class="co"># We need an integer number of steps so we round the number of steps</span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>    <span class="co"># and then adjust dt to match.</span></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>    N <span class="op">=</span> <span class="bu">round</span>((tmax <span class="op">-</span> t0)<span class="op">/</span>dt)</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>    dt <span class="op">=</span> (tmax <span class="op">-</span> t0)<span class="op">/</span>N</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Set up the time grid</span></span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>    t <span class="op">=</span> np.linspace(t0, tmax, N<span class="op">+</span><span class="dv">1</span>)</span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>    <span class="co"># set up an array for x that is the same size as t</span></span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>    x <span class="op">=</span> np.zeros(<span class="bu">len</span>(t))</span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>    <span class="co"># fill in the initial condition</span></span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>    x[<span class="dv">0</span>] <span class="op">=</span> ???</span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> n <span class="kw">in</span> <span class="bu">range</span>(???): <span class="co"># think about how far we should loop</span></span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>        <span class="co"># advance the solution forward in time with Euler</span></span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>        x[n<span class="op">+</span><span class="dv">1</span>] <span class="op">=</span> ???</span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> t, x</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<hr>
+<div id="exr-5.13" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 7.6</strong></span> 💻 Test your code from the previous exercise on a first order differential equation where you know an analytic solution. For example you could use the differential equation <span class="math display">\[\begin{equation}
+x' = -\frac{1}{3}x+\sin(t) \quad \text{where} \quad x(0) = 1.
+\end{equation}\]</span> This has the analytic solution <span class="math display">\[\begin{equation}
+x(t) = \frac{1}{10} \left( 19 e^{-t/3} + 3\sin(t) - 9\cos(t) \right).
+\end{equation}\]</span> Make a plot of the approximate solution and the exact solution on the same plot for <span class="math inline">\(t\in[0,10]\)</span> The partial code below should get you started.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Define the function giving x' in terms of t and x</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>f <span class="op">=</span> <span class="kw">lambda</span> t, x: ???</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>x0 <span class="op">=</span> ???   <span class="co"># initial condition</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>t0 <span class="op">=</span> ???   <span class="co"># initial time</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>tmax <span class="op">=</span> ??? <span class="co"># final time</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>dt <span class="op">=</span> ???   <span class="co"># time step (your choice, but make it small)</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>t, x <span class="op">=</span> euler_1d(f, x0, t0, tmax, dt)</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>plt.plot(t, x, <span class="st">'b-'</span>, label<span class="op">=</span><span class="st">'Euler'</span>)</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Define a function giving the analytic solution</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>x_exact <span class="op">=</span> <span class="kw">lambda</span> t: ???</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="co"># We will plot the exact solution at a higher resolution</span></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>t_highres <span class="op">=</span> np.linspace(t0, tmax, <span class="dv">100</span>)</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>plt.plot(t_highres, x_exact(t_highres), <span class="st">'r--'</span>, label<span class="op">=</span><span class="st">'Exact'</span>)</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>plt.grid()</span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Experiment with different values for <code>dt</code> and see how the numerical solution changes.</p>
+</div>
+<hr>
+<div id="exr-5.14" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 7.7</strong></span> 💻 The goal of this problem will be to compare the maximum error when you solve the differential equation from the previous exercise on the interval <span class="math inline">\(t \in [0,10]\)</span> with the Euler method for various values of <span class="math inline">\(\Delta t\)</span>.</p>
+<p>Write a function that produces a plot with the value of <span class="math inline">\(\Delta t\)</span> on the horizontal axis and the value of the associated absolute error on the vertical axis. You should use a log-log plot. Obviously you will need to run your code many times at many different values of <span class="math inline">\(\Delta t\)</span> to build your data set. The following incomplete code will get you started.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create vector with different step sizes</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>dt <span class="op">=</span> <span class="dv">10</span><span class="op">**</span>(<span class="op">-</span>np.linspace(<span class="dv">0</span>, <span class="dv">4</span>, <span class="dv">50</span>))</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Create vector with the same size as dt for holding the errors</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>errors <span class="op">=</span> np.zeros_like(dt)</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Loop over the different step sizes to calculate the errors</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(dt)):</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Approximate the solution with Euler's method</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    t, x <span class="op">=</span> euler_1d(f, x0, t0, tmax, dt[i])</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    errors[i] <span class="op">=</span> ??? <span class="co"># Calculate maximum absolute error</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the errors with logarithmic axes</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>plt.loglog(dt, errors)</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Step size'</span>)</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Maximum error'</span>)</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>plt.grid()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>What does the plot tell you? In general, if you were to divide your value of <span class="math inline">\(\Delta t\)</span> by 10, how much approximately does that reduce the error?</p>
+</div>
+<hr>
+<div id="exr-5.15" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 7.8</strong></span> 🖋 💬 🎓 Shelby solved a first order ODE <span class="math inline">\(x' = f(t,x)\)</span> using Euler’s method with a step size of <span class="math inline">\(dt = 0.1\)</span> on a domain <span class="math inline">\(t \in [0,3]\)</span>. To test her code she used a differential equation where she knew the exact analytic solution and she found the maximum absolute error on the interval to be <span class="math inline">\(0.15\)</span>. Jackson then solves the exact same differential equation, on the same interval, with the same initial condition using Euler’s method and a step size of <span class="math inline">\(dt = 0.01\)</span>. What would be your best estimate of Jackson’s maximum absolute error?</p>
+</div>
+<hr>
+<div id="thm-5.2" class="theorem">
+<p><span class="theorem-title"><strong>Theorem 7.1</strong></span> Euler’s method is a first order method for approximating the solution to the differential equation <span class="math inline">\(x' = f(t,x)\)</span>. Hence, if the step size <span class="math inline">\(h\)</span> of the partition of the domain were to be divided by some positive constant <span class="math inline">\(M\)</span> then the maximum absolute error between the numerical solution and the exact solution would ???<br>
+(Complete the last sentence.)</p>
+</div>
+<hr>
+</section>
+<section id="higher-order-equations-and-systems-of-equations" class="level2" data-number="7.2">
+<h2 data-number="7.2" class="anchored" data-anchor-id="higher-order-equations-and-systems-of-equations"><span class="header-section-number">7.2</span> Higher-order equations and systems of equations</h2>
+<div id="exr-5.17" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 7.9 (Harmonic Oscillator)</strong></span> 🖋 💻 If a mass is hanging from a spring then Newton’s second law, <span class="math inline">\(\sum F=ma\)</span>, gives us the differential equation <span class="math inline">\(mx'' = F_{restoring} + F_{damping}\)</span> where <span class="math inline">\(x\)</span> is the displacement of the mass from equilibrium, <span class="math inline">\(m\)</span> is the mass of the object hanging from the spring, <span class="math inline">\(F_{restoring}\)</span> is the force pulling the mass back to equilibrium, and <span class="math inline">\(F_{damping}\)</span> is the force due to friction or air resistance that slows the mass down.</p>
+<ol type="1">
+<li><p>Which of the following is a good candidate for a restoring force in a spring? Defend your answer.</p>
+<ol type="a">
+<li><p><span class="math inline">\(F_{restoring} = -kx\)</span>: The restoring force is proportional to the displacement away from equilibrium.</p></li>
+<li><p><span class="math inline">\(F_{restoring} = -kx'\)</span>: The restoring force is proportional to the velocity of the mass.</p></li>
+<li><p><span class="math inline">\(F_{restoring} = -kx''\)</span>: The restoring force is proportional to the acceleration of the mass.</p></li>
+</ol></li>
+<li><p>Which of the following is a good candidate for a damping force in a spring? Defend your answer.</p>
+<ol type="a">
+<li><p><span class="math inline">\(F_{damping} = -bx\)</span>: The damping force is proportional to the displacement away from equilibrium.</p></li>
+<li><p><span class="math inline">\(F_{damping} = -bx'\)</span>: The damping force is proportional to the velocity of the mass.</p></li>
+<li><p><span class="math inline">\(F_{damping} = -bx''\)</span>: The damping force is proportional to the acceleration of the mass.</p></li>
+</ol></li>
+<li><p>Put your answers to parts (1) and (2) together and simplify to form a second-order differential equation for position: <span class="math display">\[\begin{equation}
+\underline{\hspace{0.25in}} x'' = \underline{\hspace{0.25in}} x' + \underline{\hspace{0.25in}} x
+\end{equation}\]</span></p></li>
+<li><p>🎓 If we want to solve a second order differential equation numerically we need to convert it to first order differential equations (Euler’s method is only designed to deal with first order differential equations, not second order). To do so we can introduce a new variable, <span class="math inline">\(x_1\)</span>, such that <span class="math inline">\(x_1 = x'\)</span>. For the sake of notational consistency we define <span class="math inline">\(x_0 = x\)</span>. The result is a system of first-order differential equations. <span class="math display">\[\begin{equation}
+\begin{aligned} x_0' &amp;= x_1 \\ x_1' &amp;= \underline{\hspace{2in}}\end{aligned}
+\end{equation}\]</span></p></li>
+<li><p>The code and Euler’s method algorithm that we have created thus far in this chapter are only designed to work with a single differential equation instead of a system, so we need to make some modifications. We can discretize the system of differential equations using Euler’s method so that <span class="math display">\[\begin{equation}
+\boldsymbol{x}' = F(t,\boldsymbol{x})
+\end{equation}\]</span> where <span class="math inline">\(F\)</span> is a function that accepts a vector of inputs, plus time, and returns a vector of outputs. In the context of this particular problem, <span class="math display">\[\begin{equation}
+F(t,\boldsymbol{x}) = \begin{pmatrix} x_0' \\ x_1' \end{pmatrix} = \begin{pmatrix} x_1 \\ \underline{\hspace{1in}} \end{pmatrix}
+\end{equation}\]</span></p></li>
+<li><p>We now need to discretize the derivatives in the system. As with 1D Euler’s method, we will use a first-order approximation of the first derivative so that <span class="math display">\[\begin{equation}
+\frac{\boldsymbol{x}_{n+1} - \boldsymbol{x}_n }{h} = F(t_n,\boldsymbol{x}_n) + \mathcal{O}(h).
+\end{equation}\]</span> Rearranging and solving for <span class="math inline">\(\boldsymbol{x}_{n+1}\)</span> gives <span class="math display">\[\begin{equation}
+\boldsymbol{x}_{n+1} = \underline{\hspace{0.5in}} + h F( \underline{\hspace{0.25in}} , \underline{\hspace{0.25in}}).
+\end{equation}\]</span></p></li>
+<li><p>The following Python function will implement Euler’s method. Complete the code.</p></li>
+</ol>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> euler(F, x0, t0, tmax, dt):</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co">    Solves a system of first-order ordinary differential equations</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co">    using the Euler method.</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="co">    Parameters:</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="co">        F : function, the function defining the system of differential equations.</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="co">            It should take two arguments, the independent variable t and the</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="co">            dependent variable x (as a 1D numpy array), and return the</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="co">            derivative of x with respect to t (as a 1D numpy array).</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="co">        x0 : numpy vector, the initial values of the dependent variables.</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="co">        t0 : float, the initial value of the independent variable.</span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="co">        tmax : float, the maximum value of the independent variable.</span></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a><span class="co">        dt : float, the time step.</span></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a><span class="co">    Returns:</span></span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a><span class="co">        tuple containing two numpy arrays:</span></span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a><span class="co">            - t : vector of time values.</span></span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a><span class="co">            - x : array of solutions at each time value. Each column of x</span></span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a><span class="co">                  corresponds to a different dependent variable.</span></span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>    <span class="co"># We need an integer number of steps so we round the number of steps</span></span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>    <span class="co"># and then adjust dt to match.</span></span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>    N <span class="op">=</span> <span class="bu">round</span>((tmax <span class="op">-</span> t0)<span class="op">/</span>dt)</span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>    dt <span class="op">=</span> (tmax <span class="op">-</span> t0)<span class="op">/</span>N</span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Set up the time grid</span></span>
+<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a>    t <span class="op">=</span> ???</span>
+<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a>    <span class="co"># set up an array for x with one row for each dependent variable and one column</span></span>
+<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a>    <span class="co"># for each grid point</span></span>
+<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a>    x <span class="op">=</span> np.zeros((<span class="bu">len</span>(t), <span class="bu">len</span>(x0)))</span>
+<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a>    <span class="co"># store the initial condition in the first row of x</span></span>
+<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a>    x[<span class="dv">0</span>, :] <span class="op">=</span> x0</span>
+<span id="cb4-33"><a href="#cb4-33" aria-hidden="true" tabindex="-1"></a>    <span class="co"># loop over the different time steps</span></span>
+<span id="cb4-34"><a href="#cb4-34" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> n <span class="kw">in</span> <span class="bu">range</span>(???):</span>
+<span id="cb4-35"><a href="#cb4-35" aria-hidden="true" tabindex="-1"></a>        x[n<span class="op">+</span><span class="dv">1</span>, :] <span class="op">=</span> x[???, ???] <span class="op">+</span> dt <span class="op">*</span> F(t[???], x[???, ???])</span>
+<span id="cb4-36"><a href="#cb4-36" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> t, x</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<ol start="8" type="1">
+<li>To use the <code>euler()</code> function to solve the system of equations from part (4), complete the following code. Use a mass of <span class="math inline">\(m=2\)</span>kg, a damping force of <span class="math inline">\(b=40\)</span>kg/s, and a spring constant of <span class="math inline">\(k=128\)</span>N/m. Consider an initial position of <span class="math inline">\(x=0\)</span> (equilibrium) and an initial velocity of <span class="math inline">\(x_1 = 0.6\)</span>m/s.</li>
+</ol>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>m <span class="op">=</span> <span class="dv">2</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>b <span class="op">=</span> <span class="dv">40</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>k <span class="op">=</span> <span class="dv">128</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>F <span class="op">=</span> <span class="kw">lambda</span> t, x: np.array([x[<span class="dv">1</span>], ???])</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>x0 <span class="op">=</span> [???, ???] <span class="co"># initial conditions</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>t0 <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>tmax <span class="op">=</span> <span class="dv">5</span>  <span class="co"># pick something reasonable here</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>dt <span class="op">=</span> <span class="fl">0.01</span> <span class="co"># your choice.  pick something small</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>t, x <span class="op">=</span> euler(F, x0, t0, tmax, dt)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<ol start="9" type="1">
+<li>🎓 Complete the following code to make a plot that shows both position and velocity versus time.</li>
+</ol>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>plt.plot(t, x[???, ???], <span class="st">'b-'</span>, t, x[???, ???], <span class="st">'r--'</span>)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>plt.grid()</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Time Evolution of Position and Velocity'</span>)</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>plt.legend([<span class="st">'which legend entry here'</span>,<span class="st">'which legend entry here'</span>])</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'time'</span>)</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'position and velocity'</span>)</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<ol start="10" type="1">
+<li>Complete the following code to make a second plot, called a phase plot, that shows position versus velocity. In a phase plot, time is implicit (not one of the axes).</li>
+</ol>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>plt.plot(x[???, ???], x[???, ???])</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>plt.grid()</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Phase Plot'</span>)</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'???'</span>)</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'???'</span>)</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<hr>
+<div id="exr-5.21" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 7.10 (A Lotka-Volterra Predator-Prey Model)</strong></span> 🖋 💻 🎓 Let <span class="math inline">\(x_0(t)\)</span> denote the number of rabbits (prey) and <span class="math inline">\(x_1(t)\)</span> denote the number of foxes (predator) at time <span class="math inline">\(t\)</span>. The relationship between the species can be modelled by the classic 1920’s Lotka-Volterra Model: <span class="math display">\[\begin{equation}
+\left\{ \begin{array}{ll} x_0' &amp;= \alpha x_0 - \beta x_0 x_1 \\ x_1' &amp;= \delta x_0 x_1 - \gamma x_1 \end{array} \right.
+\end{equation}\]</span> where <span class="math inline">\(\alpha, \beta, \gamma,\)</span> and <span class="math inline">\(\delta\)</span> are positive constants. For this problems take <span class="math inline">\(\alpha =1\)</span>, <span class="math inline">\(\beta = 0.1\)</span>, <span class="math inline">\(\gamma =1\)</span>, and <span class="math inline">\(\delta =0.1\)</span>.</p>
+<ol type="1">
+<li><p>First rewrite the system of ODEs in the form <span class="math inline">\(\boldsymbol{x}' = F(t,\boldsymbol{x})\)</span> so you can use your <code>euler()</code> code.</p></li>
+<li><p>Modify your code from the previous problem so that it works for this problem. Use <code>tmax = 20</code> and <code>dt = 0.05</code>. Start with initial conditions <span class="math inline">\(x_0(0)=10\)</span> rabbits and <span class="math inline">\(x_1(0)=5\)</span> foxes.</p></li>
+<li><p>Create the time evolution plot. What does this plot tell you in context?</p></li>
+<li><p>Create a phase plot. What does this plot tell you in context?</p></li>
+<li><p>If you decrease the step size by a factor of 10, what do you see in the two plots? Why?</p></li>
+</ol>
+</div>
+<hr>
+</section>
+<section id="the-midpoint-method" class="level2" data-number="7.3">
+<h2 data-number="7.3" class="anchored" data-anchor-id="the-midpoint-method"><span class="header-section-number">7.3</span> The Midpoint Method</h2>
+<p>Now we get to improve upon Euler’s method. There is a long history of wonderful improvements to the classic Euler’s method – some that work in special cases, some that resolve areas where the error is going to be high, and some that are great for general purpose numerical solutions to ODEs with relatively high accuracy. In this section we will make a simple modification to Euler’s method that has a surprisingly great pay-off in the error rate.</p>
+<hr>
+<div id="exr-5.23" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 7.11</strong></span> 💬 In Euler’s method, if we are at the point <span class="math inline">\(t_n\)</span> then we approximate the slope <span class="math inline">\(x'(t_n) = f(t_n,x_n)\)</span> and use the slope to propagate forward one time step. As you have seen, this method can lead to an overshooting of the exact solution in regions of high curvature. It would be nice to be able to look into the future and get a better approximation of the slope so that we did not miss upcoming curvature. If you could build such a method that looks in to the future, finds a slope in the future, and then uses that slope (instead of the slope from Euler’s method) to advance forward in time, how far into the future would you look? Why?</p>
+</div>
+<hr>
+<div id="exr-5.24" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 7.12</strong></span> 🖋 💬 Let us return to the simple differential equation <span class="math inline">\(x' = -0.5x\)</span> with <span class="math inline">\(x(0) = 6\)</span> that we saw in <a href="#exr-5.9" class="quarto-xref">Exercise&nbsp;<span>7.1</span></a>. Now we will propose a slightly different method for approximating the solution.</p>
+<ol type="a">
+<li><p>At <span class="math inline">\(t=0\)</span> we know that <span class="math inline">\(x(0)=6\)</span>. If we use the slope at time <span class="math inline">\(t=0\)</span> to step forward in time then we will get the Euler approximation of the solution. Consider this alternative approach:</p>
+<ul>
+<li><p>Use the slope at time <span class="math inline">\(t=0\)</span> and move <em>half</em> a step forward.</p></li>
+<li><p>Find the slope at the half-way point</p></li>
+<li><p>Then use the slope from the half way point to go a full step forward from time <span class="math inline">\(t=0\)</span>.</p></li>
+</ul>
+<p>Perhaps a bit confusing …let us build this idea together:</p>
+<ul>
+<li><p>What is the slope at time <span class="math inline">\(t=0\)</span>? <span class="math inline">\(x'(0) = \underline{\hspace{0.5in}}\)</span></p></li>
+<li><p>Use this slope to step a half step forward and find the <span class="math inline">\(x\)</span> value: <span class="math inline">\(x(0.5) \approx \underline{\hspace{0.5in}}\)</span></p></li>
+<li><p>Now use the differential equation to find the slope at time <span class="math inline">\(t=0.5\)</span>. <span class="math inline">\(x'(0.5) = \underline{\hspace{0.5in}}\)</span></p></li>
+<li><p>Now take your answer from the previous step, and go one full step forward from time <span class="math inline">\(t=0\)</span>. What <span class="math inline">\(x\)</span> value do you end up with?</p></li>
+<li><p>Your answers to the previous bullets should be: <span class="math inline">\(x'(0) = -3\)</span>, <span class="math inline">\(x(0.5) \approx 4.5\)</span>, <span class="math inline">\(x'(0.5) = -2.25\)</span>, so if we take a full step forward with slope <span class="math inline">\(m=-2.25\)</span> starting from <span class="math inline">\(t=0\)</span> we get <span class="math inline">\(x(1) \approx 3.75\)</span>.</p></li>
+</ul></li>
+<li><p>Repeat the process outlined in part (a) to approximate the solution to the differential equation at times <span class="math inline">\(t=2, 3, 4\)</span>. Also record the exact answer at each of these times by noting that the exact solution is <span class="math inline">\(x(t) = 6e^{-0.5t}\)</span>.</p></li>
+</ol>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th><span class="math inline">\(t\)</span></th>
+<th><strong>0</strong></th>
+<th><strong>1</strong></th>
+<th><strong>2</strong></th>
+<th><strong>3</strong></th>
+<th><strong>4</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Euler approx of <span class="math inline">\(x(t)\)</span></td>
+<td>6</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td>New approx of <span class="math inline">\(x(t)\)</span></td>
+<td>6</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>Exact value of <span class="math inline">\(x(t)\)</span></td>
+<td>6</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<ol start="3" type="a">
+<li><p>Draw a clear picture of what this method is doing in order to approximate the slope at each individual step.</p></li>
+<li><p>How does your approximation compare to the Euler approximation that you found in <a href="#exr-5.9" class="quarto-xref">Exercise&nbsp;<span>7.1</span></a>?</p></li>
+</ol>
+</div>
+<hr>
+<div id="def-5.5" class="theorem definition">
+<p><span class="theorem-title"><strong>Definition 7.2 (The Midpoint Method)</strong></span> The midpoint method is defined by first taking a half step with Euler’s method to approximate a solution at time <span class="math inline">\(t_{n+1/2}\)</span>. There is no grid point at <span class="math inline">\(t_{n+1/2}\)</span> so we define this as <span class="math display">\[
+t_{n+1/2} = (t_n + t_{n+1})/2.
+\]</span> We then take a full step using the value of <span class="math inline">\(f\)</span> at <span class="math inline">\(t_{n+1/2}\)</span> and the approximate <span class="math inline">\(x_{n+1/2}\)</span>. <span class="math display">\[
+\begin{split}
+x_{n+1/2} &amp;= x_n + \frac{h}{2} f(t_n,x_n) \\ x_{n+1} &amp;= x_n + h f(t_{n+1/2},x_{n+1/2})
+\end{split}
+\]</span></p>
+</div>
+<hr>
+<div id="exr-5.25a" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 7.13</strong></span> 🖋 🎓 As in in <a href="#exr-5.11b" class="quarto-xref">Exercise&nbsp;<span>7.4</span></a>, consider the differential equation <span class="math inline">\(x'(t) = -2x(t)/3 + 4t\)</span> with initial condition <span class="math inline">\(x(0)=6\)</span>. By hand perform one step of the midpoint method with stepsize <span class="math inline">\(h=1\)</span> to obtain an approximation for <span class="math inline">\(x(1)\)</span>.</p>
+</div>
+<hr>
+<div id="exr-5.25" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 7.14</strong></span> 💻 Complete the code below to implement the midpoint method in one dimension.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> midpoint_1d(f, x0, t0, tmax, dt):</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="co">    Solves a first-order ordinary differential equation using</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="co">    the midpoint method.</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="co">    Parameters:</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="co">        f    : function, the function defining the differential equation. It should</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="co">               take two arguments, the independent variable t and the dependent</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="co">               variable x, and return the derivative of x with respect to t.</span></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="co">        x0   : float, the initial value of the dependent variable.</span></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a><span class="co">        t0   : float, the initial value of the independent variable.</span></span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a><span class="co">        tmax : float, the maximum value of the independent variable.</span></span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a><span class="co">        dt   : float, the time step.</span></span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a><span class="co">    Returns:</span></span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a><span class="co">       tuple containing two numpy arrays:</span></span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a><span class="co">            - t : vector of time values.</span></span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a><span class="co">            - x : vector of solution values at each time value.</span></span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a>    N <span class="op">=</span> <span class="bu">round</span>((tmax <span class="op">-</span> t0)<span class="op">/</span>dt)</span>
+<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a>    dt <span class="op">=</span> (tmax <span class="op">-</span> t0)<span class="op">/</span>N</span>
+<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a>    t <span class="op">=</span> ??? <span class="co"># build the times</span></span>
+<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a>    x <span class="op">=</span> ??? <span class="co"># build an array for the x values</span></span>
+<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a>    x[<span class="dv">0</span>] <span class="op">=</span> ???  <span class="co"># save the initial condition</span></span>
+<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a>    <span class="co"># On the next line: be careful about how far you're looping</span></span>
+<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> n <span class="kw">in</span> <span class="bu">range</span>(???):</span>
+<span id="cb8-27"><a href="#cb8-27" aria-hidden="true" tabindex="-1"></a>        slope <span class="op">=</span> ??? <span class="co"># get the slope at the current point</span></span>
+<span id="cb8-28"><a href="#cb8-28" aria-hidden="true" tabindex="-1"></a>        x_halfstep <span class="op">=</span> ??? <span class="co"># take a half step forward</span></span>
+<span id="cb8-29"><a href="#cb8-29" aria-hidden="true" tabindex="-1"></a>        x[n<span class="op">+</span><span class="dv">1</span>] <span class="op">=</span> ??? <span class="co"># take a full step forward</span></span>
+<span id="cb8-30"><a href="#cb8-30" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> t, x</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Test your code on several differential equations where you know the solution (just to be sure that it is working).</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>f <span class="op">=</span> <span class="kw">lambda</span> t, x: <span class="co"># your ODE right hand side goes here</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>x0 <span class="op">=</span> <span class="co"># initial condition</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>t0 <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>tmax <span class="op">=</span> <span class="co"># ending time (up to you)</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>dt <span class="op">=</span> <span class="co"># pick something small</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>t, x <span class="op">=</span> midpoint_1d(???, ???, ???, ???, ???)</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>plt.plot(???, ???, ???)</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>x_exact <span class="op">=</span> <span class="kw">lambda</span> t: <span class="co"># your exact solution goes here</span></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>plt.plot(???, ???, ???)</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>plt.legend([<span class="st">'Midpoint'</span>, <span class="st">'Exact'</span>])</span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>plt.grid()</span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>🎓 Also apply your method to the question in the feedback quiz.</p>
+</div>
+<hr>
+<div id="exr-5.26" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 7.15</strong></span> 💻 💬 🎓 The goal in building the midpoint method was to hopefully capture some of the upcoming curvature in the solution before we overshot it. Consider the differential equation <span class="math inline">\(x' = -\frac{1}{3}x + \sin(t)\)</span> with initial condition <span class="math inline">\(x(0) = 1\)</span> on the domain <span class="math inline">\(t \in [0,10]\)</span> as in <a href="#exr-5.13" class="quarto-xref">Exercise&nbsp;<span>7.6</span></a>. First get a numerical solution with Euler’s method using <span class="math inline">\(\Delta t = 1\)</span>. Then get a numerical solution with the midpoint method using the same value for <span class="math inline">\(\Delta t = 1\)</span>. Plot the two solutions on top of each other along with the exact solution <span class="math display">\[\begin{equation}
+x(t) = \frac{1}{10} \left( 19e^{-t/3} + 3\sin(t) - 9\cos(t) \right).
+\end{equation}\]</span> What do you observe?</p>
+</div>
+<hr>
+<div id="exr-5.27" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 7.16</strong></span> 💻 🎓 Repeat <a href="#exr-5.14" class="quarto-xref">Exercise&nbsp;<span>7.7</span></a> with the midpoint method. Compare your results to what you found with Euler’s method. Then use what you have discovered to answer the following, similar to <a href="#exr-5.15" class="quarto-xref">Exercise&nbsp;<span>7.8</span></a>:</p>
+<p>Shelby solved a first order ODE <span class="math inline">\(x' = f(t,x)\)</span> using the midpoint method with a step size of <span class="math inline">\(dt = 0.1\)</span> on a domain <span class="math inline">\(t \in [0,3]\)</span>. To test her code she used a differential equation where she knew the exact analytic solution and she found the maximum absolute error on the interval to be <span class="math inline">\(0.15\)</span>. Jackson then solves the exact same differential equation, on the same interval, with the same initial condition using the midpoint method and a step size of <span class="math inline">\(dt = 0.01\)</span>. What would be your best estimate of Jackson’s maximum absolute error?</p>
+</div>
+<hr>
+<div id="exr-5.28" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 7.17</strong></span> 💬 We have studied two methods thus far: Euler’s method and the Midpoint method. In <a href="#fig-euler-midpoint" class="quarto-xref">Figure&nbsp;<span>7.4</span></a> we see a graphical depiction of how each method works on the differential equation <span class="math inline">\(y' = y\)</span> with <span class="math inline">\(\Delta t = 1\)</span> and <span class="math inline">\(y(0) = 1\)</span>. The exact solution at <span class="math inline">\(t=1\)</span> is <span class="math inline">\(y(1) = e^1 \approx 2.718\)</span> and is shown in red in each figure. The methods can be summarized in the table below.</p>
+<p>Discuss what you observe as the pros and cons of each method based on the table and on the Figure.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 40%">
+<col style="width: 60%">
+</colgroup>
+<thead>
+<tr class="header">
+<th><strong>Euler’s Method</strong></th>
+<th><strong>Midpoint Method</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1. Get the slope at time <span class="math inline">\(t_n\)</span></td>
+<td>1. Get the slope at time <span class="math inline">\(t_n\)</span></td>
+</tr>
+<tr class="even">
+<td>2. Follow the slope for time <span class="math inline">\(\Delta t\)</span></td>
+<td>2. Follow the slope for time <span class="math inline">\(\Delta t/2\)</span></td>
+</tr>
+<tr class="odd">
+<td></td>
+<td>3. Get the slope at the point <span class="math inline">\(t_n + \Delta t/2\)</span></td>
+</tr>
+<tr class="even">
+<td></td>
+<td>4. Follow the new slope from time <span class="math inline">\(t_n\)</span> for time <span class="math inline">\(\Delta t\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>When might you want to use Euler’s method instead of the midpoint method? When might you want to use the midpoint method instead of Euler’s method?</p>
+<div id="cell-fig-euler-midpoint" class="cell" data-execution_count="1">
+<div class="cell-output cell-output-display">
+<div id="fig-euler-midpoint" class="quarto-float quarto-figure quarto-figure-left anchored" alt="Graphical depictions of two numerical methods. Euler (left) and Midpoint (right).">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-euler-midpoint-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="nmODE1_files/figure-html/fig-euler-midpoint-output-1.png" alt="Graphical depictions of two numerical methods. Euler (left) and Midpoint (right)." width="750" height="373" class="figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-euler-midpoint-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;7.4: Graphical depictions of two numerical methods. Euler (left) and Midpoint (right). The exact solution is shown in red.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<hr>
+<div id="exr-5.30" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 7.18 (Midpoint Method in Several Dimensions)</strong></span> 💻 🎓 Write a function <code>midpoint()</code> that can solve a system of first-order ordinary differential equations using the midpoint method. Base your code on the <code>euler()</code> code from <a href="#exr-5.17" class="quarto-xref">Exercise&nbsp;<span>7.9</span></a> . You should only have to add one line of code and then be careful about the size of the arrays that are in play. Test your code on several problems. Compare and contrast what you see with your Euler solutions and with your Midpoint solutions.</p>
+</div>
+<hr>
+</section>
+<section id="sec-instabilities" class="level2" data-number="7.4">
+<h2 data-number="7.4" class="anchored" data-anchor-id="sec-instabilities"><span class="header-section-number">7.4</span> Numerical Instabilities</h2>
+<p>This section is for discovery only. The theory behind what you are about to discover will be presented in a later chapter.</p>
+<div id="exr-5.40" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 7.19</strong></span> 🖋 Consider the differential equation <span class="math inline">\(x' = -3x\)</span> with initial condition <span class="math inline">\(x(0) = 1\)</span>. The exact solution is the exponentially decaying function <span class="math inline">\(x(t) = e^{-3t}\)</span>, which quickly approaches 0 as <span class="math inline">\(t\)</span> gets larger.</p>
+<ol type="a">
+<li><p>Use Euler’s method by hand to approximate <span class="math inline">\(x(0.1)\)</span>, <span class="math inline">\(x(0.2)\)</span>, and <span class="math inline">\(x(0.3)\)</span> using a stepsize of <span class="math inline">\(\Delta t=0.1\)</span>. Does the numerical solution appear to be decaying towards 0?</p></li>
+<li><p>Now use Euler’s method by hand to approximate <span class="math inline">\(x(1)\)</span>, <span class="math inline">\(x(2)\)</span>, and <span class="math inline">\(x(3)\)</span> using a stepsize of <span class="math inline">\(\Delta t=1\)</span>. What happens to the values of <span class="math inline">\(x\)</span>? Does it look like the exact solution?</p></li>
+</ol>
+</div>
+<hr>
+<div id="exr-5.41" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 7.20</strong></span> 💻 💬 The phenomenon you just discovered is called <em>numerical instability</em>. It occurs when the stepsize is too large, causing the numerical solution to oscillate or grow exponentially even when the exact solution decays.</p>
+<ol type="a">
+<li><p>Use your <code>euler_1d</code> function to solve the same differential equation <span class="math inline">\(x' = -3x\)</span> with <span class="math inline">\(x(0) = 1\)</span> on the interval <span class="math inline">\(t \in [0, 10]\)</span>. Run it for different values of the stepsize <span class="math inline">\(\Delta t\)</span>, for example <span class="math inline">\(\Delta t \in \{0.1, 0.5, 0.7, 1.0\}\)</span>.</p></li>
+<li><p>Plot the numerical solutions along with the exact solution <span class="math inline">\(x(t) = e^{-3t}\)</span> on the same graph. (You might want to limit the y-axis using <code>plt.ylim(-5, 5)</code> to see the details before it blows up completely.)</p></li>
+<li><p>What is the limit on the stepsize <span class="math inline">\(\Delta t\)</span> before the numerical solution completely loses its mind and grows exponentially? (Experiment with <code>dt</code> between 0.5 and 0.7 to find the exact threshold).</p></li>
+<li><p>Try the same experiment using your <code>midpoint_1d</code> function. Does the midpoint method also suffer from numerical instability? If so, what is the critical stepsize for the midpoint method on this problem?</p></li>
+</ol>
+</div>
+<hr>
+<div id="exr-5.42" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 7.21</strong></span> 💬 Based on your observations in the previous exercises, what is the danger of blindly trusting a numerical solution without considering the stepsize? How might you check if your numerical solution is stable in practice if you don’t know the exact solution?</p>
+</div>
+<hr>
+</section>
+<section id="sec-alg-summaries-ode1" class="level2" data-number="7.5">
+<h2 data-number="7.5" class="anchored" data-anchor-id="sec-alg-summaries-ode1"><span class="header-section-number">7.5</span> Algorithm Summaries</h2>
+<div id="exr-5.59" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 7.22</strong></span> 🖋 Consider the first-order differential equation <span class="math inline">\(x' = f(t,x)\)</span>. What is Euler’s method for approximating the solution to this differential equation? What is the order of accuracy of Euler’s method? Explain the meaning of the order of the method in the context of solving a differential equation.</p>
+</div>
+<hr>
+<div id="exr-5.60" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 7.23</strong></span> 🖋 Explain in clear language what Euler’s method does geometrically.</p>
+</div>
+<hr>
+<div id="exr-5.61" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 7.24</strong></span> 🖋 Consider the first-order differential equation <span class="math inline">\(x' = f(t,x)\)</span>. What is the Midpoint method for approximating the solution to this differential equation? What is the order of accuracy of the Midpoint method?</p>
+</div>
+<hr>
+<div id="exr-5.62" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 7.25</strong></span> 🖋 Explain in clear language what the Midpoint method does geometrically.</p>
+</div>
+<hr>
+</section>
+<section id="sec-truncation-ode" class="level2" data-number="7.6">
+<h2 data-number="7.6" class="anchored" data-anchor-id="sec-truncation-ode"><span class="header-section-number">7.6</span> Truncation Errors</h2>
+<p>Many of the approximation methods in Numerical Analysis are based on Taylor series expansions and then dropping higher-order terms in the series. The error that is introduced by truncating a Taylor series in this way is called the truncation error. We have seem that in <a href="nmCalculus.html#sec-truncation" class="quarto-xref"><span>Section 5.5</span></a>.</p>
+<p>The material in this section will be covered by lectures. You will not need to have read this section before the assessment quiz for this week.</p>
+<p>We recall from <a href="nmCalculus.html#sec-truncation" class="quarto-xref"><span>Section 5.5</span></a> Taylor’s formula: for a function <span class="math inline">\(x\)</span> that is <span class="math inline">\(p\)</span> times differentiable, <span class="math display">\[
+x(t+h) = x(t) + h x'(t) + \frac{h^2}{2!}x''(t) + \cdots + \frac{h^{p-1}}{(p-1)!}x^{(p-1)}(t) + \frac{h^p}{p!}x^{(p)}(\xi)
+\]</span> for some <span class="math inline">\(\xi\)</span> between <span class="math inline">\(t\)</span> and <span class="math inline">\(t+h\)</span>.</p>
+<p>Here we consider the initial-value problem <span class="math inline">\(x'(t) = f(t, x(t))\)</span> with exact solution <span class="math inline">\(x(t)\)</span>. The <strong>local truncation error</strong> at step <span class="math inline">\(n\)</span> is defined as the error made in a single step starting from the exact solution, divided by the step size <span class="math inline">\(h\)</span>: <span class="math display">\[
+\tau_n = \frac{1}{h}\left|x(t_{n+1}) - x_{n+1}\right|,
+\]</span> where <span class="math inline">\(x_{n+1}\)</span> is the value produced by the numerical method when started from the exact value <span class="math inline">\(x(t_n)\)</span>.</p>
+<section id="truncation-error-in-eulers-method" class="level3" data-number="7.6.1">
+<h3 data-number="7.6.1" class="anchored" data-anchor-id="truncation-error-in-eulers-method"><span class="header-section-number">7.6.1</span> Truncation Error in Euler’s Method</h3>
+<p>Euler’s method produces the update <span class="math display">\[
+x_{n+1} = x_n + h f(t_n, x_n).
+\]</span> Starting from the exact solution value <span class="math inline">\(x(t_n)\)</span>, the method gives <span class="math display">\[
+x_{n+1} = x(t_n) + h f(t_n, x(t_n)) = x(t_n) + h x'(t_n).
+\]</span> We compare this to the exact value at the next grid point by expanding <span class="math inline">\(x(t_{n+1}) = x(t_n + h)\)</span> in a Taylor series around <span class="math inline">\(t_n\)</span>: <span class="math display">\[
+x(t_{n+1}) = x(t_n) + h x'(t_n) + \frac{h^2}{2} x''(\xi_n)
+\]</span> for some <span class="math inline">\(\xi_n\)</span> between <span class="math inline">\(t_n\)</span> and <span class="math inline">\(t_{n+1}\)</span>. The local error in one step is therefore <span class="math display">\[
+x(t_{n+1}) - x_{n+1} = \frac{h^2}{2} x''(\xi_n),
+\]</span> so the local truncation error is <span class="math display">\[
+\tau_n = \frac{1}{h}\left|\frac{h^2}{2} x''(\xi_n)\right| = \frac{h}{2}|x''(\xi_n)|.
+\]</span> We see that the local truncation error is of order <span class="math inline">\(h\)</span> and that Euler’s method is a <strong>first-order</strong> approximation. This means that halving the step size halves the error.</p>
+<p>The <strong>global truncation error</strong> is obtained by summing the local errors over all <span class="math inline">\(N = (b-a)/h\)</span> steps. For some <span class="math inline">\(\xi\)</span> between <span class="math inline">\(a\)</span> and <span class="math inline">\(b\)</span>, <span class="math display">\[
+\tau = \left|\sum_{n=0}^{N-1} \frac{h^2}{2} x''(\xi_n)\right| \leq N \frac{h^2}{2}\max_{t\in[a,b]}|x''(t)| = \frac{b-a}{2}\, h \max_{t\in[a,b]}|x''(t)|.
+\]</span> The global truncation error is also of order <span class="math inline">\(h\)</span>, confirming that Euler’s method is a first-order method.</p>
+</section>
+<section id="truncation-error-in-the-midpoint-method" class="level3" data-number="7.6.2">
+<h3 data-number="7.6.2" class="anchored" data-anchor-id="truncation-error-in-the-midpoint-method"><span class="header-section-number">7.6.2</span> Truncation Error in the Midpoint Method</h3>
+<p>The midpoint method produces the update in two stages: <span class="math display">\[
+\begin{split}
+x_{n+1/2} &amp;= x_n + \frac{h}{2} f(t_n, x_n),\\
+x_{n+1} &amp;= x_n + h\, f\!\left(t_n + \tfrac{h}{2},\, x_{n+1/2}\right).
+\end{split}
+\]</span> Starting from the exact value <span class="math inline">\(x(t_n)\)</span>, the half-step gives <span class="math display">\[
+x_{n+1/2} = x(t_n) + \frac{h}{2} x'(t_n).
+\]</span> We now expand <span class="math inline">\(f\)</span> at the half-step point using a Taylor series in two variables. Since <span class="math inline">\(f_t + f_x x' = x''\)</span> (differentiating <span class="math inline">\(x' = f(t,x(t))\)</span> with respect to <span class="math inline">\(t\)</span>), we have <span class="math display">\[
+\begin{split}
+f\!\left(t_n + \tfrac{h}{2},\, x_{n+1/2}\right)
+&amp;= f\!\left(t_n + \tfrac{h}{2},\, x(t_n) + \tfrac{h}{2} x'(t_n)\right)\\
+&amp;= f(t_n, x(t_n)) + \frac{h}{2} f_t(t_n, x(t_n)) + \frac{h}{2} x'(t_n)\, f_x(t_n, x(t_n)) + \mathcal{O}(h^2)\\
+&amp;= x'(t_n) + \frac{h}{2} x''(t_n) + \mathcal{O}(h^2).
+\end{split}
+\]</span> Substituting into the full-step update gives <span class="math display">\[
+x_{n+1} = x(t_n) + h\left(x'(t_n) + \frac{h}{2} x''(t_n)\right) + \mathcal{O}(h^3)
+= x(t_n) + h x'(t_n) + \frac{h^2}{2} x''(t_n) + \mathcal{O}(h^3).
+\]</span> We compare this to the Taylor expansion of the exact solution: <span class="math display">\[
+x(t_{n+1}) = x(t_n) + h x'(t_n) + \frac{h^2}{2} x''(t_n) + \frac{h^3}{6} x'''(\xi_n)
+\]</span> for some <span class="math inline">\(\xi_n\)</span> between <span class="math inline">\(t_n\)</span> and <span class="math inline">\(t_{n+1}\)</span>. The local error in one step is <span class="math display">\[
+x(t_{n+1}) - x_{n+1} = \frac{h^3}{6} x'''(\xi_n),
+\]</span> so the local truncation error is <span class="math display">\[
+\tau_n = \frac{1}{h}\left|\frac{h^3}{6} x'''(\xi_n)\right| = \frac{h^2}{6}|x'''(\xi_n)|.
+\]</span> We see that the local truncation error is of order <span class="math inline">\(h^2\)</span> and that the midpoint method is a <strong>second-order</strong> approximation. This means that halving the step size reduces the error by a factor of four.</p>
+<p>The <strong>global truncation error</strong> is obtained by summing over all <span class="math inline">\(N = (b-a)/h\)</span> steps: <span class="math display">\[
+\tau \leq N\, \frac{h^3}{6}\max_{t\in[a,b]}|x'''(t)| = \frac{b-a}{6}\, h^2 \max_{t\in[a,b]}|x'''(t)|,
+\]</span> which is of order <span class="math inline">\(h^2\)</span>, confirming that the midpoint method is a second-order method.</p>
+</section>
+</section>
+<section id="exam-style-question" class="level2" data-number="7.7">
+<h2 data-number="7.7" class="anchored" data-anchor-id="exam-style-question"><span class="header-section-number">7.7</span> Exam-Style Question</h2>
+<ol type="a">
+<li><p>Explain what is meant by <em>numerical instability</em> when solving an ordinary differential equation using an explicit finite-difference scheme. What happens to the numerical solution, and how can it be avoided? [3 marks]</p></li>
+<li><p>Consider the ordinary differential equation <span class="math inline">\(x' = -2x + t\)</span> with initial condition <span class="math inline">\(x(0) = 1\)</span>. Perform one step of Euler’s method with a step size of <span class="math inline">\(h=0.5\)</span> to find an approximation for <span class="math inline">\(x(0.5)\)</span>. [2 marks]</p></li>
+<li><p>Now perform one step of the Midpoint method with a step size of <span class="math inline">\(h=0.5\)</span> to find an approximation for <span class="math inline">\(x(0.5)\)</span> for the same initial value problem. [3 marks]</p></li>
+<li><p>Consider forming a system of first-order differential equations from the second-order autonomous differential equation for a nonlinear pendulum: <span class="math display">\[\frac{d^2 \theta}{dt^2} + \frac{g}{L}\sin(\theta) = 0 ,\]</span> where <span class="math inline">\(g\)</span> and <span class="math inline">\(L\)</span> are constants. By introducing a new variable <span class="math inline">\(\omega = \frac{d\theta}{dt}\)</span>, write down the corresponding system of two first-order differential equations. [2 marks]</p></li>
+<li><p>The following incomplete Python code computes the numerical solution to the differential equation <span class="math inline">\(x'=f(t,x)\)</span> using the Midpoint method. Provide the missing code indicated by <code>...</code>. [3 marks]</p></li>
+</ol>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> midpoint_1d(f, x0, t0, tmax, dt):</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="co">    Solves a first-order ordinary differential equation using the midpoint method.</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>    N <span class="op">=</span> <span class="bu">round</span>((tmax <span class="op">-</span> t0)<span class="op">/</span>dt)</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>    dt <span class="op">=</span> (tmax <span class="op">-</span> t0)<span class="op">/</span>N</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>    t <span class="op">=</span> np.linspace(t0, tmax, N<span class="op">+</span><span class="dv">1</span>)</span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>    x <span class="op">=</span> np.zeros(<span class="bu">len</span>(t))</span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>    x[<span class="dv">0</span>] <span class="op">=</span> x0</span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> n <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(t) <span class="op">-</span> <span class="dv">1</span>):</span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>        slope <span class="op">=</span> ...</span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>        x_halfstep <span class="op">=</span> ...</span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>        x[n<span class="op">+</span><span class="dv">1</span>] <span class="op">=</span> ...</span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> t, x</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="problems" class="level2" data-number="7.8">
+<h2 data-number="7.8" class="anchored" data-anchor-id="problems"><span class="header-section-number">7.8</span> Problems</h2>
+<div id="exr-5.22" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 7.26 (The SIR Model)</strong></span> 💻 A classic model for predicting the spread of a virus or a disease is the SIR Model. In these models, <span class="math inline">\(S\)</span> stands for the proportion of the population which is susceptible to the virus, <span class="math inline">\(I\)</span> is the proportion of the population that is currently infected with the virus, and <span class="math inline">\(R\)</span> is the proportion of the population that has recovered from the virus. The idea behind the model is that</p>
+<ul>
+<li>Susceptible people become infected by having interaction with the infected people. Hence, the rate of change of the susceptible people is proportional to the number of interactions that can occur between the <span class="math inline">\(S\)</span> and the <span class="math inline">\(I\)</span> populations.<br>
+</li>
+</ul>
+<p><span class="math display">\[\begin{equation}
+S' = -\beta SI.
+\end{equation}\]</span></p>
+<ul>
+<li><p>The infected population gains people from the interactions with the susceptible people, but at the same time, infected people recover at a predictable rate. <span class="math display">\[\begin{equation}
+I' = \beta SI - \gamma I.
+\end{equation}\]</span></p></li>
+<li><p>The people in the recovered class are then immune to the virus, so the recovered class <span class="math inline">\(R\)</span> only gains people from the recoveries from the <span class="math inline">\(I\)</span> class. <span class="math display">\[\begin{equation}
+R' = \gamma I.
+\end{equation}\]</span></p></li>
+</ul>
+<p>Find a numerical solution to the system of equations using your <code>euler()</code> function. Use the parameters <span class="math inline">\(\beta = 0.0003\)</span> and <span class="math inline">\(\gamma = 0.1\)</span> with initial conditions <span class="math inline">\(S(0) = 999\)</span>, <span class="math inline">\(I(0) = 1\)</span>, and <span class="math inline">\(R(0) = 0\)</span>. Plot the solution against time. Explain all three curves in context.</p>
+</div>
+<hr>
+<div id="exr-5.68" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 7.27</strong></span> 🖋 💻 Consider the differential equation <span class="math inline">\(x'' + x' + x = 0\)</span> with initial conditions <span class="math inline">\(x(0) = 0\)</span> and <span class="math inline">\(x'(0)=1\)</span>.</p>
+<ol type="1">
+<li><p>Solve this differential equation by hand using any appropriate technique. Show your work.</p></li>
+<li><p>Write code to demonstrate the first order convergence rate of Euler’s method and the second order convergence rate of the Midpoint method. Take note that this is a second order differential equation so you will need to start by converting it to a system of differential equations. Then take care that you are comparing the correct term from the numerical solution to your analytic solution in part (1).</p></li>
+</ol>
+</div>
+<hr>
+<div id="exr-5.70" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 7.28</strong></span> 💻 💬 Two versions of Python code for one dimensional Euler’s method are given below. Compare and contrast the two implementations. What are the advantages / disadvantages to one over the other? Once you have made your pro/con list, devise an experiment to see which of the methods will actually perform faster when solving a differential equation with a very small <span class="math inline">\(\Delta t\)</span>. (You may want to look up how to time the execution of code in Python.)</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> euler(f,x0,t0,tmax,dt):</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>    t <span class="op">=</span> [t0]</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>    x <span class="op">=</span> [x0]</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>    steps <span class="op">=</span> <span class="bu">int</span>(np.floor((tmax<span class="op">-</span>t0)<span class="op">/</span>dt))</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> n <span class="kw">in</span> <span class="bu">range</span>(steps):</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>        t.append(t[n] <span class="op">+</span> dt)</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>        x.append(x[n] <span class="op">+</span> dt<span class="op">*</span>f(t[n],x[n]))</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> t, x</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> euler(f,x0,t0,tmax,dt):</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>    N <span class="op">=</span> <span class="bu">round</span>((tmax <span class="op">-</span> t0)<span class="op">/</span>dt)</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>    dt <span class="op">=</span> (tmax <span class="op">-</span> t0)<span class="op">/</span>N</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>    t <span class="op">=</span> np.linspace(t0, tmax, N<span class="op">+</span><span class="dv">1</span>)</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>    x <span class="op">=</span> np.zeros(<span class="bu">len</span>(t))</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>    x[<span class="dv">0</span>] <span class="op">=</span> x0</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> n <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(t)<span class="op">-</span><span class="dv">1</span>):</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>        x[n<span class="op">+</span><span class="dv">1</span>] <span class="op">=</span> x[n] <span class="op">+</span> dt<span class="op">*</span>f(t[n],x[n])</span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> t, x</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<hr>
+<div id="exr-5.73" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 7.29</strong></span> 💻 In this model there are two characters, Romeo and Juliet, whose affection is quantified on the scale from <span class="math inline">\(-5\)</span> to <span class="math inline">\(5\)</span> described below:</p>
+<ul>
+<li><p><span class="math inline">\(-5\)</span>: Hysterical Hatred</p></li>
+<li><p><span class="math inline">\(-2.5\)</span>: Disgust</p></li>
+<li><p><span class="math inline">\(0\)</span>: Indifference</p></li>
+<li><p><span class="math inline">\(2.5\)</span>: Sweet Affection</p></li>
+<li><p><span class="math inline">\(5\)</span>: Ecstatic Love</p></li>
+</ul>
+<p>The characters struggle with frustrated love due to the lack of reciprocity of their feelings. Mathematically,</p>
+<ul>
+<li><p>Romeo: “My feelings for Juliet decrease in proportion to her love for me.”</p></li>
+<li><p>Juliet: “My love for Romeo grows in proportion to his love for me.”</p></li>
+<li><p>Juliet’s emotional swings lead to many sleepless nights, which consequently dampens her emotions.</p></li>
+</ul>
+<p>This give rise to <span class="math display">\[\begin{equation}
+\left\{ \begin{array}{ll} \frac{dx}{dt} &amp;= -\alpha y \\ \frac{dy}{dt} &amp;= \beta x - \gamma y^2 \end{array} \right.
+\end{equation}\]</span> where <span class="math inline">\(x(t)\)</span> is Romeo’s love for Juliet and <span class="math inline">\(y(t)\)</span> is Juliet’s love for Romeo at time <span class="math inline">\(t\)</span>.</p>
+<p>Your tasks:</p>
+<ol type="1">
+<li><p>First implement this 2D system with <span class="math inline">\(x(0) = 2\)</span>, <span class="math inline">\(y(0)=0\)</span>, <span class="math inline">\(\alpha=0.2\)</span>, <span class="math inline">\(\beta=0.8\)</span>, and <span class="math inline">\(\gamma=0.1\)</span> for <span class="math inline">\(t \in [0,60]\)</span>. What is the fate of this pair’s love under these assumptions?</p></li>
+<li><p>Write code that approximates the parameter <span class="math inline">\(\gamma\)</span> that will result in Juliet having a feeling of indifference at <span class="math inline">\(t=30\)</span>. Your code should not need human supervision: you should be able to tell it that you are looking for <em>indifference</em> at <span class="math inline">\(t=30\)</span> and turn it loose to find an approximation for <span class="math inline">\(\gamma\)</span>. Assume throughout this problem that <span class="math inline">\(\alpha=0.2\)</span>, <span class="math inline">\(\beta=0.8\)</span>, <span class="math inline">\(x(0)=2\)</span>, and <span class="math inline">\(y(0)=0\)</span>.</p></li>
+</ol>
+</div>
+<hr>
+<div id="exr-5.76" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 7.30</strong></span> 💬 💻 (This problem is modified from <span class="citation" data-cites="Meerschaert">(<a href="#ref-Meerschaert" role="doc-biblioref">Meerschaert 2013</a>)</span>)</p>
+<p>One of the favourite foods of the blue whale is krill. Blue whales are baleen whales and feed almost exclusively on krill. These tiny shrimp-like creatures are devoured in massive amounts to provide the principal food source for the huge whales. In the absence of predators, in uncrowded conditions, the krill population density grows at a rate of 25% per year. The presence of 500 tons/acre of krill increases the blue whale population growth rate by 2% per year, and the presence of 150,000 blue whales decreases krill growth rate by 10% per year. The population of blue whales decreases at a rate of 5% per year in the absence of krill.</p>
+<p>These assumptions yield a pair of differential equations (a Lotka-Volterra model) that describe the population of the blue whales (<span class="math inline">\(B\)</span>) and the krill population density (<span class="math inline">\(K\)</span>) over time given by <span class="math display">\[\begin{equation}
+\begin{aligned} \frac{dB}{dt} &amp;= -0.05B + \left( \frac{0.02}{500} \right) BK \\ \frac{dK}{dt} &amp;= 0.25K - \left( \frac{0.10}{150000} \right) BK. \end{aligned}
+\end{equation}\]</span></p>
+<ol type="1">
+<li><p>What are the units of <span class="math inline">\(\frac{dB}{dt}\)</span> and <span class="math inline">\(\frac{dK}{dt}\)</span>?</p></li>
+<li><p>Explain what each of the four terms on the right-hand sides of the differential equations mean in the context of the problem. Include a reason for why each term is positive or negative.</p></li>
+<li><p>Find a numerical solution to the differential equation model using <span class="math inline">\(B(0) = 75,000\)</span> whales and <span class="math inline">\(K(0) = 150\)</span> tons per acre.</p></li>
+<li><p>Whaling is a huge concern in the oceans world wide. Implement a <em>harvesting</em> term into the whale differential equation, defend your mathematical choices and provide a thorough exploration of any parameters that are introduced.</p></li>
+</ol>
+</div>
+<hr>
+
+
+<div id="refs" class="references csl-bib-body hanging-indent" role="list">
+<div id="ref-Meerschaert" class="csl-entry" role="listitem">
+Meerschaert, Mark. 2013. <em>Mathematical <span>Modeling</span></em>. 4th edition. Academic Press.
+</div>
+</div>
+</section>
+
+</main> <!-- /main -->
+<script>
+(function() {
+  if (localStorage.getItem("alt-font") === "1") {
+    document.documentElement.classList.add("alt-font");
+  }
+})();
+
+document.addEventListener("DOMContentLoaded", function() {
+  if (localStorage.getItem("alt-font") === "1") {
+    document.documentElement.classList.add("alt-font");
+  }
+
+  var fontToggleButton = document.querySelector('a.quarto-navigation-tool[aria-label="Toggle Dyslexic Font"]');
+  if (fontToggleButton) {
+    fontToggleButton.addEventListener("click", function(e) {
+      e.preventDefault();
+      var active = document.documentElement.classList.toggle("alt-font");
+      localStorage.setItem("alt-font", active ? "1" : "0");
+    });
+  }
+});
+</script>
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+            // target, if specified
+            link.setAttribute("target", "_blank");
+            if (link.getAttribute("rel") === null) {
+              link.setAttribute("rel", "noopener");
+            }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./nmOptimisation.html" class="pagination-link" aria-label="Optimisation">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Optimisation</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./nmODE2.html" class="pagination-link" aria-label="ODE 2">
+        <span class="nav-page-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">ODE 2</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

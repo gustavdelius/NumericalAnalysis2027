@@ -1,0 +1,1366 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.9.37">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>9&nbsp; PDE 1 – Numerical Analysis</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./nmPDE2.html" rel="next">
+<link href="./nmODE2.html" rel="prev">
+<link href="./faviconNA.webp" rel="icon">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-d0ae9245876894da5ac7e18953ecc5cc.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-67e563c3f8baddecfc039ce11a1d00ae.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark-1f488f7e8e709e0b68510d46faa14ddc.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="site_libs/bootstrap/bootstrap-67e563c3f8baddecfc039ce11a1d00ae.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="fonts.css">
+<meta property="og:title" content="9&nbsp; PDE 1 – Numerical Analysis">
+<meta property="og:description" content="">
+<meta property="og:image" content="figures/PDE/HeatStencil.png">
+<meta property="og:site_name" content="Numerical Analysis">
+<meta name="twitter:title" content="9&nbsp; PDE 1 – Numerical Analysis">
+<meta name="twitter:description" content="">
+<meta name="twitter:image" content="figures/PDE/HeatStencil.png">
+<meta name="twitter:card" content="summary_large_image">
+</head>
+
+<body class="nav-sidebar floating quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const darkModeDefault = authorPrefersDark;
+      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./nmPDE1.html"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">PDE 1</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Numerical Analysis</a> 
+        <div class="sidebar-tools-main tools-wide">
+    <a href="https://vle.york.ac.uk/ultra/courses/_115112_1/outline" title="VLE" class="quarto-navigation-tool px-1" aria-label="VLE"><i class="bi bi-house-door-fill"></i></a>
+    <a href="https://maths.york.ac.uk/moodle/course/view.php?id=2727" title="Moodle quizzes" class="quarto-navigation-tool px-1" aria-label="Moodle quizzes"><i class="bi bi-mortarboard-fill"></i></a>
+    <a href="./#toggle-dyslexic-font" title="Toggle Dyslexic Font" class="quarto-navigation-tool px-1" aria-label="Toggle Dyslexic Font"><i class="bi bi-text-paragraph"></i></a>
+    <a href="./Numerical-Analysis.pdf" title="Download PDF" class="quarto-navigation-tool px-1" aria-label="Download PDF"><i class="bi bi-file-pdf"></i></a>
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Introduction</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./nmNumbers.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Numbers</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./nmFunctions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Functions</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./nmRoots1.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Roots 1</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./nmRoots2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Roots 2</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./nmCalculus.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Calculus</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./nmOptimisation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Optimisation</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./nmODE1.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">ODE 1</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./nmODE2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">ODE 2</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./nmPDE1.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">PDE 1</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./nmPDE2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">PDE 2</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Appendices</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./nmPython.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Python</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ex_exam_solns.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">Exam solutions</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./nmLinAlg.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">C</span>&nbsp; <span class="chapter-title">Linear Algebra</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./nmAutoDiff.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">D</span>&nbsp; <span class="chapter-title">Automatic Differentiation</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./nmPDE3.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">E</span>&nbsp; <span class="chapter-title">PDE 3</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#intro-to-pdes" id="toc-intro-to-pdes" class="nav-link active" data-scroll-target="#intro-to-pdes"><span class="header-section-number">9.1</span> Intro to PDEs</a></li>
+  <li><a href="#the-heat-equation" id="toc-the-heat-equation" class="nav-link" data-scroll-target="#the-heat-equation"><span class="header-section-number">9.2</span> The Heat Equation</a>
+  <ul>
+  <li><a href="#sec-heat1d" id="toc-sec-heat1d" class="nav-link" data-scroll-target="#sec-heat1d"><span class="header-section-number">9.2.1</span> In One Spatial Dimension</a></li>
+  <li><a href="#sec-neumann" id="toc-sec-neumann" class="nav-link" data-scroll-target="#sec-neumann"><span class="header-section-number">9.2.2</span> Different Boundary Conditions</a></li>
+  </ul></li>
+  <li><a href="#sec-heatvar" id="toc-sec-heatvar" class="nav-link" data-scroll-target="#sec-heatvar"><span class="header-section-number">9.3</span> Other Parabolic PDEs</a>
+  <ul>
+  <li><a href="#sec-rde" id="toc-sec-rde" class="nav-link" data-scroll-target="#sec-rde"><span class="header-section-number">9.3.1</span> Reaction-Diffusion Equations</a></li>
+  <li><a href="#sec-advect" id="toc-sec-advect" class="nav-link" data-scroll-target="#sec-advect"><span class="header-section-number">9.3.2</span> Advective-Diffusion Equations</a></li>
+  </ul></li>
+  <li><a href="#sec-stability-heat" id="toc-sec-stability-heat" class="nav-link" data-scroll-target="#sec-stability-heat"><span class="header-section-number">9.4</span> Stability of Forward Difference Method</a></li>
+  <li><a href="#exam-style-question" id="toc-exam-style-question" class="nav-link" data-scroll-target="#exam-style-question"><span class="header-section-number">9.5</span> Exam-Style Question</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span id="sec-pde" class="quarto-section-identifier"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">PDE 1</span></span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div style="margin-top: -10px; margin-bottom: 20px;"><a href="nmPDE1.pdf" class="btn btn-sm btn-outline-primary" title="Download Chapter PDF"><i class="bi bi-file-earmark-pdf"></i> Download Chapter PDF</a></div>
+<blockquote class="blockquote">
+<p><em>When you open the toolkit of differential equations you see the hammers and saws of engineering and physics for the past two centuries and for the foreseeable future.</em><br>
+–<a href="https://en.wikipedia.org/wiki/Benoit_Mandelbrot">Benoit Mandelbrot</a></p>
+</blockquote>
+<section id="intro-to-pdes" class="level2" data-number="9.1">
+<h2 data-number="9.1" class="anchored" data-anchor-id="intro-to-pdes"><span class="header-section-number">9.1</span> Intro to PDEs</h2>
+<p>Partial differential equations (PDEs) are differential equations involving the partial derivatives of an unknown multivariable function. In most of this chapter and the next we will examine two classical problems from physics: heat transport phenomena and wave phenomena. Do not think, however, that just because we are focusing on these two primary examples that this is the extent of the utility of PDEs. Basically, every scientific field has been impacted by (or has directly impacted) the study of PDEs. Any phenomenon that can be modelled via the change in multiple continuous variables (not restricted to space and time) is likely governed by a PDE model.</p>
+<p>There is a wealth of wonderful theory for finding analytic solutions to many special classes of PDEs. However, most PDEs simply do not lend themselves to analytic solutions that we can write down in terms of the regular mathematical operations of sums, products, powers, roots, trigonometric functions, logarithms, etc. For these PDEs we must turn to numerical methods to approximate the solution.</p>
+<p>Recall that numerical solutions to ODEs were approximations of the value of the unknown function at a discrete set of times. Similarly, numerical solutions to PDEs are going to be approximations of the value of the unknown function at a discrete set of points in time AND space.</p>
+<p>What we will cover in this chapter will include one primary and powerful technique for approximating solutions to PDEs: <strong>the finite difference method</strong>. There are many other techniques for approximating solutions to PDEs, and the field of numerical PDEs is still an active area of mathematical and scientific research.</p>
+</section>
+<section id="the-heat-equation" class="level2" data-number="9.2">
+<h2 data-number="9.2" class="anchored" data-anchor-id="the-heat-equation"><span class="header-section-number">9.2</span> The Heat Equation</h2>
+<p>You have probably met the heat equation, also known as the diffusion equation, in a previous module. The heat equation is a partial differential equation that describes how heat diffuses through a material. The heat equation is a parabolic PDE and is given by <span class="math display">\[
+\frac{\partial u}{\partial t} = D \nabla^2 u
+\]</span> where <span class="math inline">\(u(t,x)\)</span> is the temperature of the material at time <span class="math inline">\(t\)</span> and position <span class="math inline">\(x\)</span> and <span class="math inline">\(D\)</span> is the diffusion coefficient. The heat equation is a simple model for heat diffusion but also describes diffusion in general, like the diffusion of a solute in a solvent or of plants in a field or, …. well, you get the idea.</p>
+<p>You of course know that the heat equation is easy to solve analytically, given that it is a linear homogeneous PDE with constant coefficients. However, the finite difference method is a powerful tool for solving similar PDEs that do not have simple analytic solutions. The advantage of using the heat equation as a test case for the finite difference method is that we can easily verify the accuracy of our numerical solutions by comparing them to the known analytic solutions.</p>
+<section id="sec-heat1d" class="level3" data-number="9.2.1">
+<h3 data-number="9.2.1" class="anchored" data-anchor-id="sec-heat1d"><span class="header-section-number">9.2.1</span> In One Spatial Dimension</h3>
+<p>For the sake of simplicity we will start by considering the heat equation in 1 spatial dimension: <span class="math display">\[
+\frac{\partial u}{\partial t} = D \frac{\partial^2 u}{\partial x^2}.
+\]</span> We will also use the alternative notation <span id="eq-heat1d"><span class="math display">\[
+u_t = D u_{xx},
+\tag{9.1}\]</span></span> where the subscripts denote partial derivatives.</p>
+<div id="exr-6.29" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 9.1</strong></span> 🖋 Just as we did in <a href="nmODE1.html" class="quarto-xref">Chapter&nbsp;<span>7</span></a> to approximate solutions to ODEs, we will start by partitioning the spatial domain into finitely many pieces and we will partition time into finitely many pieces. We do this by introducing a grid of points <span class="math inline">\((t_n,x_i)\)</span> where <span class="math inline">\(t_n = t_0 + n\,\Delta t\)</span> and <span class="math inline">\(x_i = x_0 + i\,\Delta x\)</span>. Then we want to build a numerical approximation to the function <span class="math inline">\(u(t,x)\)</span> at these grid points.</p>
+<p>First we need to introduce some notation for the numerical solution. As you will see in a moment, there is a lot to keep track of in numerical PDEs so careful indexing and well-chosen notation is essential. Let <span class="math inline">\(U_i^n\)</span> be the approximation of the solution to <span class="math inline">\(u(t,x)\)</span> at the point <span class="math inline">\(t=t_n=t_0+n\,\Delta t\)</span> and <span class="math inline">\(x=x_i=x_0+i\,\Delta x\)</span> (since we have two variables we need two indices). For example, <span class="math inline">\(U_4^1\)</span> is the value of the approximation at time <span class="math inline">\(t_1\)</span> and at the spatial point <span class="math inline">\(x_4\)</span>.</p>
+<p>Next we need to approximate both derivatives <span class="math inline">\(u_t\)</span> and <span class="math inline">\(u_{xx}\)</span> in the PDE using methods that we have used before. Now would be a good time to go back to <a href="nmCalculus.html#sec-differentiation" class="quarto-xref"><span>Section 5.2</span></a> and refresh your memory for how we build approximations of derivatives.</p>
+<ol type="a">
+<li><p>Use the forward-difference formula to approximate the time derivative <span class="math inline">\(u_t\)</span> at the point <span class="math inline">\(t=t_n\)</span> and <span class="math inline">\(x=x_i\)</span>. <span class="math display">\[
+u_t(t_n,x_i) \approx \frac{??? - ???}{???}.
+\]</span></p></li>
+<li><p>Use the centred-difference formula to approximate the second spatial derivative <span class="math inline">\(u_{xx}\)</span> at the point <span class="math inline">\(t=t_n\)</span> and <span class="math inline">\(x=x_i\)</span>. <span class="math display">\[
+u_{xx}(t_n,x_i) \approx \frac{??? - ??? + ???}{???}.
+\]</span></p></li>
+<li><p>Put your answers from parts (a) and (b) together using the 1D heat equation (<a href="#eq-heat1d" class="quarto-xref">Eq.&nbsp;<span>9.1</span></a>) <span class="math display">\[
+\frac{??? - ???}{\Delta t} = D \left( \frac{??? - ??? + ???}{\Delta x^2} \right).
+\]</span> Be sure that your indexing is correct: the superscript <span class="math inline">\(n\)</span> is the index for time and the subscript <span class="math inline">\(i\)</span> is the index for space.</p></li>
+<li><p>Rearrange your result from part (c) to solve for <span class="math inline">\(U_i^{n+1}\)</span>: <span class="math display">\[
+\begin{aligned} U_i^{n+1} = ??? + \frac{D \Delta t}{\Delta x^2} \left( ??? - ??? + ??? \right). \end{aligned}
+\]</span> The iterative scheme which you just derived is called the <strong>forward difference scheme</strong> for the heat equation. Notice that the term on the left is the only term at the next time step <span class="math inline">\(n+1\)</span>. So, for every spatial point <span class="math inline">\(x_i\)</span> we can build <span class="math inline">\(U_i^{n+1}\)</span> by evaluating the right-hand side of the finite difference scheme.</p></li>
+<li><p>The numerical errors made by using the forward difference scheme we just built come from two sources: from the approximation of the time derivative and from the approximation of the second spatial derivative. Fill in the question marks in the powers of the following expression: <span class="math display">\[
+\text{Numerical Error} = \mathcal{O}(\Delta t^{???}) + \mathcal{O}(\Delta x^{???}).
+\]</span></p></li>
+<li><p>Explain what the result from part (e) means in plain English.</p></li>
+</ol>
+</div>
+<hr>
+<p>There are many different finite difference schemes due to the fact that there are many different ways to approximate derivatives (See <a href="nmCalculus.html#sec-differentiation" class="quarto-xref"><span>Section 5.2</span></a>). One convenient way to keep track of which information you are using and what you are calculating in a finite difference scheme is to use a <strong>finite difference stencil image</strong>. <a href="#fig-6.8" class="quarto-xref">Figure&nbsp;<span>9.1</span></a> shows the finite difference stencil for the approximation to the heat equation that you built in the previous exercise. In this figure we are showing that the function values <span class="math inline">\(U_{i-1}^n\)</span>, <span class="math inline">\(U_i^n\)</span>, and <span class="math inline">\(U_{i+1}^n\)</span> at the points <span class="math inline">\(x_{i-1}\)</span>, <span class="math inline">\(x_i\)</span>, and <span class="math inline">\(x_{i+1}\)</span> at time step <span class="math inline">\(t_n\)</span> are used to calculate <span class="math inline">\(U_i^{n+1}\)</span>. We will build similar stencil diagrams for other finite difference schemes throughout this chapter.</p>
+<div id="fig-6.8" class="quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-6.8-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/PDE/HeatStencil.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-6.8-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;9.1: The forward difference stencil for the 1D heat equation.
+</figcaption>
+</figure>
+</div>
+<hr>
+<div id="exr-6.30" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 9.2</strong></span> 💻 🎓 Now we want to implement your answer to part (d) of the previous exercise to approximate the solution to the following problem: <span class="math display">\[
+u_t = 0.1u_{xx}
+\]</span> on the domain <span class="math inline">\(0 &lt; x &lt; 1\)</span> and <span class="math inline">\(0 &lt; t &lt; 1\)</span> with the initial condition <span class="math display">\[
+u(0,x) = \sin(2 \pi x)
+\]</span> and boundary conditions <span class="math display">\[
+u(t,0) = 0, \, \text{and} \, u(t,1) = 0.
+\]</span> For this purpose divide the <span class="math inline">\(x\)</span> domain into 20 equal pieces and the <span class="math inline">\(t\)</span> domain into 100 equal pieces.</p>
+<p>Some partial code is given below to get you started.</p>
+<ul>
+<li>First we import the proper libraries, set up the time domain, and set up the spatial domain.</li>
+</ul>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> ipywidgets <span class="im">import</span> interactive</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Write code to give a vector of times starting at t=0 and ending </span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co"># at t=1 that divides the interval into 100 equal pieces.</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate the step size `dt`.</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Write code to give a vector of x values starting at x=0 and </span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="co"># ending exactly at x=1 that divides the interval into 20 equal pieces.</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate the step size `dx`.</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Specify the diffusion coefficient</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>D <span class="op">=</span> <span class="fl">0.1</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="co"># The coefficient "a" appears in the forward difference scheme.</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>a <span class="op">=</span> D<span class="op">*</span>dt <span class="op">/</span> dx<span class="op">**</span><span class="dv">2</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"dt="</span>, dt, <span class="st">", dx="</span>, dx, <span class="st">" and D dt/dx^2="</span>, a)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<ul>
+<li>Next we build the array <span class="math inline">\(U\)</span> so we can store all of the approximations at all times and at all spatial points. The array will have the dimensions <code>len(t)</code> by <code>len(x)</code>. We then need to enforce the boundary conditions so for all times we fill the proper portions of the array with the proper boundary conditions. Lastly, we will build the initial condition for all spatial steps in the first time step.</li>
+</ul>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>U <span class="op">=</span> np.zeros((<span class="bu">len</span>(t),<span class="bu">len</span>(x)))</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>U[:,<span class="dv">0</span>] <span class="op">=</span> <span class="co"># left boundary condition</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>U[:,<span class="op">-</span><span class="dv">1</span>] <span class="op">=</span> <span class="co"># right boundary condition</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>U[<span class="dv">0</span>,:] <span class="op">=</span> <span class="co"># the function for the init. condition (should depend on x)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<ul>
+<li>Now we step through a loop that fills the <span class="math inline">\(U\)</span> array one row at a time. Keep in mind that we want to leave the boundary conditions fixed so we will only fill indices <code>1</code> through <code>-2</code> (stop and explain this). Be careful to get the indexing correct. For example, if we want <span class="math inline">\(U_i^n\)</span> we use <code>U[n,1:-1]</code>, if we want <span class="math inline">\(U_{i+1}^n\)</span> we use <code>U[n,2:]</code>, if we want <span class="math inline">\(U_i^{n+1}\)</span> we use <code>U[n+1,1:-1]</code>, etc.</li>
+</ul>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> n <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(t)<span class="op">-</span><span class="dv">1</span>):</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    U[n<span class="op">+</span><span class="dv">1</span>,<span class="dv">1</span>:<span class="op">-</span><span class="dv">1</span>] <span class="op">=</span> U[n,?:?] <span class="op">+</span> a<span class="op">*</span>( U[n,?:] <span class="op">-</span> <span class="dv">2</span><span class="op">*</span>U[n,?:?] <span class="op">+</span> U[n,:?])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<ul>
+<li>We can now make a plot of the solution at the final time step to see what the solution looks like at <span class="math inline">\(t=1\)</span>.</li>
+</ul>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>plt.plot(x, U[?,?])</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"x"</span>)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"u"</span>)</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>plt.grid()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<ul>
+<li>Let us also calculate an approximate value for <span class="math inline">\(u(0.2,0.25)\)</span> by finding the indices in the <code>t</code> and <code>x</code> vectors that correspond to <span class="math inline">\(t=0.2\)</span> and <span class="math inline">\(x=0.25\)</span> and then looking up the value in the <span class="math inline">\(U\)</span> array at those indices.</li>
+</ul>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>U[?,?]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<hr>
+<div id="exr-6.30_plot" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 9.3</strong></span> 💻 Now visualise the whole solutions over the entire time range. You can either make a plot or an animation to illustrate the time evolution of <span class="math inline">\(u\)</span>. For each of these there are various Python packages you could use. Below is a function <code>plot_solution_1d()</code> using plotly to make a plot and a function <code>animate_solution_1d()</code> using matplotlib to make an animated 2D plot. You can use either of these or you can use your own plotting code.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> plotly.graph_objects <span class="im">as</span> go</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> plot_solution_1d(t, x, U):</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Plots the numerical approximation to a function u(t,x).</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="co">    Args:</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="co">        t: A vector of time values.</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="co">        x: A vector of spatial values.</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="co">        U: A 2D array approximating the solution u(t,x) at each grid point.</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>    fig <span class="op">=</span> go.Figure(data<span class="op">=</span>[go.Surface(z<span class="op">=</span>U, x<span class="op">=</span>x, y<span class="op">=</span>t)])</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>    fig.update_layout(</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>        width<span class="op">=</span><span class="dv">800</span>, height<span class="op">=</span><span class="dv">600</span>,</span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>        scene<span class="op">=</span><span class="bu">dict</span>(</span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>            xaxis_title<span class="op">=</span><span class="st">'x'</span>,</span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>            yaxis_title<span class="op">=</span><span class="st">'t'</span>,</span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>            zaxis_title<span class="op">=</span><span class="st">'u'</span></span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> fig</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> matplotlib <span class="im">import</span> animation, rc</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> IPython.display <span class="im">import</span> HTML</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> animate_solution_1d(t, x, U):</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Animates the numerical approximation to a function u(t,x).</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="co">    Args:</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="co">        t: A vector of time values.</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="co">        x: A vector of spatial values.</span></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="co">        U: A 2D array approximating the solution u(t,x) at each grid point.</span></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>    fig, ax <span class="op">=</span> plt.subplots()</span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>    plt.close()</span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>    ax.grid()</span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>    ax.set_xlabel(<span class="st">"x"</span>)</span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>    ax.set_ylabel(<span class="st">"u"</span>)</span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>    ax.set_xlim((np.<span class="bu">min</span>(x), np.<span class="bu">max</span>(x)))</span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>    ax.set_ylim((np.<span class="bu">min</span>(U), np.<span class="bu">max</span>(U)))</span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>    frame, <span class="op">=</span> ax.plot([], [], linewidth<span class="op">=</span><span class="dv">2</span>)</span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Don't display every time</span></span>
+<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a>    step <span class="op">=</span> <span class="bu">int</span>(<span class="bu">len</span>(t)<span class="op">/</span><span class="dv">30</span>)<span class="op">+</span><span class="dv">1</span></span>
+<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a>    frames <span class="op">=</span> <span class="bu">range</span>(<span class="dv">0</span>, <span class="bu">int</span>(<span class="bu">len</span>(t)<span class="op">/</span>step), <span class="dv">1</span>)</span>
+<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> animator(i):</span>
+<span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a>        n <span class="op">=</span> i<span class="op">*</span>step</span>
+<span id="cb7-28"><a href="#cb7-28" aria-hidden="true" tabindex="-1"></a>        ax.set_title(<span class="ss">f"t = </span><span class="sc">{</span>t[n]<span class="sc">:.2f}</span><span class="ss">"</span>)</span>
+<span id="cb7-29"><a href="#cb7-29" aria-hidden="true" tabindex="-1"></a>        frame.set_data(x, U[n,:])</span>
+<span id="cb7-30"><a href="#cb7-30" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> (frame, )</span>
+<span id="cb7-31"><a href="#cb7-31" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb7-32"><a href="#cb7-32" aria-hidden="true" tabindex="-1"></a>    ani <span class="op">=</span> animation.FuncAnimation(fig, animator, frames<span class="op">=</span>frames, interval<span class="op">=</span><span class="dv">100</span>)</span>
+<span id="cb7-33"><a href="#cb7-33" aria-hidden="true" tabindex="-1"></a>    rc(<span class="st">'animation'</span>, html<span class="op">=</span><span class="st">'jshtml'</span>) <span class="co"># embed in the HTML for Google Colab</span></span>
+<span id="cb7-34"><a href="#cb7-34" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> ani</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<hr>
+<div id="exr-heat1d" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 9.4</strong></span> 💻 Now wrap up your code for solving the one-dimensional heat equation as a function so that you can easily call it with different parameters.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> heat1d(u_0, D<span class="op">=</span><span class="fl">0.1</span>, t_0<span class="op">=</span><span class="dv">0</span>, t_max<span class="op">=</span><span class="dv">1</span>, N_t<span class="op">=</span><span class="dv">100</span>, x_left<span class="op">=</span><span class="dv">0</span>, x_right<span class="op">=</span><span class="dv">1</span>, N_x<span class="op">=</span><span class="dv">20</span>):</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Solves the 1D heat equation using the forward difference method.</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="co">    This function solves the 1D heat equation with given initial and </span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="co">    boundary conditions. It also prints a diagnostic message stating</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="co">    the step sizes `dt` and `dx` used and the value of `a = D*dt/dx**2`.</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="co">    Args:</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="co">        u_0: A function giving the initial condition u(0,x).</span></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="co">        D: The diffusion coefficient. Defaults to 0.1.</span></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a><span class="co">        t_0: The initial time. Defaults to 0.</span></span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a><span class="co">        t_max: The maximum time. Defaults to 1.</span></span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a><span class="co">        N_t: The number of time steps. Defaults to 100.</span></span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a><span class="co">        x_left: The left boundary of the spatial domain. Defaults to 0.</span></span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a><span class="co">        x_right: The right boundary of the spatial domain. Defaults to 1.</span></span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a><span class="co">        N_x: The number of spatial steps. Defaults to 20.</span></span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a><span class="co">    Returns:</span></span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a><span class="co">        A tuple containing the following:</span></span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a><span class="co">            t: A vector of time values.</span></span>
+<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a><span class="co">            x: A vector of spatial values.</span></span>
+<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a><span class="co">            U: A 2D array approximating the solution u(t,x) at each grid point.</span></span>
+<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
+<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Your code goes here</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Check that your function works by using it to calculate the same solution as in <a href="#exr-6.30" class="quarto-xref">Exercise&nbsp;<span>9.2</span></a> and plotting the solution with <code>plot_solution_1d()</code> or <code>animate_solution_1d()</code>.</p>
+</div>
+<hr>
+<div id="exr-6.31a" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 9.5</strong></span> 💻 💬 Now run your <code>heat1d</code> function from <a href="#exr-heat1d" class="quarto-xref">Exercise&nbsp;<span>9.4</span></a> with the same diffusion coefficient <span class="math inline">\(D=0.1\)</span>, the same number <code>N_t = 100</code> of time steps and the same initial and boundary conditions but double the number of spatial steps to <code>N_x=40</code>. Plot the solution on the domain <span class="math inline">\(t\in[0,1]\)</span> and <span class="math inline">\(x\in[0,1]\)</span>. Do you believe what you see? What is happening to the solution?</p>
+</div>
+<hr>
+<div id="exr-6.31" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 9.6</strong></span> 💻 💬 🎓 You will have found that you did not get a sensible solution from your method for the previous problem. The point of this exercise is to show that value of <span class="math inline">\(a = D\frac{\Delta t}{\Delta x^2}\)</span> controls the stability of the forward difference solution to the heat equation, and furthermore that there is a threshold for <span class="math inline">\(a\)</span> above which the forward difference scheme will be unstable. Experiment with values of <span class="math inline">\(\Delta t\)</span> and <span class="math inline">\(\Delta x\)</span> and conjecture the values of <span class="math inline">\(a = D \frac{\Delta t}{\Delta x^2}\)</span> that give a stable result. Your conjecture should take the form:</p>
+<p><em>If</em> <span class="math inline">\(a = D\frac{\Delta t}{\Delta x^2} &lt; \underline{\hspace{0.5in}}\)</span> then the forward difference solution for the 1D heat equation is stable. Otherwise it is unstable.</p>
+<p>Hint: the threshold is a simple fraction. If you think you have found a value for <span class="math inline">\(a\)</span> at which the method is stable, run the simulation for longer (by increasing both <code>t_max</code> and <code>N_t</code> to keep the same <span class="math inline">\(\Delta t\)</span>) to check that it is really stable. Close to the threshold the errors grow more slowly (albeit still exponentially).</p>
+</div>
+<hr>
+<div id="exr-6.32" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 9.7</strong></span> 🖋 💻 🎓 Consider the one dimensional heat equation with diffusion coefficient <span class="math inline">\(D=1\)</span>: <span class="math display">\[
+u_t = u_{xx}.
+\]</span> We want to solve this equation on the domain <span class="math inline">\(x \in [0,1]\)</span> and <span class="math inline">\(t\in [0,0.1]\)</span> subject to the initial condition <span class="math inline">\(u(0,x) = \sin(\pi x)\)</span> and the boundary conditions <span class="math inline">\(u(t,0)=u(t,1) = 0\)</span>.</p>
+<ol type="a">
+<li><p>Show that the function <span class="math inline">\(u(t,x) = e^{-\pi^2 t} \sin(\pi x)\)</span> is a solution to this heat equation, satisfies the initial condition, and satisfies the boundary conditions.</p></li>
+<li><p>Pick values of <span class="math inline">\(\Delta t\)</span> and <span class="math inline">\(\Delta x\)</span> so that you can get a stable forward difference solution to this heat equation. Then make a plot of your numerical solution.</p></li>
+<li><p>Compare your plot to the plot of the exact solution that you can get with</p></li>
+</ol>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>X, T <span class="op">=</span> np.meshgrid(x, t)</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>u_exact <span class="op">=</span> np.exp(<span class="op">-</span>np.pi<span class="op">**</span><span class="dv">2</span><span class="op">*</span>T)<span class="op">*</span>np.sin(np.pi<span class="op">*</span>X)</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>plot_solution_1d(t, x, u_exact)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<hr>
+<div id="exr-6.32b" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 9.8</strong></span> 🖋 💻 🎓 Now let us change the initial condition to <span class="math inline">\(u(0,x)=\sin(\pi x) + \sin(3 \pi x)\)</span>. We will keep the same boundary conditions as before: <span class="math inline">\(u(t,0)=u(t,1)=0\)</span>.</p>
+<ol type="a">
+<li><p>Show that the function <span class="math inline">\(u(t,x) = e^{-\pi^2 t} \sin(\pi x) +  e^{-9\pi^2t}\sin(3\pi x)\)</span> is a solution to this heat equation, matches this new initial condition, and matches the boundary conditions.</p></li>
+<li><p>Pick values of <span class="math inline">\(\Delta t\)</span> and <span class="math inline">\(\Delta x\)</span> so that you can get a stable forward difference solution to this heat equation. Make a 3d plot of your numerical solution.</p></li>
+<li><p>Compare your plot to the plot of the exact solution.</p></li>
+</ol>
+</div>
+<hr>
+</section>
+<section id="sec-neumann" class="level3" data-number="9.2.2">
+<h3 data-number="9.2.2" class="anchored" data-anchor-id="sec-neumann"><span class="header-section-number">9.2.2</span> Different Boundary Conditions</h3>
+<p>In any initial and boundary value problem such as the heat equation, the boundary conditions are often of Dirichlet or Neumann type. In Dirichlet boundary conditions the values of the solution at the boundary are specified. In contrast, Neumann boundary conditions specify the flux at the boundary instead of the value of the solution.</p>
+<div id="exr-6.34" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 9.9 (Time-dependent Dirichlet Boundary Condition)</strong></span> 💻 Modify your 1D heat equation code to plot and to animate an approximate solution of the diffusion equation <span class="math inline">\(u_t = 0.5 u_{xx}\)</span> with <span class="math inline">\(x \in (0,1)\)</span>, <span class="math inline">\(u(0,x) = \sin(2\pi x)\)</span>, <span class="math inline">\(u(t,0) = 0\)</span> and <span class="math inline">\(u(t,1) = \sin(5\pi t)\)</span>. See if everyone in your group gets the same plot and animation.</p>
+</div>
+<hr>
+<div id="exr-6.33" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 9.10 (Neumann Boundary Condition)</strong></span> 🖋 💻 🎓 Consider the 1D heat equation <span class="math inline">\(u_t = u_{xx}\)</span> with boundary conditions <span class="math inline">\(u_x(t,0)=0\)</span> and <span class="math inline">\(u(t,1)=0\)</span> with initial condition <span class="math inline">\(u(0,x) = \cos(\pi x/2)\)</span>. So at <span class="math inline">\(x=0\)</span> we are imposing a Neumann boundary condition and at <span class="math inline">\(x=1\)</span> we are imposing a Dirichlet boundary condition. Check that the initial condition satisfies these boundary conditions. As the heat profile evolves in time the Neumann boundary condition <span class="math inline">\(u_x(t,0)=0\)</span> says that the slope of the solution needs to be fixed at 0 at the left-hand boundary.</p>
+<ol type="a">
+<li><p>The Neumann boundary condition <span class="math inline">\(u_x(t,0) = 0\)</span> can be approximated with the first order approximation <span class="math display">\[
+u_x(t_n,0) \approx \frac{U_1^n - U_0^n}{\Delta x} \text{ for all } n&gt;0.
+\]</span> If we set this approximation to 0 (since <span class="math inline">\(u_x(t,0)=0\)</span>) and solve for <span class="math inline">\(U_0^n\)</span> we get an additional constraint at every time step of the numerical solution to the heat equation: <span class="math display">\[ U_0^n = ??? \text{ for all } n&gt;0.\]</span></p></li>
+<li><p>Modify your 1D heat equation code to implement this Neumann boundary condition, plot the numerical solution and verify visually that the Neumann boundary is satisfied.</p></li>
+</ol>
+</div>
+<hr>
+</section>
+</section>
+<section id="sec-heatvar" class="level2" data-number="9.3">
+<h2 data-number="9.3" class="anchored" data-anchor-id="sec-heatvar"><span class="header-section-number">9.3</span> Other Parabolic PDEs</h2>
+<p>The heat equation is a parabolic PDE and the forward-difference method that we have developed can be adapted to work for other parabolic PDEs.</p>
+<section id="sec-rde" class="level3" data-number="9.3.1">
+<h3 data-number="9.3.1" class="anchored" data-anchor-id="sec-rde"><span class="header-section-number">9.3.1</span> Reaction-Diffusion Equations</h3>
+<p>For example, the heat equation can be modified to include a reaction term. The reaction-diffusion equation is a PDE that models the diffusion of a substance in space and time with a reaction term that describes the rate of change of the substance due to some reaction. While it has its origin in chemistry, it shows up in many other fields as well, for example in ecology and epidemiology.</p>
+<div id="exr-6.35" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 9.11 (Fisher-KPP Equation)</strong></span> 💻 🎓 Modify your 1D heat equation code to calculate an approximate solution of the Fisher-KPP equation <span class="math display">\[
+u_t = u_{xx} +u(1-u)
+\]</span> with <span class="math inline">\(t\in[0,10]\)</span>, <span class="math inline">\(x \in (0,50)\)</span>, boundary conditions <span class="math display">\[
+u(t,0) = 0,\ \ \ \ u(t,50) = 1
+\]</span> and initial condition <span class="math display">\[
+u(0,x) = \frac{1+\tanh\left(\dfrac{x-40}{2}\right)}{2}.
+\]</span> Use <code>animate_solution_1d()</code> to visualize the solution. How does the solution change as time evolves?</p>
+</div>
+<hr>
+</section>
+<section id="sec-advect" class="level3" data-number="9.3.2">
+<h3 data-number="9.3.2" class="anchored" data-anchor-id="sec-advect"><span class="header-section-number">9.3.2</span> Advective-Diffusion Equations</h3>
+<p>The diffusion term usually arises from random spatial motion of particles. However, in some cases the particles are advected by a flow field. In this case we need to add an advection term to the diffusion equation. The advection-diffusion equation is a PDE that models the diffusion of a substance in space and time with an advection term that describes the rate of change of the substance due to some flow field.</p>
+<div id="exr-6.34b" class="theorem exercise">
+<p><span class="theorem-title"><strong>Exercise 9.12</strong></span> 💻 🎓 Modify your 1D heat equation code to plot an approximate solution of the following simple advection-diffusion equation: <span class="math display">\[
+u_t = 0.1 u_{xx} - u_x
+\]</span> Use the forward difference formula for the <span class="math inline">\(u_x\)</span> term and the centred difference formula for the <span class="math inline">\(u_{xx}\)</span> term. Use the initial condition <span class="math inline">\(u(0,x) = \sin(\pi x)\)</span>, Dirichlet boundary conditions <span class="math inline">\(u(t,0) = 0\)</span> and <span class="math inline">\(u(t,1) = 0\)</span>, and <span class="math inline">\(t\in[0,1]\)</span>. Use <span class="math inline">\(20\)</span> spatial steps and <span class="math inline">\(100\)</span> time steps. Make a plot and an animation of the solution.</p>
+</div>
+</section>
+</section>
+<section id="sec-stability-heat" class="level2" data-number="9.4">
+<h2 data-number="9.4" class="anchored" data-anchor-id="sec-stability-heat"><span class="header-section-number">9.4</span> Stability of Forward Difference Method</h2>
+<p>While exploring the explicit finite-difference method for solving the 1d heat equation <span class="math inline">\(u_t=Du_{xx}\)</span> we encountered the stability condition <span class="math display">\[
+a=\frac{D\Delta t}{(\Delta x)^2}\leq \frac{1}{2}.
+\]</span> We now want to understand where this condition comes from.</p>
+<p>We start by setting up the notation for solving the heat equation using the explicit finite-difference method. We discretise the spatial variable <span class="math inline">\(x\)</span> into <span class="math inline">\(N_x\)</span> intervals with grid points <span class="math inline">\(x_0,\ldots,x_{N_x}\)</span> with stepsize <span class="math inline">\(\Delta x=(x_{N_x}-x_0)/N_x\)</span>. We discretise the time variable <span class="math inline">\(t\)</span> into <span class="math inline">\(N_t\)</span> intervals with grid points <span class="math inline">\(t_0,\ldots,t_{N_t}\)</span> with stepsize <span class="math inline">\(\Delta t=(t_{N_t}-t_0)/N_t\)</span>. We denote the approximation of <span class="math inline">\(u(t_n,x_i)\)</span> by <span class="math inline">\(U_i^n\)</span>. The initial condition sets <span class="math inline">\(U_i^0=u(t_0,x_i)\)</span>. We work with homogeneous Dirichlet boundary conditions, so <span class="math inline">\(U_0^n=U_{N_x}^n=0\)</span> for all <span class="math inline">\(n\)</span>.</p>
+<p>The approximations at the remaining points is then calculated by the formula <span class="math display">\[
+U_i^{n+1}=U_i^n+a(U_{i+1}^n-2U_i^n+U_{i-1}^n)
+\]</span> for <span class="math inline">\(i=1,\ldots,N_x-1\)</span>. You derived this in <a href="#sec-heat1d" class="quarto-xref"><span>Section 9.2.1</span></a> using the finite-difference formulae for the derivatives from <a href="nmCalculus.html#sec-differentiation" class="quarto-xref"><span>Section 5.2</span></a>. We rewrite this in matrix notation: <span class="math display">\[
+\begin{pmatrix}U_1^{n+1}\\\vdots\\U_{N_x-1}^{n+1}\end{pmatrix}=\begin{pmatrix}1-2a&amp;a&amp;&amp;\\
+a&amp;1-2a&amp;a&amp;&amp;\\
+&amp;\ddots&amp;\ddots&amp;\ddots&amp;\\
+&amp;&amp;a&amp;1-2a\end{pmatrix}\begin{pmatrix}U_1^{n}\\\vdots\\U_{N_x-1}^{n}\end{pmatrix}.
+\]</span> The matrix is tridiagonal, with <span class="math inline">\(1-2a\)</span> on the diagonal and <span class="math inline">\(a\)</span> on the two off-diagonals. We denote the matrix by <span class="math inline">\(A\)</span> and the two vectors by <span class="math inline">\(\mathbf{U}_{n+1}\)</span> and <span class="math inline">\(\mathbf{U}_{n}\)</span> respectively. So we have the formula <span class="math display">\[
+\mathbf{U}_{n+1}=A\mathbf{U}_n.
+\]</span> The solution at time <span class="math inline">\(t_n\)</span> is then given by <span class="math display">\[
+\mathbf{U}_n=A^n\mathbf{U}_0.
+\]</span></p>
+<p>We want to understand how errors evolve over time. If errors grow exponentially over time then we call the method unstable and the method is not useful.</p>
+<p>Let us assume that at some step, for convenience let us choose step <span class="math inline">\(0\)</span>, an error <span class="math inline">\(\mathbf{\epsilon}\)</span> is introduced: <span class="math display">\[
+\tilde{\mathbf{U}}_0=\mathbf{U}_0+\mathbf{\epsilon}.
+\]</span> Then after <span class="math inline">\(n\)</span> steps we have <span class="math display">\[
+\tilde{\mathbf{U}}_n=A^n\tilde{\mathbf{U}}_0=A^n(\mathbf{U}_0+\mathbf{\epsilon})=A^n\mathbf{U}_0+A^n\mathbf{\epsilon}=\mathbf{U}_n+A^n\mathbf{\epsilon}.
+\]</span> So the error at time <span class="math inline">\(t_n\)</span> is <span class="math display">\[
+\mathbf{\epsilon}^{(n)}=A^n\mathbf{\epsilon}.
+\]</span> To see if the error grows exponentially over time, we expand the initial error in terms of the eigenvectors of the matrix <span class="math inline">\(A\)</span>: <span class="math display">\[
+\mathbf{\epsilon}=\sum_i\epsilon_i\mathbf{v}_i,
+\]</span> where <span class="math display">\[
+A\mathbf{v}_i=\lambda_i\mathbf{v}_i
+\]</span> and the sum is over all eigenvectors <span class="math inline">\(\mathbf{v}_i\)</span> of <span class="math inline">\(A\)</span>. Then <span class="math display">\[
+\mathbf{\epsilon}^{(n)}=\sum_i\epsilon_i\lambda_i^n\mathbf{v}_i.
+\]</span> This shows that if all eigenvalues have absolute value less than 1, then the method is stable. If at least one eigenvalue has absolute value greater than 1, then the corresponding component of the error will grow exponentially with time and the method is unstable.</p>
+<p>There is a nice method to determine the eigenvalues of the matrix <span class="math inline">\(A\)</span>, using Fourier analysis. We will not discuss this in this module and instead just give the result and then look at a simple example. The result (which you do not need to remember) is that the eigenvalues of the matrix <span class="math inline">\(A\)</span> are given by <span class="math display">\[
+\lambda_k=1-4a\left(\sin\left(\frac{k\pi}{2N_x}\right)\right)^2
+\]</span> for <span class="math inline">\(k=1,\ldots,N_x-1\)</span>. For stability we need <span class="math inline">\(|\lambda_k|\leq 1\)</span> for all <span class="math inline">\(k\)</span>, i.e., <span class="math display">\[
+0\leq a\left(\sin\left(\frac{k\pi}{2N_x}\right)\right)^2\leq\frac12
+\]</span> for all <span class="math inline">\(k\)</span>. The most stringent condition is that coming from <span class="math inline">\(k=N_x-1\)</span>, so the stability condition is <span class="math display">\[
+a\leq \frac{1}{2}\left(\sin\left(\frac{(N_x-1)\pi}{2N_x}\right)\right)^{-2}.
+\]</span></p>
+<p>In the limit <span class="math inline">\(N_x\to\infty\)</span> this gives the condition <span class="math inline">\(a\leq 1/2\)</span>.</p>
+<div id="exm-heat_stability" class="theorem example">
+<p><span class="theorem-title"><strong>Example 9.1</strong></span> Consider the heat equation on the spatial domain <span class="math inline">\(x\in[0,1]\)</span> and divide this into three subintervals, so that our spatial grid consists of <span class="math inline">\(x_0=0,x_1=1/3,x_2=2/3\)</span> and <span class="math inline">\(x_3=1\)</span>. The matrix <span class="math inline">\(A\)</span> is then <span class="math display">\[
+A=\begin{pmatrix}1-2a&amp;a&amp;\\
+a&amp;1-2a
+\end{pmatrix}.
+\]</span> The characteristic polynomial is <span class="math display">\[
+\begin{split}
+\det(A-\lambda I)&amp;=\begin{vmatrix}1-2a-\lambda&amp;a\\
+a&amp;1-2a-\lambda
+\end{vmatrix}\\
+&amp;=(1-2a-\lambda)^2-a^2\\
+&amp;=\lambda^2-2(1-2a)\lambda+(1-2a)^2-a^2.
+\end{split}
+\]</span> The roots of this polynomial are <span class="math display">\[
+\lambda_\pm=1-2a\pm a.
+\]</span> We need both of these to have a magnitude less than 1 for the method to be stable. This gives us an upper bound on the allowed <span class="math inline">\(a\)</span>. The eigenvalue whose magnitude will increase above <span class="math inline">\(1\)</span> first as <span class="math inline">\(a\)</span> increases is <span class="math inline">\(\lambda_-=1-3a\)</span>, which equals <span class="math inline">\(-1\)</span> when <span class="math inline">\(a=2/3\)</span> (meaning the error in that mode alternates sign every time step). So the stability condition is <span class="math inline">\(a \leq 2/3\)</span>.</p>
+</div>
+<hr>
+<p>In this chapter we have developed the <strong>explicit forward difference scheme</strong> for the 1D heat equation, seen how to handle Dirichlet and Neumann boundary conditions, and explored variations such as reaction-diffusion and advection-diffusion equations. We have also seen that the scheme is only stable when <span class="math inline">\(a = D\frac{\Delta t}{\Delta x^2} \leq \frac{1}{2}\)</span>, which places a severe constraint on the time step when the spatial resolution is fine. In the next chapter we will overcome this limitation by introducing <strong>implicit schemes</strong> such as the backward difference scheme and the Crank-Nicolson scheme, which are unconditionally stable and allow much larger time steps.</p>
+<hr>
+</section>
+<section id="exam-style-question" class="level2" data-number="9.5">
+<h2 data-number="9.5" class="anchored" data-anchor-id="exam-style-question"><span class="header-section-number">9.5</span> Exam-Style Question</h2>
+<ol type="a">
+<li><p>Consider the 1D heat equation <span class="math inline">\(u_t = D u_{xx}\)</span>. Using a forward difference approximation for the time derivative and a centred difference approximation for the second spatial derivative, derive the explicit finite difference scheme for <span class="math inline">\(U_i^{n+1}\)</span>. Use step sizes <span class="math inline">\(\Delta t\)</span> and <span class="math inline">\(\Delta x\)</span>, and let <span class="math inline">\(U_i^n \approx u(t_n, x_i)\)</span>. [3 marks]</p></li>
+<li><p>What are the truncation errors associated with the forward difference approximation for <span class="math inline">\(u_t\)</span> and the centred difference approximation for <span class="math inline">\(u_{xx}\)</span>? State the overall order of the numerical scheme derived in part (a). [3 marks]</p></li>
+<li><p>What condition on <span class="math inline">\(a = D\frac{\Delta t}{\Delta x^2}\)</span> must be satisfied for this explicit forward difference scheme to be numerically stable? [1 mark]</p></li>
+<li><p>Suppose you have a Neumann boundary condition at the left boundary, <span class="math inline">\(u_x(t, 0) = 0\)</span>. Using a first-order forward difference approximation for the spatial derivative, express <span class="math inline">\(U_0^n\)</span> in terms of other grid values. [2 marks]</p></li>
+<li><p>The following incomplete Python code solves the 1D heat equation <span class="math inline">\(u_t = D u_{xx}\)</span> using the explicit scheme derived in part (a), subject to Dirichlet boundary conditions <span class="math inline">\(u(t,0) = 0\)</span> and <span class="math inline">\(u(t,1) = 0\)</span>. Provide the missing code indicated by <code>...</code>. [4 marks]</p></li>
+</ol>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> solve_heat1d(u_0, D, tmax, dt, xmax, dx):</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="co">    Solves the 1D heat equation.</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="co">    u_0 is a function giving the initial condition.</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>    t <span class="op">=</span> np.arange(<span class="dv">0</span>, tmax <span class="op">+</span> dt, dt)</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>    x <span class="op">=</span> np.arange(<span class="dv">0</span>, xmax <span class="op">+</span> dx, dx)</span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>    a <span class="op">=</span> ...</span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>    U <span class="op">=</span> np.zeros((<span class="bu">len</span>(t), <span class="bu">len</span>(x)))</span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Apply initial condition</span></span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>    U[<span class="dv">0</span>, :] <span class="op">=</span> u_0(x)</span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Boundary conditions are naturally 0 from np.zeros</span></span>
+<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> n <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(t) <span class="op">-</span> <span class="dv">1</span>):</span>
+<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Update interior spatial points</span></span>
+<span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a>        U[n<span class="op">+</span><span class="dv">1</span>, <span class="dv">1</span>:<span class="op">-</span><span class="dv">1</span>] <span class="op">=</span> ...</span>
+<span id="cb10-23"><a href="#cb10-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-24"><a href="#cb10-24" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> t, x, U</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<ol start="6" type="a">
+<li><p>The explicit finite difference scheme from part (a) can be written in matrix form as <span class="math inline">\(\mathbf{U}_{n+1} = A\mathbf{U}_n\)</span>, where <span class="math inline">\(\mathbf{U}_n = (U_1^n, \ldots, U_{N-1}^n)^T\)</span> is the vector of interior grid values at time step <span class="math inline">\(n\)</span> and <span class="math inline">\(A\)</span> is a <span class="math inline">\((N-1)\times(N-1)\)</span> matrix.</p>
+<ol type="i">
+<li><p>Write down the matrix <span class="math inline">\(A\)</span> explicitly for the case <span class="math inline">\(N=4\)</span> (i.e., three interior grid points), expressing all entries in terms of <span class="math inline">\(a = D\Delta t / (\Delta x)^2\)</span>. [2 marks]</p></li>
+<li><p>Using the matrix form, write down an expression for <span class="math inline">\(\mathbf{U}_n\)</span> in terms of <span class="math inline">\(A\)</span>, <span class="math inline">\(n\)</span>, and the initial vector <span class="math inline">\(\mathbf{U}_0\)</span>. [1 mark]</p></li>
+<li><p>Suppose that at time step <span class="math inline">\(0\)</span> an error <span class="math inline">\(\boldsymbol{\epsilon}\)</span> is introduced, so that the computed vector is <span class="math inline">\(\tilde{\mathbf{U}}_0 = \mathbf{U}_0 + \boldsymbol{\epsilon}\)</span>. Show that the error at time step <span class="math inline">\(n\)</span> is <span class="math inline">\(\boldsymbol{\epsilon}_n = A^n\boldsymbol{\epsilon}\)</span>. [2 marks]</p></li>
+<li><p>Explain why and how the stability condition can be expressed in terms of the eigenvalues of <span class="math inline">\(A\)</span>. [2 marks]</p></li>
+</ol></li>
+</ol>
+
+
+</section>
+
+</main> <!-- /main -->
+<script>
+(function() {
+  if (localStorage.getItem("alt-font") === "1") {
+    document.documentElement.classList.add("alt-font");
+  }
+})();
+
+document.addEventListener("DOMContentLoaded", function() {
+  if (localStorage.getItem("alt-font") === "1") {
+    document.documentElement.classList.add("alt-font");
+  }
+
+  var fontToggleButton = document.querySelector('a.quarto-navigation-tool[aria-label="Toggle Dyslexic Font"]');
+  if (fontToggleButton) {
+    fontToggleButton.addEventListener("click", function(e) {
+      e.preventDefault();
+      var active = document.documentElement.classList.toggle("alt-font");
+      localStorage.setItem("alt-font", active ? "1" : "0");
+    });
+  }
+});
+</script>
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+            // target, if specified
+            link.setAttribute("target", "_blank");
+            if (link.getAttribute("rel") === null) {
+              link.setAttribute("rel", "noopener");
+            }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./nmODE2.html" class="pagination-link" aria-label="ODE 2">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">ODE 2</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./nmPDE2.html" class="pagination-link" aria-label="PDE 2">
+        <span class="nav-page-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">PDE 2</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

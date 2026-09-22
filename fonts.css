@@ -1,0 +1,11 @@
+@font-face {
+  font-family: 'OpenDyslexic';
+  src: url('https://cdn.jsdelivr.net/npm/opendyslexic@2.0.2/fonts/OpenDyslexic-Regular.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+}
+
+body.alt-font, body.alt-font *,
+html.alt-font body, html.alt-font body * {
+  font-family: "OpenDyslexic", "Comic Sans MS", sans-serif !important;
+}
