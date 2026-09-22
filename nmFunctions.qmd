@@ -1181,6 +1181,8 @@ the output weights with which you need to combine these neurons?
 Use this to complete the code below and use the plot to check that the resulting function has the desired form.
 
 ```python
+import matplotlib.pyplot as plt
+
 def shallow_2_peak_network(x):
     biases = [.....]
     output_weights = [.....]
@@ -1214,6 +1216,8 @@ $$
 that produces one triangular peak at $x = 0.5$ with height 1, returning to 0 at $x < 0$ and $x > 1$.
 ```{python}
 #| echo: false
+import matplotlib.pyplot as plt
+
 def g(x):
     """ Single triangular peak """
     biases = [0, -0.5, -1]
@@ -1235,6 +1239,8 @@ Then, our 2-peak sawtooth is simply $f(x) = g(g(x))$.
 
 **a)** First, create a single-peak as a shallow network with three hidden neurons.
 ```python
+import matplotlib.pyplot as plt
+
 def g(x):
     """ Single triangular peak """
     biases = [.....]
@@ -1255,6 +1261,8 @@ plt.show()
 **b)** Now comes the magic! Pass the result of your network $g(x)$ through the same network again: compute $g(g(x))$. Plot the result and compare it to the target.
 
 ```{python}
+import matplotlib.pyplot as plt
+
 f = lambda x: g(g(x))
 
 # Plot
@@ -1298,6 +1306,8 @@ Now let's compare how the two approaches scale as we increase the number of peak
 **c)** 💻 Visualize the scaling behavior. Plot the number of neurons (y-axis) versus the number of peaks (x-axis) for both approaches:
 
 ```python
+import matplotlib.pyplot as plt
+
 # TODO: Create arrays for different numbers of peaks
 peaks = [2, 4, 8, 16, 32, 64]
 shallow_neurons = [...]  # Fill in based on your formula

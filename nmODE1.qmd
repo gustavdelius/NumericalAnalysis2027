@@ -234,6 +234,8 @@ changes.
 Write a function that produces a plot with the value of $\Delta t$ on the horizontal axis and the value of the associated absolute error on the vertical axis. You should use a log-log plot. Obviously you will need to run your code many times at many different values of $\Delta t$ to build your data set. The following incomplete code will get you started.
 
 ``` python
+import matplotlib.pyplot as plt
+
 # Create vector with different step sizes
 dt = 10**(-np.linspace(0, 4, 50))
 # Create vector with the same size as dt for holding the errors
@@ -385,6 +387,8 @@ t, x = euler(F, x0, t0, tmax, dt)
 9. 🎓 Complete the following code to make a plot that shows both position and velocity versus time.
 
 ``` python
+import matplotlib.pyplot as plt
+
 plt.plot(t, x[???, ???], 'b-', t, x[???, ???], 'r--')
 plt.grid()
 plt.title('Time Evolution of Position and Velocity')
@@ -397,6 +401,8 @@ plt.show()
 10. Complete the following code to make a second plot, called a phase plot, that shows position versus velocity. In a phase plot, time is implicit (not one of the axes).
 
 ``` python
+import matplotlib.pyplot as plt
+
 plt.plot(x[???, ???], x[???, ???])
 plt.grid()
 plt.title('Phase Plot')
@@ -550,6 +556,8 @@ def midpoint_1d(f, x0, t0, tmax, dt):
 Test your code on several differential equations where you know the solution (just to be sure that it is working).
 
 ``` python
+import matplotlib.pyplot as plt
+
 f = lambda t, x: # your ODE right hand side goes here
 x0 = # initial condition
 t0 = 0

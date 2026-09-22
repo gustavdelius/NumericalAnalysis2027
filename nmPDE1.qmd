@@ -148,6 +148,8 @@ for n in range(len(t)-1):
 -   We can now make a plot of the solution at the final time step to see what the solution looks like at $t=1$.
 
 ``` python
+import matplotlib.pyplot as plt
+
 plt.plot(x, U[?,?])
 plt.xlabel("x")
 plt.ylabel("u")

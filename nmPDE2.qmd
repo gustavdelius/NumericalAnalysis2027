@@ -287,6 +287,8 @@ U[:,-1] = BCright(t) # set up the right boundary condition
 4.  Next we write a function that takes in the number of spatial points and returns the coefficient matrix for the linear system. Take note that the first and last rows take a little more care than the rest.
 
 ``` python         
+import matplotlib.pyplot as plt
+
 def coeffMatrix(M,a): # we are using M=len(x) as the first input
   A = np.zeros((M-2, M-2))
   # why are we using M-2 x M-2 for the size?

@@ -393,6 +393,8 @@ def ForwardDiff(f,a,b,N):
 3.  Now we want to call upon this function to build the first-order approximation of the first derivative for some function. We will use the function $f(x) = \sin(x)$ on the interval $[0,2\pi]$ with 100 subintervals (since we know what the answer should be). Complete the code below to call upon your `ForwardDiff()` function and to plot $f(x)$, $f'(x)$, and the approximation of $f'(x)$.
 
 ``` python
+import matplotlib.pyplot as plt
+
 f = lambda x: np.sin(x)
 exact_df = lambda x: np.cos(x)
 a = ???
