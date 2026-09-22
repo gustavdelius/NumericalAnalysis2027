@@ -956,6 +956,19 @@ def gradient_descent_1d(df, x0, alpha, tol=1e-12, max_iter=10000):
     return x
 ```
 
+(e) We want to fit a straight line $f(x) = mx + c$ to the data points $(x_0,y_0), (x_1,y_1), \ldots, (x_n,y_n)$ using the method of least squares. Write down the loss function $L(m,c)$ that is minimised. [2 marks]
+
+(f) Calculate the gradient $\nabla L(m,c)$ and show that setting it to zero leads to the pair of linear equations
+$$
+m \sum_{i=0}^n x_i^2 + c \sum_{i=0}^n x_i = \sum_{i=0}^n x_i y_i, \qquad
+m \sum_{i=0}^n x_i + c\,(n+1) = \sum_{i=0}^n y_i.
+$$
+[3 marks]
+
+(g) Use the equations from part (f) to find the least-squares line through the three data points $(0,1)$, $(1,2)$ and $(2,2)$. [3 marks]
+
+(h) Instead of solving the equations from part (f), we could minimise $L(m,c)$ for the data in part (g) with gradient descent. Perform one step of gradient descent starting from $(m,c) = (0,0)$ with learning rate $\alpha = 0.1$. Does the loss decrease? [2 marks]
+
 ------------------------------------------------------------------------
 
 ::: {.content-visible when-format="html"}

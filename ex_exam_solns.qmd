@@ -263,6 +263,40 @@ def sin_taylor(x, n):
         x = x - alpha * grad
 ```
 
+**(e) Least-Squares Loss Function**
+
+The loss function is the sum of the squared residuals:
+$$
+L(m,c) = \sum_{i=0}^n \left( y_i - (m x_i + c) \right)^2.
+$$
+
+**(f) Gradient and Normal Equations**
+
+*   Using the chain rule,
+    $$
+    \frac{\partial L}{\partial m} = -2\sum_{i=0}^n \left( y_i - m x_i - c \right) x_i, \qquad
+    \frac{\partial L}{\partial c} = -2\sum_{i=0}^n \left( y_i - m x_i - c \right).
+    $$
+*   Setting $\frac{\partial L}{\partial m} = 0$ and dividing by $-2$ gives $\sum x_i y_i - m\sum x_i^2 - c\sum x_i = 0$, which is the first equation.
+*   Setting $\frac{\partial L}{\partial c} = 0$ and dividing by $-2$ gives $\sum y_i - m\sum x_i - c(n+1) = 0$, which is the second equation (the sum $\sum_{i=0}^n 1$ has $n+1$ terms).
+
+**(g) Least-Squares Line**
+
+*   For the data $(0,1), (1,2), (2,2)$: $n+1 = 3$, $\sum x_i = 3$, $\sum x_i^2 = 5$, $\sum y_i = 5$, $\sum x_i y_i = 0 + 2 + 4 = 6$.
+*   The equations are $5m + 3c = 6$ and $3m + 3c = 5$.
+*   Subtracting gives $2m = 1$, so $m = \frac{1}{2}$, and then $c = \frac{5 - 3/2}{3} = \frac{7}{6}$.
+*   The least-squares line is $f(x) = \frac{1}{2}x + \frac{7}{6}$.
+
+**(h) One Step of Gradient Descent**
+
+*   At $(m,c) = (0,0)$ all residuals are $y_i$, so
+    $\frac{\partial L}{\partial m} = -2\sum x_i y_i = -12$ and $\frac{\partial L}{\partial c} = -2\sum y_i = -10$.
+*   The update is
+    $$
+    \begin{pmatrix} m_1 \\ c_1 \end{pmatrix} = \begin{pmatrix} 0 \\ 0 \end{pmatrix} - 0.1 \begin{pmatrix} -12 \\ -10 \end{pmatrix} = \begin{pmatrix} 1.2 \\ 1 \end{pmatrix}.
+    $$
+*   The loss decreases: $L(0,0) = 1^2 + 2^2 + 2^2 = 9$, while at $(1.2, 1)$ the predictions are $1, 2.2, 3.4$, the residuals are $0, -0.2, -1.4$ and $L(1.2,1) = 0 + 0.04 + 1.96 = 2$.
+
 ## ODE 1
 
 **(a) Numerical Instability**
