@@ -420,7 +420,7 @@ $$
 \mathbf{U}_n=A^n\mathbf{U}_0.
 $$
 
-We want to understand how errors evolve over time. If errors grow exponentially over time then we call the method unstable and the method is not useful. 
+We want to understand how errors evolve over time. If errors grow exponentially over time then we call the method unstable and the method is not useful. The argument is the same as the one we used for the stability of the Euler method for the ODE $x'=\lambda x$ in @exm-euler_stability, except that the amplification factor $1+h\lambda$ is now replaced by the matrix $A$.
 
 Let us assume that at some step, for convenience let us choose step $0$, an error $\mathbf{\epsilon}$ is introduced:
 $$

@@ -454,7 +454,7 @@ $$x_{n+1} = Q(h\lambda)\, x_n$$
 for some **amplification factor** $Q(h\lambda)$, so
 $$x_n = Q(h\lambda)^n\, x_0.$$
 
-Setting $z = h\lambda$, the numerical solution decays to zero if and only if $|Q(z)| < 1$. The set of all $z \in \mathbb{C}$ for which $|Q(z)| < 1$ is called the **region of absolute stability** of the method. 
+Setting $z = h\lambda$, the numerical solution decays to zero if and only if $|Q(z)| < 1$. Because the recurrence is linear, an error $\epsilon$ introduced at some step is also multiplied by $Q(h\lambda)$ at every subsequent step, so after $n$ further steps it has become $Q(h\lambda)^n\epsilon$. So errors decay if and only if $|Q(z)|<1$. We will see this argument again in @sec-stability-heat, where it is used to analyse the stability of the finite-difference method for the heat equation. The set of all $z \in \mathbb{C}$ for which $|Q(z)| < 1$ is called the **region of absolute stability** of the method. 
 
 Since we want the numerical solution to decay whenever the exact solution does, i.e.\ whenever $\text{Re}(\lambda) < 0$ (equivalently $\text{Re}(z) < 0$), we want the region of absolute stability to cover as much of the left half-plane as possible. Note that $\lambda$ may be complex, corresponding to oscillatory decaying solutions.
 
@@ -471,25 +471,31 @@ x_{n+1}=x_n+h\lambda x_n=(1+h\lambda)x_n.
 $$
 So
 $$
-x_{n+1}=(1+h\lambda)x_n=(1+h\lambda)^2x_{n-1}=\cdots=(1+h\lambda)^{n+1}x_0.
+x_n=(1+h\lambda)^n x_0.
 $$
-Because we know the exact solution, we can calculate the absolute error that the Euler method produces:
+We want to understand how errors evolve over time. If errors grow exponentially over time then we call the method unstable. Let us assume that at some step, for convenience let us choose step $0$, an error $\epsilon$ is introduced, for example by rounding:
 $$
-E_n:=|x_n-x(t_n)|=|x_0(1+h\lambda)^n-x_0e^{\lambda t_n}|.
+\tilde{x}_0=x_0+\epsilon.
 $$
-In the case where $\lambda<0$ we have that the exact solution decays to zero as $n\to\infty$. So the error will be determined by the behaviour of the first term:
+Then after $n$ steps we have
 $$
-\begin{split}
-\lim_{n\to\infty}E_n&=\lim_{n\to\infty}|x_0(1+h\lambda)^n|\\
-&=\begin{cases}
+\tilde{x}_n=(1+h\lambda)^n\tilde{x}_0=(1+h\lambda)^n(x_0+\epsilon)=(1+h\lambda)^nx_0+(1+h\lambda)^n\epsilon=x_n+(1+h\lambda)^n\epsilon.
+$$
+So the error at step $n$ is
+$$
+\epsilon_n=\tilde{x}_n-x_n=(1+h\lambda)^n\epsilon.
+$$
+Therefore
+$$
+\lim_{n\to\infty}|\epsilon_n|=\lim_{n\to\infty}|1+h\lambda|^n|\epsilon|
+=\begin{cases}
 0&\text{if }|1+h\lambda|<1\\
 \infty&\text{if }|1+h\lambda|>1.
 \end{cases}
-\end{split}
 $$
-The error grows exponentially unless $|1+h\lambda|<1$. This is the stability condition for the Euler method. It requires us to choose a step size
+The error grows exponentially if $|1+h\lambda|>1$ and decays if $|1+h\lambda|<1$. So $|1+h\lambda|<1$ is the stability condition for the Euler method. For real negative $\lambda$ it requires us to choose a step size
 $$
-h<\frac{2}{|\lambda|}
+h<\frac{2}{|\lambda|}.
 $$
 :::
 
