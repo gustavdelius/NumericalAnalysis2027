@@ -179,10 +179,10 @@ def animator(N):
   frame.set_data(x,???) # plot the correct time step for u(t,x)
   return (frame,)
 
-PlotFrames = range(0,len(t),1) 
+plot_frames = range(0,len(t),1) 
 anim = animation.FuncAnimation(fig, 
                                animator, 
-                               frames=PlotFrames, 
+                               frames=plot_frames, 
                                interval=100, 
                               )
 

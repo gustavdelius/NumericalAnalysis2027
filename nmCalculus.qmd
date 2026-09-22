@@ -297,13 +297,13 @@ def plot_forward_difference_errors(f, x, exact, H):
     """
 
     # Create list of errors
-    AbsError = [] # start off with a blank list of errors
+    abs_error = [] # start off with a blank list of errors
     for h in H:
         approx = (f(x+h) - f(x))/h
-        AbsError.append(abs(approx - exact))
+        abs_error.append(abs(approx - exact))
 
     # Make a loglog plot
-    plt.loglog(H, AbsError, 'b*')
+    plt.loglog(H, abs_error, 'b*')
     plt.xlabel("h")
     plt.ylabel("Absolute Error")
     plt.title("Absolute Error vs. h")
@@ -372,7 +372,7 @@ The function will return the forward-difference approximation of the first deriv
 ``` python
 import numpy as np
 import matplotlib.pyplot as plt
-def ForwardDiff(f,a,b,N):
+def forward_diff(f,a,b,N):
     x = np.linspace(a,b,N+1) # What does this line of code do?
     # What's up with the N+1 in the previous line?
     h = x[1] - x[0] # What does this line of code do?
@@ -390,7 +390,7 @@ def ForwardDiff(f,a,b,N):
     return df
 ```
 
-3.  Now we want to call upon this function to build the first-order approximation of the first derivative for some function. We will use the function $f(x) = \sin(x)$ on the interval $[0,2\pi]$ with 100 subintervals (since we know what the answer should be). Complete the code below to call upon your `ForwardDiff()` function and to plot $f(x)$, $f'(x)$, and the approximation of $f'(x)$.
+3.  Now we want to call upon this function to build the first-order approximation of the first derivative for some function. We will use the function $f(x) = \sin(x)$ on the interval $[0,2\pi]$ with 100 subintervals (since we know what the answer should be). Complete the code below to call upon your `forward_diff()` function and to plot $f(x)$, $f'(x)$, and the approximation of $f'(x)$.
 
 ``` python
 f = lambda x: np.sin(x)
@@ -402,7 +402,7 @@ x = np.linspace(a,b,N+1)
 # What does the previous line do?
 # What's up with the N+1?
 
-df = ForwardDiff(f,a,b,N) # What does this line do?
+df = forward_diff(f,a,b,N) # What does this line do?
 
 # In the next line we plot three curves:
 # 1) the function f(x)
@@ -445,7 +445,7 @@ plt.show()
 2.  Use the insight from part (1) to simplify your first-order first derivative function to look like the code below.
 
 ``` python
-def ForwardDiff(f,a,b,N):
+def forward_diff(f,a,b,N):
     x = np.linspace(a,b,N+1)
     h = x[1] - x[0]
     y = f(x)
@@ -470,7 +470,7 @@ b = 15
 N = # make this an appropriately sized number of subintervals
 x = np.linspace(a,b,N+1) # what does this line do?
 y = f(x) # what does this line do?
-df = ForwardDiff(f,a,b,N) # what does this line do?
+df = forward_diff(f,a,b,N) # what does this line do?
 
 fig, ax = plt.subplots(1,2) # what does this line do?
 ax[0].plot(x,y,'b',x[0:-1],df,'r--') # what does this line do?
@@ -497,7 +497,7 @@ d.  Play with the number of subintervals, $N$, and demonstrate the fact that we 
 ::: {#exr-max_err_plot}
 💻 You have seen in the previous exercise how the error is different at different $x$. It might be interesting to look at the largest error over the entire interval for different step sizes.
 
-1.  Find the numerical first derivative with your `ForwardDiff` function on the interval $[0,15]$ with a step size of $h = 0.1$.
+1.  Find the numerical first derivative with your `forward_diff` function on the interval $[0,15]$ with a step size of $h = 0.1$.
 
 2.  Find the absolute difference between your numerical first derivative and the actual first derivative. This is point-by-point subtraction so you should end up with a vector containing the errors at each point, just as in the previous exercise. Again be careful to take into account that the numerical derivative is not available at the right endpoint.
 
@@ -636,7 +636,7 @@ e.  💬 What does your answer to part (d) have to do with the approximation ord
 ------------------------------------------------------------------------
 
 ::: {#exr-3.23}
-💻 Write a Python function `CentralDiff(f, a, b, N)` that takes a mathematical function `f`, the start and end values of an interval [`a`, `b`] and the number `N` of subintervals to use. It should return a second-order numerical approximation to the first derivative on the interval. This should be a vector with $N-1$ entries (why?). You should try to write this code without using any loops. (Hint: This should really be a minor modification of your first-order first derivative code.) Test the code on functions where you know the first derivative.
+💻 Write a Python function `central_diff(f, a, b, N)` that takes a mathematical function `f`, the start and end values of an interval [`a`, `b`] and the number `N` of subintervals to use. It should return a second-order numerical approximation to the first derivative on the interval. This should be a vector with $N-1$ entries (why?). You should try to write this code without using any loops. (Hint: This should really be a minor modification of your first-order first derivative code.) Test the code on functions where you know the first derivative.
 
 :::
 
@@ -758,7 +758,7 @@ $$
 ------------------------------------------------------------------------
 
 ::: {#exr-3.28}
-💻 Write a Python function `SecondDiff(f, a, b, N)` that takes a mathematical function `f`, the start and end values of an interval [`a`, `b`] and the number `N` of subintervals to use. It should return a second-order numerical approximation to the second derivative on the interval. This should be a vector with $N-1$ entries (why?). As before, you should write your code without using any loops.
+💻 Write a Python function `second_diff(f, a, b, N)` that takes a mathematical function `f`, the start and end values of an interval [`a`, `b`] and the number `N` of subintervals to use. It should return a second-order numerical approximation to the second derivative on the interval. This should be a vector with $N-1$ entries (why?). As before, you should write your code without using any loops.
 
 :::
 
@@ -773,7 +773,7 @@ $$
 ::: {#exr-max_err_plot_second}
 💻 🎓 You have seen in the previous exercise how the error is different at different $x$. It might be interesting to look at the largest error over the entire interval for different step sizes.
 
-1.  Find the numerical second derivative with your `SecondDiff` function on the interval $[0,15]$ with a step size of $h = 0.1$.
+1.  Find the numerical second derivative with your `second_diff` function on the interval $[0,15]$ with a step size of $h = 0.1$.
 
 2.  Find the absolute difference between your numerical second derivative and the actual second derivative. This is point-by-point subtraction so you should end up with a vector containing the errors at each interior point. Again be careful to take into account that the numerical second derivative is not available at the endpoints.
 
@@ -879,7 +879,7 @@ $$
 ------------------------------------------------------------------------
 
 ::: {#exr-3.32}
-💻 🎓 Write a Python function `RiemannSum(f, a, b, N, method='left')` that approximates an integral with a Riemann sum.
+💻 🎓 Write a Python function `riemann_sum(f, a, b, N, method='left')` that approximates an integral with a Riemann sum.
 Your Python function should accept a Python function `f`, a lower bound `a`, an upper bound `b`, the number of subintervals `N`, and an optional input `method` that allows the user to designate whether they want 'left', 'right', or 'midpoint' rectangles. You should write your code without any loops. Test your code on several functions for which you know the integral.
 
 :::
@@ -890,7 +890,7 @@ Your Python function should accept a Python function `f`, a lower bound `a`, an 
 #| echo: false
 import numpy as np
 
-def RiemannSum(f, a, b, N, method='left'):
+def riemann_sum(f, a, b, N, method='left'):
     x = np.linspace(a, b, N+1)
     dx = (b - a) / N
     if method == 'left':
@@ -939,7 +939,7 @@ print("-" * 82)
 for n in range(1,11):
     dx = 3**(-n)
     dx_str = f"3^-{n} = {dx:g}"
-    approx = RiemannSum(f, 0, 1, int(np.round(1/dx)), method='left')
+    approx = riemann_sum(f, 0, 1, int(np.round(1/dx)), method='left')
     error = abs(exact - approx)
     if n == 1:
         print(f"{dx_str:<20} | {approx:<18.15f} | {error:<18.15f} | ")
@@ -991,9 +991,9 @@ def plot_riemann_errors(f, a, b, exact, DX):
 
     for dx in DX:
         N = int(np.round((b - a) / dx))
-        error_left.append(abs(RiemannSum(f, a, b, N, method='left') - exact))
-        error_right.append(abs(RiemannSum(f, a, b, N, method='right') - exact))
-        error_midpoint.append(abs(RiemannSum(f, a, b, N, method='midpoint') - exact))
+        error_left.append(abs(riemann_sum(f, a, b, N, method='left') - exact))
+        error_right.append(abs(riemann_sum(f, a, b, N, method='right') - exact))
+        error_midpoint.append(abs(riemann_sum(f, a, b, N, method='midpoint') - exact))
 
     # Make a loglog plot
     plt.loglog(DX, error_left, 'b*', label='Left Sum', markersize=14)
@@ -1074,7 +1074,7 @@ $$
 ------------------------------------------------------------------------
 
 ::: {#exr-3.39}
-💻 🎓 Write a Python function `Trapezoidal(f, a, b, N)` that approximates an integral with the trapezoidal method you derived in the previous exercise.
+💻 🎓 Write a Python function `trapezoidal(f, a, b, N)` that approximates an integral with the trapezoidal method you derived in the previous exercise.
 Your Python function should accept a Python function `f`, a lower bound `a`, an upper bound `b` and the number of subintervals `N`. You should write your code without any loops. Test your code on several functions for which you know the integral.
 
 :::
@@ -1257,7 +1257,7 @@ $$
 ------------------------------------------------------------------------
 
 ::: {#exr-3.45}
-💻 🎓 Write a Python function `Simpsons(f, a, b, N)` that approximates an integral with Simpson's rule that you derived in the previous exercise.
+💻 🎓 Write a Python function `simpsons(f, a, b, N)` that approximates an integral with Simpson's rule that you derived in the previous exercise.
 Your Python function should accept a Python function `f`, a lower bound `a`, an upper bound `b` and the number of subintervals `N`. You should write your code without any loops. Test your code on several functions for which you know the integral.
 
 :::
