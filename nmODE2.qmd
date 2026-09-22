@@ -354,7 +354,7 @@ $$
 $$
 G(x_{n+1}):=x_{n+1} - hf(t_{n+1},x_{n+1}) - x_n = 0.
 $$
- You know the values of $h=\Delta t$, $t_{n+1}$ and $x_n$, and you know the function $f$, so, in a practical sense, you should use some sort of numerical method to solve that equation -- at each time step. Since $G'(x_{n+1}) = 1 - h\,\partial f/\partial x$, applying Newton's method would require computing the partial derivative of $f$ with respect to $x$, which is not always available or convenient. So our next best option is to use the secant method. You can use your code from @exr-2.49 for the function `secant_1d()`.
+ You know the values of $h=\Delta t$, $t_{n+1}$ and $x_n$, and you know the function $f$, so, in a practical sense, you should use some sort of numerical method to solve that equation -- at each time step. Since $G'(x_{n+1}) = 1 - h\,\partial f/\partial x$, applying Newton's method would require computing the partial derivative of $f$ with respect to $x$, which is not always available or convenient. So our next best option is to use the secant method. You can use your code from @exr-2.49 for the function `secant_1d()`. Remember that this function returns the list of all iterates, so the solution of the equation is its last element.
 
 ------------------------------------------------------------------------
 
@@ -372,7 +372,7 @@ def backward_euler_1d(f, x0, t0, tmax,dt):
     for n in range(len(t)-1):
         G = lambda y: ??? # define this function
         # give appropriate starting values for the secant method
-        x[n+1] = secant_1d(G, ???)
+        x[n+1] = secant_1d(G, ???)[-1]
     return t, x
 ```
 

@@ -120,7 +120,7 @@ The idea now is to choose a new point between the two outer points, compare the 
 
 ::: {#exr-golden-section-code}
 
-💻 Complete the following function to implement this method. If you have done the previous two exercises you will have a good idea of what to do and this is mostly a coding task. So it would be alright to delegate this to just the group members who enjoy coding the most.
+💻 Complete the following function to implement this method. As with our root-finding functions, the function should return the list of all the successive middle points `c`, the last of which is the final approximation of the minimum. If you have done the previous two exercises you will have a good idea of what to do and this is mostly a coding task. So it would be alright to delegate this to just the group members who enjoy coding the most.
 
 ``` python
 def golden_section(f, a, b, c, tol = 1e-12):
@@ -143,12 +143,15 @@ def golden_section(f, a, b, c, tol = 1e-12):
                  The function stops when b - a < tol.
 
     Returns:
-    float: An approximation of a point where f achieves a local minimum.
+    list: The successive middle points `c`. The last element is an
+          approximation of a point where f achieves a local minimum.
     """
 
     # Check that the points are ordered a < c < b
 
     # Check that the function value at `c` is lower than at both `a` and `b`
+
+    # Start a list of iterates containing `c`
 
     # Loop until you have an interval smaller than the tolerance
     while b-a >= tol:
@@ -160,10 +163,12 @@ def golden_section(f, a, b, c, tol = 1e-12):
         # to choose a new triplet `a`, `b`, `c` in such a way that
         # b-a has decreased but f(c) is still lower than both f(a) and f(b)
 
+        # Append the new `c` to the list of iterates
+
         # While debugging, include a print statement to let you know what
         # is happening within your loop
     
-    return c
+    return iterates
     
 ```
 
@@ -238,7 +243,7 @@ Let $f(x)$ be the objective function which you are seeking to minimise.
 ------------------------------------------------------------------------
 
 ::: {#exr-3.53}
-💻 Write code to implement the 1D gradient descent algorithm. Note that gradient descent is a fixed-point iteration method. So you can adapt the code for Newton's method from @exr-2.38. Just be sure to change the iteration formula.
+💻 Write code to implement the 1D gradient descent algorithm. Note that gradient descent is a fixed-point iteration method. So you can adapt the code for Newton's method from @exr-2.38. Just be sure to change the iteration formula. As before, the function should return the list of all iterates.
 
 ``` python
 def gradient_descent_1d(df, x0, alpha, 
@@ -262,19 +267,17 @@ def gradient_descent_1d(df, x0, alpha,
     max_iter (int): The maximum number of iterations to perform.
 
     Returns:
-    float: An approximation of a point where f achieves
-           a local minimum.
+    list: The iterates x_0, x_1, ..., x_n. The last element is an
+          approximation of a point where f achieves a local minimum.
     """
-    # Initialize `x` with the starting value
+    # Initialize the list of iterates with the starting value
 
     # Loop for a maximum of `max_iter` iterations
 
-        # Calculate the next approximation `x_new`
+        # Calculate the next approximation and append it to the list
         
         # If the step taken was smaller than `tol` then 
-        # return `x_new`
-
-        # Update `x = x_new`
+        # return the list of iterates
         
     # If the loop finishes without returning then
     #    return a message that method did not converge
@@ -306,13 +309,13 @@ plt.plot(x,f(x))
 Check that the derivative is
 $$f'(x) = 4\cos(4x)((x-5)^2-25) + 2(x-5)(\sin(4x)+1)$$
 
-If you choose $x_0=3$ as your starting point and a learning rate of $0.001$, what approximation do you get for $x$ at the minimum? Did gradient descent find the global minimum?
+If you choose $x_0=3$ as your starting point and a learning rate of $0.001$, what approximation do you get for $x$ at the minimum (the last element of the list returned by your function)? Did gradient descent find the global minimum?
 :::
 
 ------------------------------------------------------------------------
 
 ::: {#exr-3.55}
-💻 🎓 Experiment with different values of the learning rate for the previous question, assuming that you can only specify it with up to 3 digits after the decimal point. Which choice of learning rate requires the smallest number of steps to reach the required tolerance of $10^{-12}$? 
+💻 🎓 Experiment with different values of the learning rate for the previous question, assuming that you can only specify it with up to 3 digits after the decimal point. Which choice of learning rate requires the smallest number of steps to reach the required tolerance of $10^{-12}$? You can get the number of steps from the length of the list of iterates returned by your function (remember that the list also contains the starting value).
 
 :::
 
@@ -322,8 +325,8 @@ If you choose $x_0=3$ as your starting point and a learning rate of $0.001$, wha
 ::: {#exr-3.54}
 💻 You will now explore how the error decreases as the number of gradient descent steps increases.
 
-1. Write a Python function `gradient_descent_with_error_tracking()` that returns a list of absolute errors between the iterates and the exact minimum. You can adapt your `newton_with_error_tracking()` function from @exr-newton_error_tracking. 
-2. Use this to print the errors when applied to the function $f(x)=\cos(x)$ with a starting value of $x_0=3$, a learning rate of $\alpha = 0.1$ and a tolerance of $10^{-12}$. Make sure you use the correct exact minimum in your error calculations, namely the one that you expect gradient descent to find.
+1. Use your `gradient_descent_1d()` function from @exr-3.53 to calculate the list of iterates, and from that the list of absolute errors between the iterates and the exact minimum, as you did for Newton's method in @exr-newton_error_tracking. 
+2. Print the errors when applied to the function $f(x)=\cos(x)$ with a starting value of $x_0=3$, a learning rate of $\alpha = 0.1$ and a tolerance of $10^{-12}$. Make sure you use the correct exact minimum in your error calculations, namely the one that you expect gradient descent to find.
 3. Use your `plot_error_progression()` function that we wrote in @exm-2.1b to make a plot of the log of the absolute error at iteration $n+1$ against the log of the absolute error at iteration $n$. You should observe that the points line up approximately along a straight line.
 4. 🎓 Read off the slope of the straight line fitted to the points.
 5. What does this slope tell you about how the error $\epsilon_{n+1}$ is related to the error at the previous iteration $\epsilon_n$?
@@ -515,8 +518,8 @@ def gradient_descent(df, x0, alpha, tol=1e-12, max_iter=1000):
     max_iter (int): Maximum number of iterations.
 
     Returns:
-    NumPy array: The approximated minimum point 
-                 (a NumPy array with k elements).
+    list: The iterates x_0, x_1, ..., x_n, each a NumPy array with
+          k elements. The last element is the approximated minimum point.
     """
     
     # Here comes your code.
@@ -528,6 +531,7 @@ Use your function to find the minimum of the function
 $$f(x,y) = \sin(x)\exp\left(-\sqrt{x^2+y^2}\right).$$
 with a starting point $(x_0,y_0)=(-1,1)$, a learning rate of $1$ and a tolerance of $10^{-6}$.
 You can use your gradient function from @exm-wgrad_python.
+The approximate minimum is the last element of the list of iterates returned by your function.
 :::
 
 ------------------------------------------------------------------------
@@ -535,7 +539,7 @@ You can use your gradient function from @exm-wgrad_python.
 ::: {#exr-gd-difficulties}
 💻 💬 The gradient descent method works well for some functions but struggles with others. In this exercise you will explore two functions that gradient descent struggles with.
 
-1. Modify your `gradient_descent` function from @exr-3.58 to create a new function `gradient_descent_path` that returns the list of all iterates, not just the final one.
+1. Your `gradient_descent` function from @exr-3.58 returns the list of all iterates, which describes the path taken by the method. Use it to print the first few points on the path for the function in @exr-3.58 and check that each step goes downhill. How many iterations did the method need in that example?
 
 2. Consider the function $$f(x,y)=x^2+100y^2.$$ This function has a clear minimum at the origin but is much steeper in the $y$ direction than in the $x$ direction. Try the starting point $(x_0,y_0)=(1,1)$ and experiment with different learning rates. The code below will get you started. Can you find a learning rate that gives fast convergence in both variables simultaneously?
 
@@ -545,8 +549,8 @@ f = lambda x: x[0]**2 + 100 * x[1]**2
 df = lambda x: np.array([2 * x[0], 200 * x[1]])
 
 alpha = 0.005  # Try different values
-path = gradient_descent_path(df, np.array([1.0, 1.0]), alpha, 
-                             tol=1e-6, max_iter=1000)
+path = gradient_descent(df, np.array([1.0, 1.0]), alpha, 
+                        tol=1e-6, max_iter=1000)
 len(path)
 ```
 
@@ -616,7 +620,7 @@ def plot_path(func, path, x_range=(-2, 2), y_range=(-2, 2), grid_pts=100):
     return fig
 
 alpha = 0.004  # Try different values
-path = gradient_descent_path(df, np.array([1.0, 1.0]), alpha,
+path = gradient_descent(df, np.array([1.0, 1.0]), alpha,
                         tol=1e-6, max_iter=1000)
 print(len(path))
 plot_path(f, path)
@@ -637,7 +641,7 @@ df = lambda x: np.array([
 ])
 
 alpha = 0.0002  # Try different values
-path = gradient_descent_path(df, np.array([-1.0, 1.0]), alpha,
+path = gradient_descent(df, np.array([-1.0, 1.0]), alpha,
                         tol=1e-6, max_iter=1000)
 print(len(path))
 plot_path(f, path, x_range=(-2, 2), y_range=(-2, 5))
@@ -896,16 +900,16 @@ This is a large and active area of research and we will not go into more detail 
 
 (c) Consider finding the minimum of a multivariable function $f(x, y)$. Write down the iteration formula for the Gradient Descent method in this case. Explain geometrically why moving in the direction of the negative gradient is an effective strategy for finding a minimum point. [3 marks]
 
-(d) The following incomplete Python code implements the Gradient Descent method for a single-variable function. Provide the missing code indicated by `...`. Assume `df` is the derivative function, `x0` is the starting guess, `alpha` is $\alpha$, and `tol` is the tolerance for stopping when the gradient is sufficiently close to zero. [2 marks]
+(d) The following incomplete Python code implements the Gradient Descent method for a single-variable function. Provide the missing code indicated by `...`. Assume `df` is the derivative function, `x0` is the starting guess, `alpha` is $\alpha$, and `tol` is the tolerance for stopping when the gradient is sufficiently close to zero. The function returns the list of all iterates. [2 marks]
 
 ``` python
 def gradient_descent_1d(df, x0, alpha, tol=1e-12, max_iter=10000):
-    x = x0
+    x = [x0]
     for i in range(max_iter):
         grad = ...
         if abs(grad) < tol:
             return x
-        x = ...
+        x.append(...)
     return x
 ```
 

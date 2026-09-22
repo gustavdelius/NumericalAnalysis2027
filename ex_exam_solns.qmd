@@ -132,9 +132,9 @@ def sin_taylor(x, n):
 
     ``` python
     def fixed_point_iteration():
-        x = 1.0
-        for i in range(10):
-            x = (x + 2)**(1/3)
+        x = [1.0]
+        for n in range(10):
+            x.append((x[-1] + 2)**(1/3))
         return x
     ```
 
@@ -259,8 +259,8 @@ def sin_taylor(x, n):
 **(d) Gradient Descent Code**
 
 ``` python
-        grad = df(x)
-        x = x - alpha * grad
+        grad = df(x[-1])
+        x.append(x[-1] - alpha * grad)
 ```
 
 ## ODE 1
