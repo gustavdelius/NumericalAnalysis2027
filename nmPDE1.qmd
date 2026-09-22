@@ -488,6 +488,57 @@ We need both of these to have a magnitude less than 1 for the method to be stabl
 
 :::
 
+------------------------------------------------------------------------
+
+The following exercises let you practise the stability analysis from this section.
+
+::: {#exr-lect-stab-heat-Nx4}
+🖋 Repeat the analysis of @exm-heat_stability for the case where the spatial domain $[0,1]$ is divided into $N_x=4$ subintervals, so that there are three interior grid points $x_1=\frac14$, $x_2=\frac12$, $x_3=\frac34$.
+
+a.  Write down the $3\times 3$ matrix $A$.
+
+b.  Show that $(1,0,-1)^T$, $(1,\sqrt2,1)^T$ and $(1,-\sqrt2,1)^T$ are eigenvectors of $A$ and find the corresponding eigenvalues.
+
+c.  Deduce the stability condition on $a$, and check that it agrees with the general formula for the stability condition given above.
+
+You should find the eigenvalues $1-2a$ and $1-2a\pm\sqrt2\,a$ and the stability condition $a\leq\frac{2}{2+\sqrt2}=2-\sqrt2\approx 0.586$.
+:::
+
+------------------------------------------------------------------------
+
+::: {#exr-lect-stab-heat-eigenvectors}
+🖋 In this exercise you verify the formula for the eigenvalues of $A$ that was given above without proof. Let $\theta_k=\frac{k\pi}{N_x}$ for some $k\in\{1,\ldots,N_x-1\}$ and consider the vector $\mathbf{v}_k$ with components $(\mathbf{v}_k)_i=\sin(i\theta_k)$ for $i=1,\ldots,N_x-1$.
+
+a.  Use the trigonometric identity $\sin((i+1)\theta)+\sin((i-1)\theta)=2\sin(i\theta)\cos(\theta)$ to show that
+$$
+a\sin((i-1)\theta_k)+(1-2a)\sin(i\theta_k)+a\sin((i+1)\theta_k)=\left(1-2a+2a\cos(\theta_k)\right)\sin(i\theta_k).
+$$
+
+b.  Explain why this equation also holds for the first row ($i=1$) and the last row ($i=N_x-1$) of the matrix, even though these rows have only two non-zero entries. (Hint: what are $\sin(0\cdot\theta_k)$ and $\sin(N_x\theta_k)$?)
+
+c.  Conclude that $\mathbf{v}_k$ is an eigenvector of $A$ and use $1-\cos(\theta)=2\sin^2(\theta/2)$ to show that its eigenvalue is $\lambda_k=1-4a\sin^2\left(\frac{k\pi}{2N_x}\right)$.
+
+d.  Sketch the components of $\mathbf{v}_k$ against $i$ for $k=1$ and for $k=N_x-1$ when $N_x=10$. Which eigenvector is responsible for the instability when $a$ is too large? Does this explain the shape of the unstable solutions that you saw in @exr-6.31a?
+:::
+
+------------------------------------------------------------------------
+
+::: {#exr-lect-stab-heat-predict}
+🖋 In @exr-6.31a you used $D=0.1$, $t\in[0,1]$ with $N_t=100$ time steps and $x\in[0,1]$, first with $N_x=20$ and then with $N_x=40$.
+
+a.  Calculate $a=D\Delta t/(\Delta x)^2$ in both cases, and the most negative eigenvalue $\lambda_{N_x-1}$ of $A$ in both cases. Explain what you observed in @exr-6.31a.
+
+b.  Suppose you want to solve $u_t=u_{xx}$ on $x\in[0,1]$ up to $t=1$ with $N_x=100$ spatial subintervals. What is the largest time step you can use with the forward difference method, and what is the minimum number of time steps needed? How does this number change if you double $N_x$?
+
+You should find $a=0.4$ and $\lambda_{19}\approx-0.59$ for $N_x=20$ but $a=1.6$ and $\lambda_{39}\approx-5.39$ for $N_x=40$. In part (b) you need $\Delta t\leq 5\times10^{-5}$ and so at least $20\,000$ time steps.
+:::
+
+------------------------------------------------------------------------
+
+::: {#exr-lect-stab-heat-numerical}
+💻 Write a function that constructs the matrix $A$ for given $a$ and $N_x$. Use `np.linalg.eigvals()` to compute its eigenvalues and compare them with the formula $\lambda_k=1-4a\sin^2\left(\frac{k\pi}{2N_x}\right)$. Then, for $N_x=3$, $4$, $10$ and $40$, find numerically the largest value of $a$ for which all eigenvalues satisfy $|\lambda_k|\leq 1$, and compare with the stability conditions that you derived above.
+:::
+
 ---
 
 In this chapter we have developed the **explicit forward difference scheme** for the 1D heat equation, seen how to handle Dirichlet and Neumann boundary conditions, and explored variations such as reaction-diffusion and advection-diffusion equations. We have also seen that the scheme is only stable when $a = D\frac{\Delta t}{\Delta x^2} \leq \frac{1}{2}$, which places a severe constraint on the time step when the spatial resolution is fine. In the next chapter we will overcome this limitation by introducing **implicit schemes** such as the backward difference scheme and the Crank-Nicolson scheme, which are unconditionally stable and allow much larger time steps.

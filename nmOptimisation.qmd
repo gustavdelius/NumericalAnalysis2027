@@ -385,6 +385,56 @@ which is precisely gradient descent with the "learning rate" $\alpha = \frac{1}{
 
 ------------------------------------------------------------------------
 
+The following exercises let you practise using the theory from this section.
+
+::: {#exr-lect-gd-quadratic}
+🖋 Consider the quadratic function $f(x)=\frac{c}{2}(x-p)^2$ with $c>0$, which has its minimum at $x=p$.
+
+a.  Show that gradient descent with learning rate $\alpha$ gives $x_{n+1}-p=(1-\alpha c)(x_n-p)$ exactly, and hence $E_n=|1-\alpha c|^n E_0$.
+
+b.  Describe the behaviour of the iterates for each of the cases $0<\alpha<\frac1c$, $\alpha=\frac1c$, $\frac1c<\alpha<\frac2c$, $\alpha=\frac2c$ and $\alpha>\frac2c$. In which cases do the iterates approach $p$ monotonically, in which cases do they oscillate around $p$, and in which cases do they fail to converge?
+
+c.  Explain why, close to a minimum $p$ of a general smooth function $f$, gradient descent behaves like it does for the quadratic function with $c=f''(p)$. (Hint: Taylor-expand $f'(x)$ around $p$.)
+:::
+
+------------------------------------------------------------------------
+
+::: {#exr-lect-gd-learning-rates}
+🖋 Consider the function $f(x)=x^2-2\ln(x)$ for $x>0$.
+
+a.  Show that $f$ has a minimum at $p=1$ and calculate $f''(1)$ and $f'''(1)$.
+
+b.  For which learning rates $\alpha$ does gradient descent converge to $p=1$ when started sufficiently close to $p$?
+
+c.  What is the limit $\lambda=\lim_{n\to\infty}E_{n+1}/E_n$ when using the learning rate $\alpha=0.1$?
+
+d.  Which learning rate gives the fastest convergence? What is the order of convergence for this learning rate, and what is the corresponding constant $\lambda$? (Can you recognise the resulting iteration function $g(x)$ from @sec-roots2?)
+
+You should find that the method converges for $0<\alpha<\frac12$, that $\lambda=0.6$ for $\alpha=0.1$, and that for $\alpha=\frac14$ the convergence is quadratic with $\lambda=\frac12$.
+:::
+
+------------------------------------------------------------------------
+
+::: {#exr-lect-gd-cos}
+🖋 💻 In @exr-3.54 you applied gradient descent to $f(x)=\cos(x)$ starting from $x_0=3$ with learning rate $\alpha=0.1$, so that the iterates converge to the minimum at $p=\pi$.
+
+a.  Predict the value of $\lim_{n\to\infty}E_{n+1}/E_n$ and check it against your numerical errors from @exr-3.54.
+
+b.  For which learning rates does gradient descent converge to $p=\pi$ (when started close enough)?
+
+c.  Show that for the learning rate $\alpha=1$ not only $g'(\pi)=0$ but also $g''(\pi)=0$. What does @thm-a then tell you about the order of convergence? Check your prediction numerically by computing the ratios $E_{n+1}/E_n^3$.
+
+You should find $\lambda=0.9$ in part (a), convergence for $0<\alpha<2$ in part (b), and cubic convergence with $\lambda=\frac16$ in part (c).
+:::
+
+------------------------------------------------------------------------
+
+::: {#exr-lect-gd-maximum}
+🖋 💬 Suppose $p$ is a local maximum of $f$ with $f''(p)<0$. Show that $|g'(p)|>1$ for the gradient descent iteration function $g(x)=x-\alpha f'(x)$ for every learning rate $\alpha>0$. What does this imply about whether gradient descent can converge to a local maximum? What happens to iterates that start close to $p$?
+:::
+
+------------------------------------------------------------------------
+
 ## Multivariable Optimisation {#sec-multiopt}
 
 Now let us look at multivariable optimisation.

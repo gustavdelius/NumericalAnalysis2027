@@ -551,6 +551,68 @@ Further reading: Section 2.4 of [@Burden_Faires].
 
 ------------------------------------------------------------------------
 
+The following exercises let you practise using the theory from this section.
+
+::: {#exr-lect-order-fixed-point}
+🖋 For each of the following fixed-point iterations $x_{n+1}=g(x_n)$ use @thm-a (or @eq-nonlin35 in the linear case) to determine the order of convergence $\alpha$ and the constant $\lambda=\lim_{n\to\infty}E_{n+1}/E_n^\alpha$.
+
+a.  $g(x)=\cos(x)$, which has the fixed point $p\approx 0.7391$.
+
+b.  $g(x)=\frac12\left(x+\frac{2}{x}\right)$, which has the fixed point $p=\sqrt{2}$. (This is Newton's method for which function?)
+
+c.  $g(x)=\dfrac{x(x^2+6)}{3x^2+2}$, which also has the fixed point $p=\sqrt{2}$. (Hint: rather than differentiating three times, show that $g(x)-\sqrt{2}=\dfrac{(x-\sqrt{2})^3}{3x^2+2}$.)
+
+You should find: (a) linear with $\lambda=\sin(p)\approx 0.674$, (b) quadratic with $\lambda=\frac{1}{2\sqrt{2}}\approx 0.354$, (c) cubic with $\lambda=\frac18$.
+:::
+
+------------------------------------------------------------------------
+
+::: {#exr-lect-order-fixed-point-check}
+💻 Confirm your answer to part (c) of the previous exercise numerically: starting from $x_0=1$, compute the first few iterates, the errors $E_n=|x_n-\sqrt{2}|$ and the ratios $E_{n+1}/E_n^3$. How many iterations does it take until the error is at the level of machine precision? Why can you not observe the limit of the ratios for very long?
+:::
+
+------------------------------------------------------------------------
+
+::: {#exr-lect-order-multiple-root}
+🖋 In the analysis of Newton's method above we assumed that $f'(p)\neq 0$. Here we see what happens when this assumption fails.
+
+a.  Apply Newton's method to $f(x)=(x-1)^2$, whose root $p=1$ is a double root, so that $f'(p)=0$. Show that the Newton iteration is $x_{n+1}=\frac{x_n+1}{2}$ and deduce that the convergence is only linear. What is $\lambda$?
+
+b.  More generally, suppose $f(x)=(x-p)^m h(x)$ with $h(p)\neq 0$ and an integer $m\geq 2$ (a root of multiplicity $m$). Show that the Newton iteration function $g(x)=x-f(x)/f'(x)$ satisfies $g'(p)=1-\frac1m$. (It is enough to do this for $h(x)=1$.) What does this tell you about the order of convergence?
+
+c.  Show that the modified iteration $x_{n+1}=x_n-m\frac{f(x_n)}{f'(x_n)}$ has $g'(p)=0$ for $f(x)=(x-p)^m$, so that quadratic convergence is restored when the multiplicity $m$ is known.
+:::
+
+------------------------------------------------------------------------
+
+::: {#exr-lect-order-speed}
+🖋 Suppose the initial error is $E_0=0.1$.
+
+a.  If the errors satisfy $E_{n+1}=0.5\,E_n$ (linear convergence with $\lambda=0.5$), how many iterations are needed until $E_n\leq 10^{-8}$?
+
+b.  If instead the errors satisfy $E_{n+1}=E_n^2$ (quadratic convergence with $\lambda=1$), how many iterations are needed?
+
+You should find $24$ iterations in part (a) and $3$ iterations in part (b).
+:::
+
+------------------------------------------------------------------------
+
+::: {#exr-lect-order-from-data}
+🖋 If $E_{n+1}\approx \lambda E_n^\alpha$ for all sufficiently large $n$, show that
+$$
+\alpha\approx\frac{\ln(E_{n+1}/E_n)}{\ln(E_n/E_{n-1})}.
+$$
+The secant method applied to $f(x)=x^2-2$ with $x_0=1$ and $x_1=2$ produces errors
+$$
+E_3\approx 1.42\times 10^{-2},\quad E_4\approx 4.21\times 10^{-4},\quad E_5\approx 2.12\times 10^{-6},\quad E_6\approx 3.16\times 10^{-10}.
+$$
+Use the formula to estimate $\alpha$ twice, once from $E_3,E_4,E_5$ and once from $E_4,E_5,E_6$. Compare your estimates with the theoretical value $\alpha=\frac{1+\sqrt5}{2}$.
+
+You should find the estimates $\alpha\approx 1.50$ and $\alpha\approx 1.67$.
+:::
+
+------------------------------------------------------------------------
+
 ## Exam-Style Question
 
 (a) Briefly explain how the secant method modifies Newton's method. Give one advantage and one disadvantage of the secant method compared to Newton's method. [3 marks]

@@ -548,6 +548,82 @@ $$
 This is almost the entire complex plane, except for the disk of radius 1 centred at $z=1$. In particular it contains the entire left half-plane, so no upper bound on the step size is needed for stability, even when $|\lambda|$ is very large (as arises in stiff equations, discussed in @sec-stiff). We therefore say that the backward Euler method is **unconditionally stable**.
 :::
 
+------------------------------------------------------------------------
+
+The following exercises let you practise the stability analysis from these lecture notes.
+
+::: {#exr-lect-stab-midpoint-real}
+🖋 Show that for real $z$ the amplification factor $Q(z)=1+z+\frac{z^2}{2}$ of the midpoint method is always positive and that $|Q(z)|\leq 1$ if and only if $-2\leq z\leq 0$. Deduce that for real $\lambda<0$ the midpoint method is stable if and only if $h\leq 2/|\lambda|$, the same condition as for Euler's method. Use this to explain the critical step size that you found for the midpoint method in part (d) of @exr-5.41.
+:::
+
+------------------------------------------------------------------------
+
+::: {#exr-lect-stab-trapezoidal}
+🖋 The **trapezoidal method** is the implicit method
+$$
+x_{n+1}=x_n+\frac{h}{2}\left(f(t_n,x_n)+f(t_{n+1},x_{n+1})\right).
+$$
+
+a.  Apply it to the test equation $x'=\lambda x$ and show that its amplification factor is
+$$
+Q(z)=\frac{1+z/2}{1-z/2}.
+$$
+
+b.  Show that $|Q(z)|\leq 1$ if and only if $\text{Re}(z)\leq 0$, so that the region of absolute stability is exactly the left half-plane (including the imaginary axis). Is the method unconditionally stable? (Hint: $|Q(z)|\leq 1$ means that $z$ is at least as close to $-2$ as to $2$.)
+
+c.  Find $\lim_{z\to-\infty}Q(z)$ for real $z$ and compare with the corresponding limit for the backward Euler method. What does this tell you about how the two methods treat a very rapidly decaying transient $e^{\lambda t}$ with $\lambda\ll 0$ when $h$ is not small?
+
+You should find that $Q(z)\to -1$ for the trapezoidal method, whereas $Q(z)\to 0$ for backward Euler.
+:::
+
+------------------------------------------------------------------------
+
+::: {#exr-lect-stab-rk4}
+🖋 💻 Consider the Runge-Kutta 4 method from @sec-rk4.
+
+a.  🖋 Apply one step of RK4 to the test equation $x'=\lambda x$. Show that $k_1=\lambda x_n$, $k_2=\lambda x_n\left(1+\frac{z}{2}\right)$, and so on, and deduce that the amplification factor is
+$$
+Q(z)=1+z+\frac{z^2}{2}+\frac{z^3}{6}+\frac{z^4}{24}.
+$$
+Compare this with the Taylor series of the factor $e^{z}$ by which the exact solution changes over one step. Do the same comparison for the amplification factors of Euler's method and the midpoint method. How is the number of terms that agree related to the order of the method?
+
+b.  💻 Find numerically the interval of the negative real axis on which $|Q(z)|\leq 1$, for example by using `np.roots()` to find the real roots of $Q(z)-1$ and $Q(z)+1$. This confirms the hint given in @exr-5.56. What is the resulting maximum step size for RK4 applied to $x'=-100x+\sin t$?
+
+c.  💻 Plot the boundaries of the regions of absolute stability of Euler's method, the midpoint method and RK4 in the complex $z$-plane. (Hint: evaluate $|Q(z)|$ on a grid of complex numbers $z=x+iy$ created with `np.meshgrid()` and use `plt.contour()` to draw the curve where $|Q(z)|=1$.)
+
+You should find that $|Q(z)|\leq 1$ for $-2.785\leq z\leq 0$, so the maximum step size is about $0.0279$.
+:::
+
+------------------------------------------------------------------------
+
+::: {#exr-lect-stab-oscillator}
+🖋 💬 For the harmonic oscillator from @exr-5.17 without damping ($b=0$) the differential equation is $x''=-\omega^2x$ with $\omega=\sqrt{k/m}$. The eigenvalues of the matrix of the corresponding first-order system are $\lambda=\pm i\omega$, which are purely imaginary. So the exact solution neither grows nor decays. It is therefore enough to study the test equation with $z=h\lambda=iy$ where $y=h\omega$ is real.
+
+a.  Show that for Euler's method $|Q(iy)|^2=1+y^2$, for the midpoint method $|Q(iy)|^2=1+\frac{y^4}{4}$ and for the backward Euler method $|Q(iy)|^2=\frac{1}{1+y^2}$. What does each of these results tell you about what happens to the amplitude of the numerical solution over many steps? (If you like, check your conclusion for Euler's method by running your `euler()` code from @exr-5.17 with $b=0$ and looking at the phase plot.)
+
+b.  What is $|Q(iy)|$ for the trapezoidal method from @exr-lect-stab-trapezoidal?
+
+c.  Show that for RK4 $|Q(iy)|^2=1-\frac{y^6}{72}+\frac{y^8}{576}$. For which step sizes $h$ does the RK4 solution of the harmonic oscillator not grow?
+
+You should find that the trapezoidal method preserves the amplitude exactly, and that the RK4 solution does not grow as long as $h\omega\leq 2\sqrt{2}\approx 2.83$.
+:::
+
+------------------------------------------------------------------------
+
+::: {#exr-lect-trunc-backward-euler}
+🖋 Show that the backward Euler method $x_{n+1}=x_n+hf(t_{n+1},x_{n+1})$ has a local truncation error of order $h$, using the definition of the local truncation error from @sec-truncation-ode.
+
+a.  First do this for the test equation $x'=\lambda x$: show that one step starting from the exact value gives $x_{n+1}=\frac{x(t_n)}{1-\lambda h}$ and expand $e^{\lambda h}-\frac{1}{1-\lambda h}$ in powers of $h$ to find $\tau_n\approx\frac{h}{2}\lambda^2|x(t_n)|$.
+
+b.  Now do it for a general $f$. Let $e=x(t_{n+1})-x_{n+1}$ where $x_{n+1}$ is obtained from the exact value $x(t_n)$. Expand $x(t_n)=x(t_{n+1}-h)$ in a Taylor series around $t_{n+1}$ and $f(t_{n+1},x_{n+1})=f(t_{n+1},x(t_{n+1})-e)$ in a Taylor series in its second argument to show that
+$$
+\left(1-h\,f_x(t_{n+1},x(t_{n+1}))\right)e=-\frac{h^2}{2}x''(t_{n+1})+\mathcal{O}(h^3)
+$$
+and hence that $\tau_n=\frac{h}{2}|x''(t_{n+1})|+\mathcal{O}(h^2)$.
+:::
+
+------------------------------------------------------------------------
+
 ## Stiff Equations {#sec-stiff}
 
 A differential equation is called **stiff** if the exact solution contains a rapidly decaying transient term. This is a problem for explicit numerical methods because the stability condition forces the step size to be very small — small enough to track the transient — even after the transient has disappeared and the remaining solution varies slowly. The step-size restriction therefore persists for the entire computation, making it very slow.

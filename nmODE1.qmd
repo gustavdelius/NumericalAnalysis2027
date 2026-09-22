@@ -872,6 +872,59 @@ $$
 which is of order $h^2$, confirming that the midpoint method is a second-order method.
 
 
+------------------------------------------------------------------------
+
+The following exercises let you practise the truncation-error analysis from this section.
+
+::: {#exr-lect-trunc-ode-test-equation}
+🖋 Consider the linear differential equation $x'=\lambda x$ with constant $\lambda$, whose exact solution satisfies $x(t_{n+1})=e^{\lambda h}x(t_n)$.
+
+a.  Show that one step of Euler's method started from the exact value gives $x_{n+1}=(1+\lambda h)x(t_n)$. Use the Taylor series of $e^{\lambda h}$ to show that
+$$
+x(t_{n+1})-x_{n+1}=\left(\frac{(\lambda h)^2}{2}+\frac{(\lambda h)^3}{6}+\cdots\right)x(t_n).
+$$
+Deduce that $\tau_n\approx\frac{h}{2}\lambda^2|x(t_n)|$ and check that this agrees with the general formula $\tau_n=\frac{h}{2}|x''(\xi_n)|$.
+
+b.  Do the same for the midpoint method. You should find that one step gives $x_{n+1}=\left(1+\lambda h+\frac{(\lambda h)^2}{2}\right)x(t_n)$ and that $\tau_n\approx\frac{h^2}{6}|\lambda|^3|x(t_n)|$, in agreement with the general formula.
+:::
+
+------------------------------------------------------------------------
+
+::: {#exr-lect-trunc-ode-heun}
+🖋 **Heun's method** (also known as the improved Euler method) first takes a full Euler step to get a prediction $\tilde{x}_{n+1}$ and then uses the average of the slopes at the start and at the predicted end of the step:
+$$
+\begin{split}
+\tilde{x}_{n+1} &= x_n + h f(t_n, x_n),\\
+x_{n+1} &= x_n + \frac{h}{2}\left(f(t_n,x_n)+f(t_{n+1},\tilde{x}_{n+1})\right).
+\end{split}
+$$
+Follow the analysis of the midpoint method above to show that the local truncation error of Heun's method is of order $h^2$, i.e., that Heun's method is a second-order method. (Hint: show that, when started from the exact value $x(t_n)$, $f(t_{n+1},\tilde{x}_{n+1})=x'(t_n)+h x''(t_n)+\mathcal{O}(h^2)$.)
+:::
+
+------------------------------------------------------------------------
+
+::: {#exr-lect-trunc-ode-predict}
+🖋 Suppose you solve an initial-value problem on the interval $[0,1]$ and find that, with step size $h=0.1$, the absolute error at $t=1$ is $0.02$.
+
+a.  If you used Euler's method, roughly what error do you expect at $t=1$ with step size $h=0.025$? Roughly what step size would you need to reduce the error to $10^{-4}$, and how many steps is that?
+
+b.  Answer the same questions if you had used the midpoint method (and had got the same error $0.02$ for $h=0.1$).
+
+You should find an error of about $0.005$ for Euler's method and about $0.00125$ for the midpoint method with $h=0.025$. To reach an error of $10^{-4}$ you need about $2000$ steps of Euler's method but only about $142$ steps of the midpoint method.
+:::
+
+------------------------------------------------------------------------
+
+::: {#exr-lect-trunc-ode-check}
+💻 Confirm the orders of the truncation errors numerically for the differential equation $x'=-0.5x$ with $x(0)=6$ from @exr-5.9, whose exact solution is $x(t)=6e^{-0.5t}$.
+
+a.  For the step sizes $h=2^{-k}$, $k=1,\ldots,10$, compute a single step of Euler's method and of the midpoint method starting from $x(0)=6$, and calculate the local truncation errors $\tau_0=\frac1h|x(h)-x_1|$. Make a log-log plot of $\tau_0$ against $h$ for both methods and read off the slopes.
+
+b.  Now use your `euler_1d()` and `midpoint_1d()` functions to compute the global errors $|x(4)-x_N|$ at $t=4$ for the same step sizes and make a log-log plot of these against $h$. Do the slopes agree with the slopes of the local truncation errors?
+:::
+
+------------------------------------------------------------------------
+
 ## Exam-Style Question
 
 (a) Explain what is meant by *numerical instability* when solving an ordinary differential equation using an explicit finite-difference scheme. What happens to the numerical solution, and how can it be avoided? [3 marks]
