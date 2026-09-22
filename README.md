@@ -16,6 +16,7 @@ This repository contains the Quarto source for the Numerical Analysis 2027 book.
 - `publish_chapter.sh`: Script that renders the book and pushes a single chapter to the `gh-pages` branch.
 - `fonts.css` & `toggle-font.html`: Implementation of the dyslexic font toggle.
 - `docs/`: The output directory where the website and all PDFs are generated.
+- `relabel_exercises.py`: Script that renames the internal exercise labels (`exr-...`) so that they agree with the displayed exercise numbers (e.g. `exr-5.13` for Exercise 5.13) and updates all cross-references. Run `python3 relabel_exercises.py` after adding, removing or reordering exercises (`--dry-run` shows the renames without changing any files).
 
 ## Rendering and Publishing
 

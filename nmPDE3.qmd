@@ -10,7 +10,7 @@ where $c$ is a parameter modelling the stiffness of the medium the wave is trave
 
 ------------------------------------------------------------------------
 
-::: {#exr-6.46}
+::: {#exr-E.1}
 🖋 💻 Let us write code to numerically solve the 1D wave equation. As before, we use the notation $U_i^n$ to represent the approximate solution $u(t,x)$ at the point $t=t_n$ and $x=x_i$.
 
 1.  Give a reasonable discretization of the second derivative in time: 
@@ -47,7 +47,7 @@ $$
 
 ------------------------------------------------------------------------
 
-::: {#exr-6.47}
+::: {#exr-E.2}
 💻 💬 The ratio $c^2\Delta t^2 / \Delta x^2$ shows up explicitly in the finite difference scheme for the 1D wave equation. Just like in the heat equation, this parameter controls when the finite difference solution will be stable. Experiment with your finite difference solution and conjecture a value of $a = c^2 \Delta t^2 / \Delta x^2$ which divides the regions of stability versus instability. Your answer should be in the form:
 
 *If* $a = c^2\Delta t^2 / \Delta x^2 < \underline{\hspace{0.5in}}$ then the finite difference scheme for the 1D wave equation will be stable. Otherwise it will be unstable.
@@ -56,21 +56,21 @@ $$
 
 ------------------------------------------------------------------------
 
-::: {#exr-6.48}
+::: {#exr-E.3}
 💻 Show several plots demonstrating what occurs to the finite difference solution of the wave equation when the parameters are in the unstable region and right on the edge of the unstable region.
 
 :::
 
 ------------------------------------------------------------------------
 
-::: {#exr-6.49}
+::: {#exr-E.4}
 💬 What is the expected error in the finite difference scheme for the 1D wave equation? What does this mean in plain English?
 
 :::
 
 ------------------------------------------------------------------------
 
-::: {#exr-6.50}
+::: {#exr-E.5}
 💻 💬 Use your finite difference code to solve the 1D wave equation 
 $$
  u_{tt} = c^2 u_{xx} 
@@ -81,7 +81,7 @@ $$
 
 ------------------------------------------------------------------------
 
-::: {#exr-6.51}
+::: {#exr-E.6}
 💻 💬 Solve the 1D wave equation 
 $$
  u_{tt} = u_{xx} 
@@ -92,7 +92,7 @@ $$
 
 ## The 2D Wave Equation
 
-::: {#exr-6.52}
+::: {#exr-E.7}
 🖋 💻 Now consider the 2D wave equation 
 $$
  u_{tt} = c^2\left( u_{xx} + u_{yy} \right).
@@ -111,14 +111,14 @@ $$
 
 ------------------------------------------------------------------------
 
-::: {#exr-6.53}
+::: {#exr-E.8}
 💻 💬 What is the region of stability for the finite difference scheme on the 2D wave equation? Produce several plots showing what happens when we are in the unstable region as well as when we are right on the edge of the stable region.
 
 :::
 
 ------------------------------------------------------------------------
 
-::: {#exr-6.54}
+::: {#exr-E.9}
 💻 Solve the 2D wave equation on the unit square with $u$ starting at rest and being driven by a wave coming in from one boundary.
 :::
 
@@ -134,7 +134,7 @@ In this equation $u(t,x)$ is the density of some conserved quantity at time $t$ 
 
 ------------------------------------------------------------------------
 
-::: {#exr-6.55}
+::: {#exr-E.10}
 🖋 Consider the PDE $u_t + v u_x = 0$. There is a very easy way to get an analytic solution to this equation that describes a travelling wave. If we have the initial condition $u(0,x) = f(x) = e^{-(x-4)^2}$ then we claim that $u(t,x) = f(x-vt)$ is an analytic solution to the PDE. More explicitly, we are claiming that 
 $$
  u(t,x) = e^{-(x-vt-4)^2} 
@@ -151,7 +151,7 @@ $$
 
 ------------------------------------------------------------------------
 
-::: {#exr-6.56}
+::: {#exr-E.11}
 💻 Now we would like to visualize the solution to the PDE from the previous exercise. The Python code below gives an interactive visual of the solution. Experiment with different values of $v$ and different initial conditions.
 
 ``` python         
@@ -194,7 +194,7 @@ anim
 
 ------------------------------------------------------------------------
 
-::: {#exr-6.57}
+::: {#exr-E.12}
 🖋 Use the chain rule to prove that for any differentiable function $f(x)$ the function $u(t,x) = f(x-vt)$ is an analytic solution to the transport equation $u_t + v u_{x} = 0$ with initial condition $u(0,x) = f(x)$.
 
 :::
@@ -205,7 +205,7 @@ Thus the transport equation $u_t + vu_x = 0$ has a very nice analytic solution w
 
 ------------------------------------------------------------------------
 
-::: {#exr-6.58}
+::: {#exr-E.13}
 🖋 💻 Consider the transport equation $u_t + vu_x = 0$ with initial condition $u(0,x) = f(x)$ for some given function $f$ and boundary condition $u(t,0) = 0$. To build a numerical solution we will again adopt the notation $U_i^n$ for the approximation to $u(t,x)$ at the point $t=t_n$ and $x=x_i$.
 
 (a)  Write an approximation of $u_t$ using $U_i^{n+1}$ and $U_i^n$.
@@ -226,14 +226,14 @@ The finite difference scheme that you built in the previous exercise is called t
 
 ------------------------------------------------------------------------
 
-::: {#exr-6.59}
+::: {#exr-E.14}
 💬 You should have noticed in the previous exercise that you cannot reasonably stabilize the finite difference scheme. Propose several reasons why this method appears to be unstable no matter what you use for the ratio $v \Delta t / \Delta x$.
 
 :::
 
 ------------------------------------------------------------------------
 
-::: {#exr-6.60}
+::: {#exr-E.15}
 💻 One of the troubles with the finite difference scheme that we have built for the transport equation is that we are using the information at our present spatial location and the next spatial location to the right to propagate the solution forward in time. The trouble here is that the wave is moving from left to right, so the interesting information about the next time step's solution is actually coming from the left, not the right. We call this "looking upwind" since you can think of a fictitious *wind* blowing from left to right, and we need to look "upwind" to see what is coming at us. If we write the spatial derivative as 
 $$
  u_x \approx \frac{U_i^n - U_{i-1}^n}{\Delta x} 
@@ -250,7 +250,7 @@ $$
 
 ------------------------------------------------------------------------
 
-::: {#exr-6.61}
+::: {#exr-E.16}
 💬 Complete the following sentences:
 
 1.  In the downwind finite difference scheme for the transport equation, the approximate solution moves at the correct speed, but ...
@@ -261,7 +261,7 @@ $$
 
 ------------------------------------------------------------------------
 
-::: {#exr-6.62}
+::: {#exr-E.17}
 🖋 💻 💬 Neither the downwind nor the upwind solutions for the transport equation are satisfactory. They completely miss the interesting dynamics of the analytic solution to the PDE. Some ideas for stabilizing the finite difference solution for the transport equation are as follows. Implement each of these ideas and discuss pros and cons of each. Also draw a finite difference stencil for each of these methods.
 
 1.  Perhaps one of the issues is that we are using first-order methods to approximate $u_t$ and $u_x$. What if we used a second-order approximation for these first derivatives 
@@ -301,7 +301,7 @@ $$
 
 ## The Laplace and Poisson Equations
 
-::: {#exr-6.63}
+::: {#exr-E.18}
 💻 💬 Consider the 1D heat equation $u_t = 1 u_{xx}$ with boundary conditions $u(t,0) = 0$ and $u(t,1)=1$ and initial condition $u(0,x) = 0$.
 
 1.  Describe the physical setup for this problem.
@@ -314,7 +314,7 @@ $$
 
 ------------------------------------------------------------------------
 
-::: {#exr-6.64}
+::: {#exr-E.19}
 💻 💬 Now consider the forced 1D heat equation $u_t = u_{xx} + e^{-(x-0.5)^2}$ with the same boundary and initial conditions as the previous exercise. The exponential forcing function introduced in this equation is an external source of heat (like a flame held to the middle of the metal rod).
 
 1.  Conjecture what the steady state heat profile will look like for this particular setup. Be able to defend your answer.
@@ -325,7 +325,7 @@ $$
 
 ------------------------------------------------------------------------
 
-::: {#exr-6.65}
+::: {#exr-E.20}
 💻 💬 Next we will examine 2D steady state heat profiles. Consider the PDE $u_t = u_{xx} + u_{yy}$ with boundary conditions $u(t,0,y) = u(t,x,0) = u(t,x,1) = 0$ and $u(t,1,y) = 1$ with initial condition $u(0,x,y) = 0$.
 
 1.  Describe the physical setup for this problem.
@@ -338,7 +338,7 @@ $$
 
 ------------------------------------------------------------------------
 
-::: {#exr-6.66}
+::: {#exr-E.21}
 💻 💬 Now consider the forced 2D heat equation $u_t = u_{xx} + u_{yy} + 10e^{-(x-0.5)^2-(y-0.5)^2}$ with the same boundary and initial conditions as the previous exercise. The exponential forcing function introduced in this equation is an external source of heat (like a flame held to the middle of the metal sheet).
 
 1.  Conjecture what the steady state heat profile will look like for this particular setup. Be able to defend your answer.
@@ -361,7 +361,7 @@ $$
 
 ------------------------------------------------------------------------
 
-::: {#exr-6.67}
+::: {#exr-E.22}
 🖋 💻 Consider a 1-dimensional rod that is infinitely thin and has unit length. For the sake of simplicity assume the following:
 
 -   the specific heat of the rod is exactly 1 for the entire length of the rod,
@@ -401,14 +401,14 @@ Solving the 1D Laplace equation with Dirichlet boundary conditions is rather uni
 
 ------------------------------------------------------------------------
 
-::: {#exr-6.69}
+::: {#exr-E.23}
 🖋 How would we analytically solve the Poisson equation $u_{xx} = f(x)$ in one spatial dimension? As a sample problem consider $x\in [0,1]$, the forcing function $f(x) = 5\sin(2 \pi x)$ and boundary conditions $u(0) = 2$ and $u(1) = 0.5$. Of course you need to check your answer by taking two derivatives and making sure that the second derivative exactly matches $f(x)$. Also be sure that your solution matches the boundary conditions exactly.
 
 :::
 
 ------------------------------------------------------------------------
 
-::: {#exr-6.70}
+::: {#exr-E.24}
 🖋 💻 Now we can solve the Poisson equation from the previous problem numerically. Let us again build this with a partition that contains only 6 points just like we did with the Laplace equation a few exercise ago. We know the approximation for $u_{xx}$ so we have the linear system 
 $$
 \begin{aligned} U_0 &= 2 \quad \text{(left boundary condition)}\\ \frac{U_2 - 2U_1 + U_0}{\Delta x^2} &= f(x_1) \\ \frac{U_3 - 2U_2 + U_1}{\Delta x^2} &= f(x_2) \\ \frac{U_4 - 2U_3 + U_2}{\Delta x^2} &= f(x_3) \\ \frac{U_5 - 2U_4 + U_3}{\Delta x^2} &= f(x_4) \\ U_5 &= 0.5 \quad \text{(right boundary condition).} \end{aligned}
@@ -425,7 +425,7 @@ $$
 
 ------------------------------------------------------------------------
 
-::: {#exr-6.71}
+::: {#exr-E.25}
 🖋 💻 The previous exercises only account for Dirichlet boundary conditions (fixed boundary conditions). We would now like to modify our Poisson solution to allow for a Neumann condition: where we know the derivative of $u$ at one of the boundaries. The statement of the problem is as follows: 
 $$
 \text{Solve: } u_{xx} = f(x) \quad \text{on} \quad x \in (0,1) \quad \text{with} \quad u_x(0) = \alpha \quad \text{and} \quad u(1) = \beta.
@@ -448,7 +448,7 @@ $$
 
 ------------------------------------------------------------------------
 
-::: {#exr-6.72}
+::: {#exr-E.26}
 #### The 2D Poisson Equation
 🖋 💻 💬 We conclude this section, and chapter, by examining the two dimensional Poisson equations. As a sample problem, we want to solve the Poisson equation 
 $$u_{xx} + u_{yy} = f(x,y)$$
@@ -509,63 +509,63 @@ $$
 
 ## Algorithm Summaries
 
-::: {#exr-6.76}
+::: {#exr-E.27}
 💬 Show the full mathematical details for building a first-order in time and second-order in space approximation method for the one-dimensional heat equation. Explain what the order of the error means in this context
 
 :::
 
 ------------------------------------------------------------------------
 
-::: {#exr-6.77}
+::: {#exr-E.28}
 💬 Show the full mathematical details for building a second-order in time and second-order in space approximation method for the one-dimensional wave equation. Explain what the order of the error means in this context
 
 :::
 
 ------------------------------------------------------------------------
 
-::: {#exr-6.78}
+::: {#exr-E.29}
 💬 Show the full mathematical details for building a first-order in time and second-order in space approximation method for the two-dimensional heat equation. Explain what the order of the error means in this context
 
 :::
 
 ------------------------------------------------------------------------
 
-::: {#exr-6.79}
+::: {#exr-E.30}
 💬 Show the full mathematical details for building a second-order in time and second-order in space approximation method for the two-dimensional wave equation. Explain what the order of the error means in this context
 
 :::
 
 ------------------------------------------------------------------------
 
-::: {#exr-6.80}
+::: {#exr-E.31}
 💬 Explain in clear language what it means for a finite difference method to be stable versus unstable.
 
 :::
 
 ------------------------------------------------------------------------
 
-::: {#exr-6.81}
+::: {#exr-E.32}
 💬 Show the full mathematical details for solving the 1D heat equation using the implicit and Crank-Nicolson methods.
 
 :::
 
 ------------------------------------------------------------------------
 
-::: {#exr-6.82}
+::: {#exr-E.33}
 💬 Show the full mathematical details for building a downwind finite difference scheme for the transport equation. Discuss the primary disadvantages of the downwind scheme.
 
 :::
 
 ------------------------------------------------------------------------
 
-::: {#exr-6.83}
+::: {#exr-E.34}
 💬 Show the full mathematical details for building an upwind finite difference scheme for the transport equation. Discuss the primary disadvantages of the upwind scheme.
 
 :::
 
 ------------------------------------------------------------------------
 
-::: {#exr-6.84}
+::: {#exr-E.35}
 💬 Show the full mathematical details for numerically solving the 1D Laplace and Poisson equations.
 
 :::
@@ -576,7 +576,7 @@ $$
 
 ## Problems
 
-::: {#exr-6.85}
+::: {#exr-E.36}
 🖋 💻 💬 In this problem we will solve a more realistic 1D heat equation. We will allow the diffusivity to change spatially, so $D = D(x)$ and we want to solve 
 $$
 u_t = \left( D(x) u_x \right)_x
@@ -603,28 +603,28 @@ Your jobs are:
 
 ------------------------------------------------------------------------
 
-::: {#exr-6.86}
+::: {#exr-E.37}
 💻 In a square domain create a function $u(0,x,y)$ that looks like the university logo. The simplest way to do this might be to take a photo of the logo, crop it to a square, and use the `scipy.ndimage.imread` command to read in the image. Use this function as the initial condition for the heat equation on a square domain with homogeneous Dirichlet boundary conditions. Numerically solve the heat equation and show an animation for what happens to the logo as time evolves.
 
 :::
 
 ------------------------------------------------------------------------
 
-::: {#exr-6.87}
+::: {#exr-E.38}
 💻 Repeat the previous exercise but this time solve the wave equation with the logo as the initial condition.
 
 :::
 
 ------------------------------------------------------------------------
 
-::: {#exr-6.88}
+::: {#exr-E.39}
 💻 💬 The explicit finite difference scheme that we built for the 1D heat equation in this chapter has error on the order of $\mathcal{O}(\Delta t) + \mathcal{O}(\Delta x^2)$. Explain clearly what this means. Then devise a numerical experiment to empirically test this fact. Clearly explain your thought process and show sufficient plots and mathematics to support your work.
 
 :::
 
 ------------------------------------------------------------------------
 
-::: {#exr-6.89}
+::: {#exr-E.40}
 🖋 💻 Suppose that we have a concrete slab that is 10 meters in length, with the left boundary held at a temperature of $75^\circ$ and the right boundary held at a temperature of $90^\circ$. Assume that the thermal diffusivity of concrete is about $k = 10^{-5}$ m$^2$/s. Assume that the initial temperature of the slab is given by the function $T(x) = 75 + 1.5x - 20 \sin( \pi x / 10)$. In this case, the temperature can be analytically solved by the function $T(t,x) = 75 + 1.5x - 20 \sin(\pi x / 10) e^{-ct}$ for some value of $c$.
 
 1.  Working by hand (no computers!) test the proposed analytic solution by substituting it into the 1D heat equation and verifying that it is indeed a solution. In doing so you will be able to find the correct value of $c$.
@@ -635,7 +635,7 @@ Your jobs are:
 
 ------------------------------------------------------------------------
 
-::: {#exr-6.90}
+::: {#exr-E.41}
 💻 💬 (This problem is modified from [@Spayd]). The data given below is real experimental data provided courtesy of the authors.)
 
 Harry and Sally set up an experiment to gather data specifically for the heat diffusion through a long thin metal rod. Their experimental setup was as follows.
@@ -693,7 +693,7 @@ data = np.array(pd.read_csv(URL+'1dheatdata.csv'))
 
 ------------------------------------------------------------------------
 
-::: {#exr-6.91}
+::: {#exr-E.42}
 You may recall from your differential equations class that population growth under limited resources is governed by the logistic equation $x' = k_1x(1-x/k_2)$ where $x=x(t)$ is the population, $k_1$ is the intrinsic growth rate of the population, and $k_2$ is the carrying capacity of the population. The carrying capacity is the maximum population that can be supported by the environment. The trouble with this model is that the species is presumed to be fixed to a spatial location. Let us make a modification to this model that allows the species to spread out over time while they reproduce. We have seen throughout this chapter that the heat equation $u_t = D(u_{xx} + u_{yy})$ models the diffusion of a substance (like heat or concentration). We therefore propose the model\
 
 $$
@@ -708,8 +708,8 @@ $$
 
 ------------------------------------------------------------------------
 
-::: {#exr-6.92}
-In @exr-6.72 you solved the Poisson equation, $u_{xx} + u_{yy} = f(x,y)$, on the unit square with homogeneous Dirichlet boundary conditions and a forcing function $f(x,y) = -20 \exp\left(-\frac{(x-0.5)^2 + (y-0.5)^2}{0.05} \right)$. Use a $10 \times 10$ grid of points to solve the Poisson equation on the same domain with the same forcing function but with boundary conditions 
+::: {#exr-E.43}
+In @exr-E.26 you solved the Poisson equation, $u_{xx} + u_{yy} = f(x,y)$, on the unit square with homogeneous Dirichlet boundary conditions and a forcing function $f(x,y) = -20 \exp\left(-\frac{(x-0.5)^2 + (y-0.5)^2}{0.05} \right)$. Use a $10 \times 10$ grid of points to solve the Poisson equation on the same domain with the same forcing function but with boundary conditions 
 $$
 u(0,y)=0, \quad u(1,y) = 0, \quad u(x,0) = -\sin(\pi x), \quad u(x,1) = 0.
 $$

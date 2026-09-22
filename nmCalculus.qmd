@@ -11,7 +11,7 @@ Recall the typical techniques from differential calculus: the power rule, the ch
 
 ------------------------------------------------------------------------
 
-::: {#exr-3.2}
+::: {#exr-5.1}
 💬 When a police officer fires a laser speed gun at a moving car it uses a laser to measure the distance from the officer to the car:
 
 -   The speed of light is constant.
@@ -29,7 +29,7 @@ Integration, on the other hand, is a more difficult situation. You may recall so
 
 ------------------------------------------------------------------------
 
-::: {#exr-3.3}
+::: {#exr-5.2}
 💬 In statistics the function known as *the normal distribution* (the bell curve) is defined as
 $$
 N(x) = \frac{1}{\sqrt{2\pi}} e^{-x^2/2}.
@@ -43,7 +43,7 @@ $$
 
 ------------------------------------------------------------------------
 
-::: {#exr-3.5}
+::: {#exr-5.3}
 💬 A dam operator has control of the rate at which water is flowing out of a hydroelectric dam. He has records for the approximate flow rate through the dam over the course of a day. Propose a way for the operator to use his data to determine the total amount of water that has passed through the dam during that day.
 
 :::
@@ -58,7 +58,7 @@ Throughout this chapter we will make heavy use of Taylor's Theorem to build appr
 
 ### The First Derivative
 
-::: {#exr-3.6}
+::: {#exr-5.4}
 💬 Recall from your first-semester Calculus class that the derivative of a function $f(x)$ is defined as
 $$
 f'(x) = \lim_{\Delta x \to 0} \frac{f(x+\Delta x) - f(x)}{\Delta x}.
@@ -89,7 +89,7 @@ This distance $\Delta x$ between neighbouring points in the partition is often r
 
 ------------------------------------------------------------------------
 
-::: {#exr-3.7}
+::: {#exr-5.5}
 🖋 Let us take a close look at partitions before moving on to more details about numerical differentiation.
 
 1.  If we partition the interval $[0,1]$ into $3$ equal subintervals each with length $h$ then:
@@ -121,14 +121,14 @@ $$
 
 ------------------------------------------------------------------------
 
-::: {#exr-3.8}
+::: {#exr-5.6}
 🖋 🎓 In Python's `numpy` library there is a nice tool called `np.linspace()` that partitions an interval in exactly the way that we want. The command takes the form `np.linspace(a, b, n)` where the interval is $[a,b]$ and $n$ the number of points used to create the partition. For example, `np.linspace(0,1,5)` will produce the list of numbers `0, 0.25, 0.5, 0.75, 1`. Notice that there are 5 total points, the first point is $a$, the last point is $b$, and there are $4$ total subintervals in the partition. Hence, if we want to partition the interval $[0,1]$ into 20 equal subintervals then we would use the command `np.linspace(0,1,21)` which would result in a list of numbers starting with `0, 0.05, 0.1, 0.15,` etc. What command would you use to partition the interval $[5,10]$ into $100$ equal subintervals?
 
 :::
 
 ------------------------------------------------------------------------
 
-::: {#exr-3.9}
+::: {#exr-5.7}
 🖋 Consider the Python command `np.linspace(0,1,50)`.
 
 1.  What interval does this command partition?
@@ -161,7 +161,7 @@ While this is the simplest and most obvious approximation for the first derivati
 
 ### Truncation Error
 
-::: {#exr-3.10}
+::: {#exr-5.8}
 🖋 From Taylor's Theorem we know that, for a sufficiently smooth function $f(x)$ whose Taylor series represents it locally,
 $$
 f(x) = f(x_0) + \frac{f'(x_0)}{1!} (x-x_0)^1 + \frac{f''(x_0)}{2!}(x-x_0)^2 + \frac{f^{(3)}(x_0)}{3!}(x-x_0)^3 + \cdots.
@@ -176,7 +176,7 @@ $$
 
 ------------------------------------------------------------------------
 
-::: {#exr-3.11}
+::: {#exr-5.9}
 🖋 Solve the result from the previous exercise for $f'(x)$ to create an approximation for $f'(x)$ using $f(x+h)$, $f(x)$, and some higher-order terms. (Fill in the blanks and the question marks.)
 $$
 f'(x) = \frac{f(x+h) - ???}{??} + \underline{\hspace{2in}}
@@ -185,10 +185,10 @@ $$
 
 ------------------------------------------------------------------------
 
-::: {#exr-3.12}
-🖋 🎓 In the formula that you developed in @exr-3.11, if we were to truncate after the first fraction and drop everything else (called the *remainder*), we know that we would be introducing a truncation error into our derivative computation. If $h$ is taken to be very small then the first term in the remainder is the largest and everything else in the remainder can be ignored (since all subsequent terms should be extremely small ... pause and ponder this fact). Therefore, the amount of error we make in the derivative computation by dropping the remainder depends on the power of $h$ in that first term in the remainder.
+::: {#exr-5.10}
+🖋 🎓 In the formula that you developed in @exr-5.9, if we were to truncate after the first fraction and drop everything else (called the *remainder*), we know that we would be introducing a truncation error into our derivative computation. If $h$ is taken to be very small then the first term in the remainder is the largest and everything else in the remainder can be ignored (since all subsequent terms should be extremely small ... pause and ponder this fact). Therefore, the amount of error we make in the derivative computation by dropping the remainder depends on the power of $h$ in that first term in the remainder.
 
-What is the power of $h$ in the first term of the remainder from @exr-3.11?
+What is the power of $h$ in the first term of the remainder from @exr-5.9?
 :::
 
 ------------------------------------------------------------------------
@@ -221,7 +221,7 @@ when $h$ is sufficiently small. If the leading nonzero error term is proportiona
 ------------------------------------------------------------------------
 
 ::: {#thm-3.1}
-The approximation you derived in @exr-3.11 gives a first-order approximation of the first derivative:
+The approximation you derived in @exr-5.9 gives a first-order approximation of the first derivative:
 $$
  f'(x) = \frac{f(x+h) - f(x)}{h} + \mathcal{O}(h).
 $$
@@ -231,7 +231,7 @@ This is called the **forward difference approximation** of the first derivative.
 
 ------------------------------------------------------------------------
 
-::: {#exr-3.13}
+::: {#exr-5.11}
 💻 💬 Consider the function $f(x) = \sin(x) (1- x)$. The goal of this exercise is to make sense of the discussion of the "order" of the derivative approximation.
 
 a.  Find $f'(x)$ analytically.
@@ -341,7 +341,7 @@ h.  💬 What does your answer to part (e) have to do with the approximation ord
 
 :::
 
-::: {#exr-3.16}
+::: {#exr-5.12}
 💬 Explain the phrase: *The forward difference approximation* $f'(x) \approx \frac{f(x+h)-f(x)}{h}$ *is first order.*
 
 :::
@@ -354,7 +354,7 @@ Now that we have a handle on how the forward-difference approximation scheme for
 
 ------------------------------------------------------------------------
 
-::: {#exr-3.17}
+::: {#exr-5.13}
 💻 🎓 We want to build a Python function that accepts:
 
 -   a mathematical function,
@@ -429,7 +429,7 @@ plt.show()
 
 ------------------------------------------------------------------------
 
-::: {#exr-3.18}
+::: {#exr-5.14}
 💻 Now let us build the first derivative function in a much *smarter* way -- using NumPy arrays in Python. Instead of looping over all of the $x$ values, we can take advantage of the fact that NumPy operations can act on all the elements of an array at once and hence we can do all of the function evaluations and all the subtractions and divisions at once without a loop.
 
 1.  The line of code `x = np.linspace(a,b,N+1)` builds a numpy vector of $N+1$ values of $x$ starting at $a$ and ending at $b$. Then `y = f(x)` builds a vector with the function values at all the elements in `x`. In the following questions remember that Python indexes all lists starting at 0. Also remember that you can call on the last element of a list using an index of `-1`. Finally, remember that if you do `x[p:q]` in Python you will get a list of `x` values starting at index `p` and ending at index `q-1`.
@@ -455,7 +455,7 @@ def ForwardDiff(f,a,b,N):
 3. Test your new function by checking that the plots from the previous exercise still look the same.
 :::
 
-::: {#exr-3.19}
+::: {#exr-5.15}
 💻 Write code that finds a first-order approximation for the first derivative of $f(x) = \sin(x) (1 - x)$ on the interval $x \in (0,15)$. Your script should output two plots (side-by-side).
 
 a.  The left-hand plot should show the function in blue and the approximate first derivative as a red dashed curve. Sample code for this exercise is given below.
@@ -494,7 +494,7 @@ d.  Play with the number of subintervals, $N$, and demonstrate the fact that we 
 
 ------------------------------------------------------------------------
 
-::: {#exr-max_err_plot}
+::: {#exr-5.16}
 💻 You have seen in the previous exercise how the error is different at different $x$. It might be interesting to look at the largest error over the entire interval for different step sizes.
 
 1.  Find the numerical first derivative with your `ForwardDiff` function on the interval $[0,15]$ with a step size of $h = 0.1$.
@@ -536,7 +536,7 @@ Next we will build a more accurate numerical first derivative scheme. The deriva
 
 ------------------------------------------------------------------------
 
-::: {#exr-3.20}
+::: {#exr-5.17}
 🖋 Consider again the Taylor series for a sufficiently smooth function $f(x)$ whose Taylor series represents it locally:
 $$
  f(x) = f(x_0) + \frac{f'(x_0)}{1!} (x-x_0)^1 + \frac{f''(x_0)}{2!}(x-x_0)^2 + \frac{f^{(3)}(x_0)}{3!}(x-x_0)^3 + \cdots .
@@ -579,14 +579,14 @@ $$
 
 ------------------------------------------------------------------------
 
-::: {#exr-3.21}
+::: {#exr-5.18}
 💻 🎓 Let us return to the function $f(x) = \sin(x)(1- x)$ but this time we will approximate the first derivative at $x=1$ using the formula
 $$
 f'(1) \approx \frac{f(1+h) - f(1-h)}{2h}=:\delta f(1).
 $$
  You should already have the first derivative and the exact answer from earlier exercises (if not, then go get them by hand again).
 
-a. We want to see how the error in the approximation behaves as $h$ is made smaller and smaller. Adapt your code from @exr-3.13 to extend the table to include $h = 2^{-3}$ up to $h = 2^{-10}$.
+a. We want to see how the error in the approximation behaves as $h$ is made smaller and smaller. Adapt your code from @exr-5.11 to extend the table to include $h = 2^{-3}$ up to $h = 2^{-10}$.
 
 ```{python}
 #| echo: false
@@ -635,14 +635,14 @@ e.  💬 What does your answer to part (d) have to do with the approximation ord
 
 ------------------------------------------------------------------------
 
-::: {#exr-3.23}
+::: {#exr-5.19}
 💻 Write a Python function `CentralDiff(f, a, b, N)` that takes a mathematical function `f`, the start and end values of an interval [`a`, `b`] and the number `N` of subintervals to use. It should return a second-order numerical approximation to the first derivative on the interval. This should be a vector with $N-1$ entries (why?). You should try to write this code without using any loops. (Hint: This should really be a minor modification of your first-order first derivative code.) Test the code on functions where you know the first derivative.
 
 :::
 
 ------------------------------------------------------------------------
 
-::: {#exr-3.25}
+::: {#exr-5.20}
 💻 💬 The plot shown in @fig-3.3 shows the maximum absolute error between the exact first derivative of a function $f(x)$ and a numerical first derivative approximation scheme. At this point we know two schemes:
 $$
  f'(x) = \frac{f(x+h) - f(x)}{h} + \mathcal{O}(h)
@@ -723,7 +723,7 @@ $$
 
 ------------------------------------------------------------------------
 
-::: {#exr-3.26}
+::: {#exr-5.21}
 🖋 The goal of this exercise is to use the Taylor series for $f(x+h)$ and $f(x-h)$ to arrive at an approximation scheme for the second derivative $f''(x)$.
 
 1.  Add the Taylor series for $f(x+h)$ and $f(x-h)$ and combine all like terms. You should notice that several terms cancel.
@@ -744,7 +744,7 @@ $$
 
 ------------------------------------------------------------------------
 
-::: {#exr-3.27}
+::: {#exr-5.22}
 🖋 💬 Again consider the function $f(x) = \sin(x)(1 - x)$.
 
 1.  Calculate the derivative of this function and calculate the exact value of $f''(1)$.
@@ -757,20 +757,20 @@ $$
 
 ------------------------------------------------------------------------
 
-::: {#exr-3.28}
+::: {#exr-5.23}
 💻 Write a Python function `SecondDiff(f, a, b, N)` that takes a mathematical function `f`, the start and end values of an interval [`a`, `b`] and the number `N` of subintervals to use. It should return a second-order numerical approximation to the second derivative on the interval. This should be a vector with $N-1$ entries (why?). As before, you should write your code without using any loops.
 
 :::
 
 ------------------------------------------------------------------------
 
-::: {#exr-3.29}
-💻 💬 Test your second derivative code on the function $f(x) = \sin(x) (1-x)$ by calculating the second derivative at $x=1$ and comparing it to the exact answer you determined in @exr-3.27.
+::: {#exr-5.24}
+💻 💬 Test your second derivative code on the function $f(x) = \sin(x) (1-x)$ by calculating the second derivative at $x=1$ and comparing it to the exact answer you determined in @exr-5.22.
 :::
 
 ------------------------------------------------------------------------
 
-::: {#exr-max_err_plot_second}
+::: {#exr-5.25}
 💻 🎓 You have seen in the previous exercise how the error is different at different $x$. It might be interesting to look at the largest error over the entire interval for different step sizes.
 
 1.  Find the numerical second derivative with your `SecondDiff` function on the interval $[0,15]$ with a step size of $h = 0.1$.
@@ -798,7 +798,7 @@ The table below summarises the formulas that we have for derivatives thus far.
 
 ------------------------------------------------------------------------
 
-::: {#exr-3.30}
+::: {#exr-5.26}
 💬  Let $f(x)$ be a twice differentiable function. We are interested in the first and second derivative of the function $f$ at the point $x = 1.74$. Use what you have learned in this section to answer the following questions. (For clarity, you can think of "$f$" as a different function in each of the following questions ...it does not really matter exactly what function $f$ is.)
 
 1.  Johnny used a numerical first derivative scheme with $h = 0.1$ to approximate $f'(1.74)$ and found an absolute error of 3.28. He then used $h=0.01$ and found an absolute error of 0.328. What was the order of the error in his first derivative scheme? How can you tell?
@@ -809,7 +809,7 @@ The table below summarises the formulas that we have for derivatives thus far.
 
 :::
 
-::: {#exr-3.30n}
+::: {#exr-5.27}
 🖋 We said at the start of this section that the spacing of the steps does not have to be constant. Instead of a constant step size $h$ we could have variable step sizes $\Delta x_i:=x_{i+1}-x_i$. However, this complicates the expression for the second derivative. In this exercise you can check that you fully understood the derivation of the formula for the second derivative by repeating it for these variable step sizes. So you will need to start with the Taylor expansions of $f(x_{i+1})=f(x_i+\Delta x_i)$ and $f(x_{i-1})=f(x_i-\Delta x_{i-1})$ around $x_i$.
 
 :::
@@ -822,7 +822,7 @@ Now that we understand how to calculate derivatives, we begin our work on the se
 
 ------------------------------------------------------------------------
 
-::: {#exr-3.31}
+::: {#exr-5.28}
 💬 Remember that a single-variable definite integral can be interpreted as the signed area between the curve and the $x$ axis. Consider the shaded area of the region under the function plotted in @fig-3.4 between $x=0$ and $x=2$.
 
 1.  What rectangle with area 6 gives an upper bound for the area under the curve? Can you give a better upper bound?
@@ -878,7 +878,7 @@ $$
 
 ------------------------------------------------------------------------
 
-::: {#exr-3.32}
+::: {#exr-5.29}
 💻 🎓 Write a Python function `RiemannSum(f, a, b, N, method='left')` that approximates an integral with a Riemann sum.
 Your Python function should accept a Python function `f`, a lower bound `a`, an upper bound `b`, the number of subintervals `N`, and an optional input `method` that allows the user to designate whether they want 'left', 'right', or 'midpoint' rectangles. You should write your code without any loops. Test your code on several functions for which you know the integral.
 
@@ -904,7 +904,7 @@ def RiemannSum(f, a, b, N, method='left'):
         raise ValueError("Method must be 'left', 'right', or 'midpoint'")
 ```
 
-::: {#exr-3.33}
+::: {#exr-5.30}
 💻 Consider the function $f(x) = \sin(x)$. We know the antiderivative for this function, $F(x) = -\cos(x) + C$. In this question we are going to get a sense of the order of the error when doing Riemann sum integration.
 
 a.  Find the exact value of
@@ -959,7 +959,7 @@ d.  Repeat part (b) to create the tables and answer the questions using the righ
 
 ------------------------------------------------------------------------
 
-::: {#exr-3.34}
+::: {#exr-5.31}
 💻 💬 🎓 This exercise continues examining the absolute integration errors from the previous problem, this time with a plot.
 
 Use the following function to plot the absolute error as a function of $\Delta x$.
@@ -1022,7 +1022,7 @@ DX = [2**(-n) for n in range(1, 11)]
 plot_riemann_errors(f, 0, 1, exact, DX)
 ```
 
-Discuss the pattern in how the absolute error changes as $\Delta x$ is changed. What does the log-log plot tell you? How does this agree with what the tables you created in the previous exercise told you? (Again notice the similarity between this exercise and @exr-3.25 where you created a similar plot for approximating a derivative.)
+Discuss the pattern in how the absolute error changes as $\Delta x$ is changed. What does the log-log plot tell you? How does this agree with what the tables you created in the previous exercise told you? (Again notice the similarity between this exercise and @exr-5.20 where you created a similar plot for approximating a derivative.)
 
 :::
 
@@ -1036,7 +1036,7 @@ Now let us turn our attention to some slightly better algorithms for calculating
 
 ------------------------------------------------------------------------
 
-::: {#exr-3.37}
+::: {#exr-5.32}
 🖋 🎓 Consider a single trapezoid approximating the area under a curve. From geometry we recall that the area of a trapezoid is
 $$
 A = \frac{f(a) + f(b)}{2}\left( b - a \right).
@@ -1054,9 +1054,9 @@ Now use the same idea with $h = \Delta x = 1$ to approximate the area under the 
 
 ------------------------------------------------------------------------
 
-::: {#exr-3.37b}
+::: {#exr-5.33}
 #### Trapezoidal Rule
-Now generalise the idea from @exr-3.37 to divide the interval $[a,b]$ into $N$ subintervals with boundaries $\{x_0=a, x_1, x_2, \ldots, x_{N-1},x_N=b\}$. Fill in the missing bits in the equations below. The area of the trapezoid on the subinterval from $x_{j-1}$ to $x_j$ is
+Now generalise the idea from @exr-5.32 to divide the interval $[a,b]$ into $N$ subintervals with boundaries $\{x_0=a, x_1, x_2, \ldots, x_{N-1},x_N=b\}$. Fill in the missing bits in the equations below. The area of the trapezoid on the subinterval from $x_{j-1}$ to $x_j$ is
 $$
 A_j = \frac{1}{2} \left[ f(???) + f(???) \right]\left(??? - ??? \right).
 $$
@@ -1073,7 +1073,7 @@ $$
 
 ------------------------------------------------------------------------
 
-::: {#exr-3.39}
+::: {#exr-5.34}
 💻 🎓 Write a Python function `Trapezoidal(f, a, b, N)` that approximates an integral with the trapezoidal method you derived in the previous exercise.
 Your Python function should accept a Python function `f`, a lower bound `a`, an upper bound `b` and the number of subintervals `N`. You should write your code without any loops. Test your code on several functions for which you know the integral.
 
@@ -1081,12 +1081,12 @@ Your Python function should accept a Python function `f`, a lower bound `a`, an 
 
 ------------------------------------------------------------------------
 
-::: {#exr-3.40}
+::: {#exr-5.35}
 You have by now developed and repeatedly used ways to investigate how the errors for numerical integration and differentiation schemes depend on the step size. It is now up to you to do the same for the trapezoidal rule. The goal is to answer the question:
 
 > If I approximate the integral with a fixed $\Delta x$ and find an absolute error of $P$, then what will the absolute error be using a width of $\Delta x / M$?
 
-You can either do this with a table as in @exr-3.33 or with a graph as in @exr-3.34. What is the order of the error for the trapezoidal rule?
+You can either do this with a table as in @exr-5.30 or with a graph as in @exr-5.31. What is the order of the error for the trapezoidal rule?
 :::
 
 ------------------------------------------------------------------------
@@ -1119,7 +1119,7 @@ $$
 
 ------------------------------------------------------------------------
 
-::: {#exr-3.43}
+::: {#exr-5.36}
 🖋 At this point we can see that an integral can be approximated as
 $$
 \int_a^b f(x) dx \approx \left( \frac{b-a}{6} \right) \left( f(a) + 4f\left( \frac{a+b}{2} \right) + f(b) \right)
@@ -1237,7 +1237,7 @@ fig2
 
 ------------------------------------------------------------------------
 
-::: {#exr-3.43b}
+::: {#exr-5.37}
 #### Simpson's Rule
 We divide the interval $[a,b]$ into $N$ subintervals with boundaries $\{x_0=a, x_1, x_2, \ldots, x_{N-1},x_N=b\}$. Fill in the missing bits in the equations below. We approximate the integral on the subinterval from $x_{j-1}$ to $x_j$ by
 $$
@@ -1256,7 +1256,7 @@ $$
 
 ------------------------------------------------------------------------
 
-::: {#exr-3.45}
+::: {#exr-5.38}
 💻 🎓 Write a Python function `Simpsons(f, a, b, N)` that approximates an integral with Simpson's rule that you derived in the previous exercise.
 Your Python function should accept a Python function `f`, a lower bound `a`, an upper bound `b` and the number of subintervals `N`. You should write your code without any loops. Test your code on several functions for which you know the integral.
 
@@ -1264,8 +1264,8 @@ Your Python function should accept a Python function `f`, a lower bound `a`, an 
 
 ------------------------------------------------------------------------
 
-::: {#exr-3.44}
-🎓 As in @exr-3.40, use your favourite method to determine how the absolute
+::: {#exr-5.39}
+🎓 As in @exr-5.35, use your favourite method to determine how the absolute
 error in Simpson's rule depends on the step size and hence determine the order of the error for Simpson's rule?
 
 :::
@@ -1273,7 +1273,7 @@ error in Simpson's rule depends on the step size and hence determine the order o
 ------------------------------------------------------------------------
 
 
-::: {#exr-3.47}
+::: {#exr-5.40}
  Use the integration problem and exact answer
 $$
 \int_0^{\pi/4} e^{3x} \sin(2x) dx = \frac{3}{13} e^{3\pi/4} + \frac{2}{13}
@@ -1293,7 +1293,7 @@ Further reading: Sections 4.3 to 4.9 of [@Burden_Faires].
 
 ## Algorithm Summaries
 
-::: {#exr-3.87}
+::: {#exr-5.41}
 🖋 Starting from Taylor series prove that
 $$
 f'(x) \approx \frac{f(x+h) - f(x)}{h}
@@ -1303,7 +1303,7 @@ $$
 
 ------------------------------------------------------------------------
 
-::: {#exr-3.88}
+::: {#exr-5.42}
 🖋 Starting from Taylor series prove that
 $$
 f'(x) \approx \frac{f(x+h) - f(x-h)}{2h}
@@ -1314,7 +1314,7 @@ $$
 
 ------------------------------------------------------------------------
 
-::: {#exr-3.89}
+::: {#exr-5.43}
 🖋 Starting from Taylor series prove that
 $$
 f''(x) \approx \frac{f(x+h) - 2f(x) + f(x-h)}{h^2}
@@ -1325,21 +1325,21 @@ $$
 
 ------------------------------------------------------------------------
 
-::: {#exr-3.90}
+::: {#exr-5.44}
 🖋 Explain how to approximate the value of a definite integral with Riemann sums. When will the Riemann sum approximation be exact? Distinguish between left, right and midpoint Riemann sums. State how the error of these approximations depends on the step size, i.e., give the order of the error for each of the three Riemann sums.
 
 :::
 
 ------------------------------------------------------------------------
 
-::: {#exr-3.91}
+::: {#exr-5.45}
 🖋 Explain how to approximate the value of a definite integral with the trapezoidal rule. When will the trapezoidal rule approximation be exact? What is the order of the trapezoidal rule?
 
 :::
 
 ------------------------------------------------------------------------
 
-::: {#exr-3.92}
+::: {#exr-5.46}
 🖋 Explain how to approximate the value of a definite integral with Simpson's rule. Give the full mathematical details for where Simpson's rule comes from. When will the Simpson's rule approximation be exact? What is the order of Simpson's rule?
 
 :::
@@ -1565,7 +1565,7 @@ def trapezoidal(f, a, b, N):
 
 ## Problems
 
-::: {#exr-3.97}
+::: {#exr-5.47}
 🖋 💬 For each of the following numerical differentiation formulas
 
 (1) prove that the formula is true and
@@ -1584,28 +1584,28 @@ To prove that each of the formulas is true you will need to write the Taylor ser
 
 ------------------------------------------------------------------------
 
-::: {#exr-3.98}
+::: {#exr-5.48}
 💻 Write a function that accepts a list of $(x,y)$ ordered pairs from a spreadsheet and returns a list of $(x,y)$ ordered pairs for a first-order approximation of the first derivative of the underlying function. Create a test spreadsheet file and a test script that have graphical output showing that your function is finding the correct derivative.
 
 :::
 
 ------------------------------------------------------------------------
 
-::: {#exr-3.99}
+::: {#exr-5.49}
 💻 Write a function that accepts a list of $(x,y)$ ordered pairs from a spreadsheet or a `*.csv` file and returns a list of $(x,y)$ ordered pairs for a second-order approximation of the second derivative of the underlying function. Create a test spreadsheet file and a test script that have graphical output showing that your function is finding the correct derivative.
 
 :::
 
 ------------------------------------------------------------------------
 
-::: {#exr-3.100}
+::: {#exr-5.50}
 💻 Write a function that implements the trapezoidal rule on a list of $(x,y)$ ordered pairs representing the integrand function. The list of ordered pairs should be read from a spreadsheet file. Create a test spreadsheet file and a test script showing that your function is finding the correct integral.
 
 :::
 
 ------------------------------------------------------------------------
 
-::: {#exr-3.101}
+::: {#exr-5.51}
 💻 💬 Use numerical integration to answer the question in each of the following scenarios
 
 1.  We measure the rate at which water is flowing out of a reservoir (in gallons per second) several times over the course of one hour. Estimate the total amount of water which left the reservoir during that hour.
@@ -1632,7 +1632,7 @@ $$
 
 ------------------------------------------------------------------------
 
-::: {#exr-3.102}
+::: {#exr-5.52}
 💻 💬 Consider the integrals
 $$
 \int_{-2}^2 e^{-x^2/2} dx \quad \text{and} \quad \int_0^1 \cos(x^2) dx.
@@ -1643,7 +1643,7 @@ $$
 
 ------------------------------------------------------------------------
 
-::: {#exr-3.103}
+::: {#exr-5.53}
 💻 💬 Go to [data.gov](https://www.data.gov/) or the [World Health Organization Data Repository](http://apps.who.int/gho/data/?theme=home) and find data sets for the following tasks.
 
 1.  Find a data set where the variables naturally lead to a meaningful derivative. Use appropriate code to evaluate and plot the derivative. If your data appears to be subject to significant noise then you may want to smooth the data first before doing the derivative. Write a few sentences explaining what the derivative means in the context of the data.
@@ -1656,7 +1656,7 @@ In both of these tasks be very cautious of the units on the data sets and the un
 
 ------------------------------------------------------------------------
 
-::: {#exr-3.104}
+::: {#exr-5.54}
 💻 💬 Numerically integrate each of the functions over the interval $[-1,2]$ with an appropriate technique and verify mathematically that your numerical integral is correct to 10 decimal places. Then provide a plot of the function along with its numerical first derivative.
 
 1.  $f(x) = \frac{x}{1+x^4}$
@@ -1669,7 +1669,7 @@ In both of these tasks be very cautious of the units on the data sets and the un
 
 ------------------------------------------------------------------------
 
-::: {#exr-3.105}
+::: {#exr-5.55}
 💻 💬 A bicyclist completes a race course in 90 seconds. The speed of the biker at each 10-second interval is determined using a radar gun and is given in the table in feet per second. How long is the race course?
 
 | **Time (sec)** | **0** | **10** | **20** | **30** | **40** | **50** | **60** | **70** | **80** | **90** |

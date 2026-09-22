@@ -94,7 +94,7 @@ y
 
 ------------------------------------------------------------------------
 
-::: {#exr-A.5}
+::: {#exr-A.1}
 Write code to define positive integers $a,b$ and $c$ of your own choosing. Then calculate $a^2, b^2$ and $c^2$. When you have all three values computed, check to see if your three values form a Pythagorean Triple so that $a^2 + b^2 = c^2$. Have Python simply say True or False to verify that you do, or do not, have a Pythagorean Triple defined. **Hint:** You will need to use the `==` Boolean check just like in other programming languages.
 :::
 
@@ -185,7 +185,7 @@ print(type(MixedList[3]))
 
 ------------------------------------------------------------------------
 
-::: {#exr-A.6}
+::: {#exr-A.2}
 In this exercise you will put your new list skills into practice.
 
 1.  Create the list of the first several Fibonacci numbers: 
@@ -266,7 +266,7 @@ my_list
 
 ------------------------------------------------------------------------
 
-::: {#exr-A.7}
+::: {#exr-A.3}
 In this exercise you will go a bit further with your list operation skills.
 
 1.  Create the list of the first several Lucas Numbers: $1,3,4,7,11,18,29,47.$
@@ -431,7 +431,7 @@ for n in range(0,6):
 
 ------------------------------------------------------------------------
 
-::: {#exr-A.8}
+::: {#exr-A.4}
 We want to sum the first 100 perfect cubes. Let us do this in two ways.
 
 1.  Start off a variable called `total` at 0 and write a `for` loop that adds the next perfect cube to the running total.
@@ -444,7 +444,7 @@ The answer is: 25,502,500 so check your work.
 
 ------------------------------------------------------------------------
 
-::: {#exr-A.9}
+::: {#exr-A.5}
 Write a `for` loop that builds the first 20 terms of the sequence $x_{n+1}=1-x_n^2$ with $x_0=0.1$. Pre-allocate enough memory in your list and then fill it with the terms of the sequence. Only print the list after all of the computations have been completed.
 
 :::
@@ -486,7 +486,7 @@ print("The last few terms in the list are:\n",Fib[-3:])
 
 ------------------------------------------------------------------------
 
-::: {#exr-A.10}
+::: {#exr-A.6}
 Write a `while` loop that sums the terms in the Fibonacci sequence until the sum is larger than 1000
 
 :::
@@ -565,12 +565,12 @@ else:
 
 ------------------------------------------------------------------------
 
-::: {#exr-A.11}
+::: {#exr-A.7}
 Write code to give the Collatz Sequence 
 \begin{equation}
 x_{n+1} = \left\{ \begin{array}{ll} x_n / 2, & \text{$x_n$ is even} \\ 3 x_n + 1, & \text{otherwise} \end{array} \right.
 \end{equation}
- starting with a positive integer of your choosing. The sequence will converge^[Actually, it is still an open mathematical question whether every integer seed will converge to 1. The Collatz sequence has been checked for many millions of initial seeds and they all converge to 1, but there is no mathematical proof that it will always happen. You will check the conjecture numerically in @exr-1.50] to 1 so your code should stop when the sequence reaches 1.
+ starting with a positive integer of your choosing. The sequence will converge^[Actually, it is still an open mathematical question whether every integer seed will converge to 1. The Collatz sequence has been checked for many millions of initial seeds and they all converge to 1, but there is no mathematical proof that it will always happen. You will check the conjecture numerically in @exr-A.25] to 1 so your code should stop when the sequence reaches 1.
  
  **Hints:** To test whether a number `x` is even you can test whether the remainder after dividing by 2 is zero with `(x % 2) == 0`. Also you will want to use the integer division `//` when calculating $x_n/2$.
 
@@ -609,7 +609,7 @@ Take careful note of several things in the previous example:
 
 ------------------------------------------------------------------------
 
-::: {#exr-A.12}
+::: {#exr-A.8}
 Define the function $g(n) = n^2 + n + 41$ as a Python function. Write a loop that gives the output for this function for integers from $n=0$ to $n=39$. Euler noticed that each of these outputs is a prime number (check this on your own). Will the function produce a prime for $n=40$? For $n=41$?
 :::
 
@@ -688,7 +688,7 @@ This example also shows how to format the output of a print statement so that it
 
 ------------------------------------------------------------------------
 
-::: {#exr-A.13}
+::: {#exr-A.9}
 The previous example is a special case of the Babylonian Algorithm for calculating square roots. If you want the square root of $S$ then iterate the sequence 
 \begin{equation}
 x_{n+1} = \frac{1}{2} \left(x_n + \frac{S}{x_n} \right)
@@ -738,14 +738,14 @@ If we wanted the value $f(2,4)$ we would now write the code `f(2,4)`.
 
 ------------------------------------------------------------------------
 
-::: {#exr-A.14}
-Go back to @exr-A.12 and repeat this exercise using a `lambda` function.
+::: {#exr-A.10}
+Go back to @exr-A.8 and repeat this exercise using a `lambda` function.
 :::
 
 ------------------------------------------------------------------------
 
-::: {#exr-A.15}
-Go back to @exr-A.13 and repeat this exercise using a `lambda` function.
+::: {#exr-A.11}
+Go back to @exr-A.9 and repeat this exercise using a `lambda` function.
 :::
 
 ------------------------------------------------------------------------
@@ -834,7 +834,7 @@ Of course, there will be times when you need help with a function. You can use t
 
 ------------------------------------------------------------------------
 
-::: {#exr-A.16}
+::: {#exr-A.12}
 Import the `math` package, figure out how the `log` function works, and write code to calculate the logarithm of the number 8.3 in base 10, base 2, base 16, and base $e$ (the natural logarithm).
 :::
 
@@ -891,7 +891,7 @@ my_list**2 # This will work as expected!
 
 ------------------------------------------------------------------------
 
-::: {#exr-numpy}
+::: {#exr-A.13}
 See if you can take the sine of a full list of numbers that are stored in a `numpy` array.
 
 Hint: you will now see why the numpy package provides its own version of the sine function.
@@ -1126,7 +1126,7 @@ A @ A_inv
 
 ------------------------------------------------------------------------
 
-::: {#exr-A.17}
+::: {#exr-A.14}
 Now that we can do some basic linear algebra with `numpy` it is your turn. Define the matrix $B$ and the vector $u$ as\
 
 \begin{equation}
@@ -1224,7 +1224,7 @@ If the purpose of this is not clear to you yet, don't worry. You will see it use
 
 ------------------------------------------------------------------------
 
-::: {#exr-A.18}
+::: {#exr-A.15}
 Now it is time to practice with some of these `numpy` functions.
 
 a.  Create a `numpy` array of the numbers 1 through 10 and square every entry in the list without using a loop.
@@ -1385,7 +1385,7 @@ plt.show()
 
 ------------------------------------------------------------------------
 
-::: {#exr-A.19}
+::: {#exr-A.16}
 Plot the functions $f(x) = x^2$, $g(x) = x^3$, and $h(x) = x^4$ on the same axes. Use the domain $x \in [0,1]$. Put a grid, a legend, a title, and appropriate labels on the axes.
 :::
 
@@ -1465,7 +1465,7 @@ The `fig.tight_layout()` command makes the plot labels a bit more readable in th
 
 ------------------------------------------------------------------------
 
-::: {#exr-A.20}
+::: {#exr-A.17}
 Put the functions $f(x) = x^2$, $g(x) = x^3$ and $h(x) = x^4$ in a subplot environment with 1 row and 3 columns of plots. Use the unit interval as the domain and range for all three plot. Make sure that each plot has a grid, appropriate labels, an appropriate title, and the overall figure has a title.
 
 ### Logarithmic Scaling with `semilogy`, `semilogx`, and `loglog`
@@ -1520,7 +1520,7 @@ to produce identical results.
 
 ------------------------------------------------------------------------
 
-::: {#exr-A.21}
+::: {#exr-A.18}
 Plot the function $f(x) = x^3$ for $x \in [0,1]$ on linearly scaled axes, logarithmic axis in the $y$ direction, logarithmically scaled axes in the $x$ direction, and a log-log plot with logarithmic scaling on both axes. Use `subplots` to put your plots side-by-side. Give appropriate labels, titles, etc.
 :::
 
@@ -1579,14 +1579,14 @@ You do not need to do all the exercises. Do only as many as you have time for an
 
 ------------------------------------------------------------------------
 
-::: {#exr-1.42}
+::: {#exr-A.19}
 (This problem is modified from [@ProjectEuler])\
 If we list all of the numbers below 10 that are multiples of 3 or 5 we get 3, 5, 6, and 9. The sum of these multiples is 23. Write code to find the sum of all the multiples of 3 or 5 below 1000. Your code needs to run error free and output only the sum. There are of course many ways you could approach this exercise. Compare your approach to that of others in your group.
 :::
 
 ------------------------------------------------------------------------
 
-::: {#exr-1.43}
+::: {#exr-A.20}
 (This problem is modified from [@ProjectEuler])\
 Each new term in the Fibonacci sequence is generated by adding the previous two terms. By starting with 1 and 2, the first 10 terms will be: 
 \begin{equation}
@@ -1597,7 +1597,7 @@ By considering the terms in the Fibonacci sequence whose values do not exceed fo
 
 ------------------------------------------------------------------------
 
-::: {#exr-1.44}
+::: {#exr-A.21}
 Write computer code that will draw random numbers from the unit interval $[0,1]$, distributed uniformly (using Python's `np.random.rand()`), until the sum of the numbers that you draw is greater than 1. Keep track of how many numbers you draw. Then write a loop that does this process many many times. On average, how many numbers do you have to draw until your sum is larger than 1?
 
 **Hint #1:**
@@ -1611,7 +1611,7 @@ Write computer code that will draw random numbers from the unit interval $[0,1]$
 
 ------------------------------------------------------------------------
 
-::: {#exr-1.47}
+::: {#exr-A.22}
 (This problem is modified from [@ProjectEuler])\
 The sum of the squares of the first ten natural numbers is, 
 \begin{equation}
@@ -1628,14 +1628,14 @@ Write code to find the difference between the square of the sum of the first one
 
 ------------------------------------------------------------------------
 
-::: {#exr-1.48}
+::: {#exr-A.23}
 (This problem is modified from [@ProjectEuler])\
 The prime factors of $13195$ are $5, 7, 13$ and $29$. Write code to find the largest prime factor of the number $600851475143$? Your code needs to run error free and output only the largest prime factor.
 :::
 
 ------------------------------------------------------------------------
 
-::: {#exr-1.49}
+::: {#exr-A.24}
 (This problem is modified from [@ProjectEuler])\
 The number 2520 is the smallest number that can be divided by each of the numbers from 1 to 10 without any remainder. Write code to find the smallest positive number that is evenly divisible by all of the numbers from 1 to 20?
 
@@ -1644,7 +1644,7 @@ The number 2520 is the smallest number that can be divided by each of the number
 
 ------------------------------------------------------------------------
 
-::: {#exr-1.50}
+::: {#exr-A.25}
 The following iterative sequence is defined for the set of positive integers: \begin{equation}
 \begin{aligned} & n \to \frac{n}{2} \quad (n \text{ is even}) \\ & n \to 3n + 1 \quad (n \text{ is odd}) \end{aligned}
 \end{equation} Using the rule above and starting with $13$, we generate the following sequence: \begin{equation}

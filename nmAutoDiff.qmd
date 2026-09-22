@@ -140,7 +140,7 @@ This will become clearer in sections @sec-forward-ad and @sec-reverse-ad.
 
 ------------------------------------------------------------------------
 
-::: {#exr-3.31a}
+::: {#exr-D.1}
 🖋 💬 1. Draw the computation graph for the function $f(x) = x^2\sin(x)$.
 
 2. For the function $h(x,y,z) = xy + yz + zx$, identify:
@@ -302,7 +302,7 @@ $$
 
 ------------------------------------------------------------------------
 
-::: {#exr-3.33}
+::: {#exr-D.2}
 
 🖋 💻 Compute the derivative of using the dual number approach:
 
@@ -377,7 +377,7 @@ And to compute $\frac{\partial f}{\partial y}$, we initialize:
 
 ------------------------------------------------------------------------
 
-::: {#exr-3.34}
+::: {#exr-D.3}
 
 🖋 💻 1. For $f(x, y) = x^2y + \sin(xy)$, compute both $\frac{\partial f}{\partial x}$ and $\frac{\partial f}{\partial y}$ at $(x, y) = (2, 1)$ using forward mode AD with the dual number approach.
 
@@ -558,7 +558,7 @@ plt.show()
 :::
 ------------------------------------------------------------------------
 
-::: {#exr-3.35}
+::: {#exr-D.4}
 
 🖋 💬 Trace through the reverse mode process for:
 
@@ -604,7 +604,7 @@ Two things to note:
 
 :::
 
-::: {#exr-3.37}
+::: {#exr-D.5}
 
 Use JAX to compute the derivatives of:
 
@@ -614,7 +614,7 @@ b. $f(x) = \sin(x) \exp(x)$
 
 c. $f(x) = \frac{x^2 + 1}{2x - 3}$
 
-Check that you get the same results as in @exr-3.33.
+Check that you get the same results as in @exr-D.2.
 
 :::
 
@@ -639,7 +639,7 @@ print(f"∂g/∂y at (2,1) = {dg_dy(2.0, 1.0)}")
 
 :::
 
-::: {#exr-3.37b}
+::: {#exr-D.6}
 
 💻 Use this approach to compute the partial derivatives of:
 
@@ -665,7 +665,7 @@ print(f"f''(1) = {d2f(1.0)}")
 
 ------------------------------------------------------------------------
 
-::: {#exr-3.38}
+::: {#exr-D.7}
 💻 💬 Compare the accuracy and efficiency of the differentiation methods we've studied:
 
 1. For the function $f(x) = \sin(x)(1 - x)$, compute the derivative at $x = 1$ using:
@@ -682,13 +682,13 @@ print(f"f''(1) = {d2f(1.0)}")
 
 ## Algorithm Summaries
 
-::: {#exr-3.90a}
+::: {#exr-D.8}
 💬 Explain how to define arithmetic operations on dual numbers and how to use them to compute the derivative of a function with forward mode automatic differentiation.
 :::
 
 ------------------------------------------------------------------------
 
-::: {#exr-3.90b}
+::: {#exr-D.9}
 💬 Given a computation graph of a function, explain how to accumulate the gradients in a backwards pass through the computation graph.
  What is the advantage of this method over forward mode automatic differentiation?
 :::

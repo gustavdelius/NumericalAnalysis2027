@@ -4,7 +4,7 @@
 
 OK. Ready for some experimentation? We are going to build a few experiments that eventually lead us to a more powerful method for finding numerical solutions to first order differential equations than the midpoint method. It is up to you to decide how much time to spend on experimentation in this section. If you are pressed for time, you can skip forward to @sec-rk4.
 
-::: {#exr-5.31}
+::: {#exr-8.1}
 🖋 Let us talk about the Midpoint Method for a moment. The geometric idea of the midpoint method is outlined in the bullets below. Draw a picture along with the bullets.
 
 -   You are sitting at the point $(t_n,x_n)$.
@@ -37,7 +37,7 @@ $$
 
 ------------------------------------------------------------------------
 
-::: {#exr-5.34}
+::: {#exr-8.2}
 🖋 💻 💬 The midpoint method only uses the slope at the midpoint. Perhaps one can find a better method by taking some combination of slopes calculated at different points. Here we will build four slopes:
 
 -   $m_n = f(t_n, x_n)$: the slope at the start of the step.
@@ -181,7 +181,7 @@ The order of the error in the RK4 method is $\mathcal{O}(\Delta t^4)$.
 
 ------------------------------------------------------------------------
 
-::: {#exr-5.37}
+::: {#exr-8.3}
 
 💬 🎓 Of course there is a price to pay for the improvement provided by the RK4 method over our earlier methods. How many evaluations of the function $f(t,x)$ do we need to make at every time step of the RK4 method? Compare this to the Euler method and the midpoint method. 
 
@@ -215,14 +215,14 @@ d.  Discuss the implications of what you found in parts (a) - (c) of this proble
 
 --->
 
-::: {#exr-rk4-hand}
+::: {#exr-8.4}
 🖋 🎓 Let us step back for a second and just see what the RK4 method does from a nuts-and-bolts point of view. Consider the differential equation $x' = x$ with initial condition $x(0) = 1$. The solution to this differential equation is clearly $x(t) = e^t$. Take $\Delta t = h$ and perform 1 step of the RK4 method BY HAND to approximate the value $x(h)$. You should find that $x(h)$ is given by a polynomial in $h$. 💬 Does that polynomial look familiar? Is this consistent with the fact that the RK4 method is a 4th order method?
 
 :::
 
 ------------------------------------------------------------------------
 
-::: {#exr-rk4-1d}
+::: {#exr-8.5}
 💻 🎓 Write a Python function that implements the Runge-Kutta 4 method in one dimension. 
 
 ``` python         
@@ -245,14 +245,14 @@ Test the problem on several differential equations where you know the solution.
 
 ------------------------------------------------------------------------
 
-::: {#exr-rk4error}       
+::: {#exr-8.6}       
 #### RK4 Error Plot
 💻 Make a log-log plot of the error in the RK4 method for a differential equation whose solution you know exactly (you could use $x' = -\frac{1}{3}x + \sin(t)$ with $x(0) = 1$ on the domain $t \in [0,10]$, similar to what you did for the Euler method and the midpoint method earlier). Check that the error plot shows that the error is $\mathcal{O}(\Delta t^4)$.
 :::
 
 ------------------------------------------------------------------------
 
-::: {#exr-rk4h}       
+::: {#exr-8.7}       
 #### RK4 in Several Dimensions
 💻 🎓 Modify your Runge-Kutta 4 code to work for any number of dimensions.  You may want to start from your `euler()` and `midpoint()` functions that already do this.  You will only need to make minor modifications from there.  Then test your new generalized RK4 method on all of the same problems which you used to test your `euler()` and `midpoint()` functions.
 :::
@@ -290,7 +290,7 @@ $$
 
 ------------------------------------------------------------------------
 
-::: {#exr-5.48}
+::: {#exr-8.8}
 🖋 Let us take a few steps through the backward Euler method on a problem that we know well: $x' = -0.5x$ with $x(0) = 6$.\
 Let us take $h=1$ for simplicity, so the backward Euler iteration scheme for this particular differential equation is 
 $$
@@ -316,7 +316,7 @@ $$
 
 ------------------------------------------------------------------------
 
-::: {#exr-5.48b}
+::: {#exr-8.9}
 🖋 🎓 By hand, apply the backward Euler method with stepsize $h=1/2$ to the differential equation $x'=xt$ with initial condition $x(0)=1$ to obtain an approximation for $x(1/2)$. Do your calculations in terms of fractions.
 
 :::
@@ -354,11 +354,11 @@ $$
 $$
 G(x_{n+1}):=x_{n+1} - hf(t_{n+1},x_{n+1}) - x_n = 0.
 $$
- You know the values of $h=\Delta t$, $t_{n+1}$ and $x_n$, and you know the function $f$, so, in a practical sense, you should use some sort of numerical method to solve that equation -- at each time step. Since $G'(x_{n+1}) = 1 - h\,\partial f/\partial x$, applying Newton's method would require computing the partial derivative of $f$ with respect to $x$, which is not always available or convenient. So our next best option is to use the secant method. You can use your code from @exr-2.49 for the function `secant_1d()`.
+ You know the values of $h=\Delta t$, $t_{n+1}$ and $x_n$, and you know the function $f$, so, in a practical sense, you should use some sort of numerical method to solve that equation -- at each time step. Since $G'(x_{n+1}) = 1 - h\,\partial f/\partial x$, applying Newton's method would require computing the partial derivative of $f$ with respect to $x$, which is not always available or convenient. So our next best option is to use the secant method. You can use your code from @exr-4.20 for the function `secant_1d()`.
 
 ------------------------------------------------------------------------
 
-::: {#exr-5.50}
+::: {#exr-8.10}
 💻 🎓 Complete the function `backward_euler_1d()` below. How do you define the function `G` inside the `for` loop and what starting values do you use for the secant method?
 
 ``` python         
@@ -382,13 +382,13 @@ Test your `backward_euler_1d()` function on several differential equations where
 
 ------------------------------------------------------------------------
 
-::: {#exr-5.52}
+::: {#exr-8.11}
 💻 You can test your `backward_euler_1d()` function on the differential equation 
 $$x' = -\frac{1}{3} x + \sin(t)\qquad\text{ with }x(0) = 1$$
 like we have for many of our past algorithms since we know that the solution is 
 $$x(t) = \frac{1}{10}\left( 19e^{-t/3} + 3\sin(t) - 9\cos(t) \right)$$
 
-The following plot lets you compare the backward Euler method to the forward Euler method and the exact solution. You just need to first define the `euler_1d()` function (which you have done in @exr-5.12) and the `backward_euler_1d()` function (which you have just completed in @exr-5.50).
+The following plot lets you compare the backward Euler method to the forward Euler method and the exact solution. You just need to first define the `euler_1d()` function (which you have done in @exr-7.5) and the `backward_euler_1d()` function (which you have just completed in @exr-8.10).
 
 ```python
 import numpy as np
@@ -413,13 +413,13 @@ plt.legend()
 
 ## Numerical Instabilities {#sec-instability}
 
-::: {#exr-5.54}
+::: {#exr-8.12}
 💻 💬 It may not be obvious at the outset, but the Backward Euler method will actually behave better than the (forward) Euler method in some sense. Let us take a look. Consider, for example, the really simple linear differential equation $x' = -10x$ with $x(0) = 1$ on the interval $t \in [0,2]$. The analytic solution is $x(t) = e^{-10t}$. Write Python code that plots the analytic solution, the Euler approximation, and the Backward Euler approximation on top of each other. Use a time step that is larger than you normally would (such as $\Delta t = 0.25$ or $\Delta t = 0.5$ or larger).  What do you notice? Why do you think this is happening?
 :::
 
 ------------------------------------------------------------------------
 
-::: {#exr-5.54b}
+::: {#exr-8.13}
 🖋 🎓 Consider the linear differential equation $x' = -cx$ with $c>0$ a constant. If you solve this with the forward Euler method with a step size $h$, then each step can be written in the form
 $$
 x_{n+1} =\  ??? \ \cdot x_n.
@@ -554,7 +554,7 @@ An example of such a rapidly decaying term would be a term of the form $e^{-\gam
 $$
 x'=-100x+\sin t.
 $$
-This is similar to equations we solved in @exr-5.13, just with a larger negative coefficient in front of $x$. The solution to this equation is
+This is similar to equations we solved in @exr-7.6, just with a larger negative coefficient in front of $x$. The solution to this equation is
 $$
 x(t)=Ce^{-100t}+\frac{100}{10001}\sin t-\frac{1}{10001}\cos t.
 $$
@@ -562,12 +562,12 @@ The term $e^{-100t}$ decays very rapidly. We refer to such a term in the solutio
 
 ------------------------------------------------------------------------
 
-::: {#exr-5.55}
+::: {#exr-8.14}
 🖋 Verify by substitution that
 $$
 x(t)=Ce^{-100t}+\frac{100}{10001}\sin t-\frac{1}{10001}\cos t
 $$
-is indeed the general solution to $x'=-100x+\sin t$. (The particular solution can be found by the method of undetermined coefficients; the analytic solution to $x'=-\frac{1}{3}x+\sin t$ was stated in @exr-5.13.) Then:
+is indeed the general solution to $x'=-100x+\sin t$. (The particular solution can be found by the method of undetermined coefficients; the analytic solution to $x'=-\frac{1}{3}x+\sin t$ was stated in @exr-7.6.) Then:
 
 a. What value of $C$ gives the solution satisfying the initial condition $x(0)=0$?
 
@@ -578,7 +578,7 @@ c. What is the maximum step size that forward Euler can use on this equation and
 
 ------------------------------------------------------------------------
 
-::: {#exr-5.56}
+::: {#exr-8.15}
 💻 💬 Investigate the stiffness of $x'=-100x+\sin t$ with $x(0)=0$ numerically.
 
 a. Solve the equation using forward Euler with step sizes $h=0.1$, $h=0.01$, and $h=0.001$. Plot all three numerical solutions together with the exact solution on the interval $t\in[0,1]$. What do you observe?
@@ -597,7 +597,7 @@ A simple example comes from the overdamped spring. Consider the second-order ODE
 $$
 x''+(\gamma+1)x'+\gamma x=0,
 $$
-which describes a spring-mass system with damping. This is the system from @exr-5.17 with $m=1, b=\gamma+1$ and $k=\gamma$. Writing $u=x$ and $v=x'$ converts this to the first-order system
+which describes a spring-mass system with damping. This is the system from @exr-7.9 with $m=1, b=\gamma+1$ and $k=\gamma$. Writing $u=x$ and $v=x'$ converts this to the first-order system
 $$
 \begin{pmatrix}u\\v\end{pmatrix}' = \begin{pmatrix}0&1\\-\gamma&-(\gamma+1)\end{pmatrix}\begin{pmatrix}u\\v\end{pmatrix}.
 $$
@@ -610,7 +610,7 @@ For large $\gamma$ the term $e^{-\gamma t}$ is a rapidly decaying transient and 
 
 ------------------------------------------------------------------------
 
-::: {#exr-5.57}
+::: {#exr-8.16}
 🖋 Consider the system from @exm-5.57 with initial conditions $u(0)=1$ and $v(0)=x'(0)=0$:
 $$
 \begin{pmatrix}u\\v\end{pmatrix}' = \begin{pmatrix}0&1\\-\gamma&-(\gamma+1)\end{pmatrix}\begin{pmatrix}u\\v\end{pmatrix}, \quad \begin{pmatrix}u(0)\\v(0)\end{pmatrix}=\begin{pmatrix}1\\0\end{pmatrix}.
@@ -625,10 +625,10 @@ c. For $\gamma=100$, how small must the step size $h$ be for the forward Euler m
 
 ------------------------------------------------------------------------
 
-::: {#exr-5.58}
+::: {#exr-8.17}
 💻 Solve the stiff system from @exm-5.57 numerically with $\gamma=100$ on the interval $t\in[0,5]$.
 
-a. Solve the system with the forward Euler method and step sizes $h=0.1$, $h=0.01$, and $h=0.001$. You can use your code from @exr-5.17. At which step size does forward Euler first produce a stable solution?
+a. Solve the system with the forward Euler method and step sizes $h=0.1$, $h=0.01$, and $h=0.001$. You can use your code from @exr-7.9. At which step size does forward Euler first produce a stable solution?
 
 b. Solve the system with the backward Euler method using the same step sizes. Does backward Euler remain stable even for $h=0.1$? You can use the following function for the higher-dimensional backward Euler method:
 
@@ -662,28 +662,28 @@ Note that while Backward Euler is stable for large $h$, it is still only a first
 
 ## Algorithm Summaries
 
-::: {#exr-5.63}
+::: {#exr-8.18}
 🖋 Consider the first-order differential equation $x' = f(t,x)$. What is the Runge Kutta 4 method for approximating the solution to this differential equation? What is the order of accuracy of the Runge Kutta 4 method?
 
 :::
 
 ------------------------------------------------------------------------
 
-::: {#exr-5.64}
+::: {#exr-8.19}
 🖋 Explain in clear language what the Runge Kutta 4 method does geometrically.
 
 :::
 
 ------------------------------------------------------------------------
 
-::: {#exr-5.65}
+::: {#exr-8.20}
 🖋 Consider the first-order differential equation $x' = f(t,x)$. What is the Backward Euler method for approximating the solution to this differential equation? What is the order of accuracy of the backward Euler method? What is the region of absolute stability for the backward Euler method?
 
 :::
 
 ------------------------------------------------------------------------
 
-::: {#exr-5.66}
+::: {#exr-8.21}
 🖋 Explain in clear language what the Backward Euler method does geometrically.
 
 :::
@@ -708,7 +708,7 @@ Note that while Backward Euler is stable for large $h$, it is still only a first
 
 ## Problems
 
-::: {#exr-5.69}
+::: {#exr-8.22}
 🖋 💻 Test the Euler, Midpoint, and Runge Kutta methods on the differential equation 
 $$
 x' = \lambda \left( x - \cos(t) \right) - \sin(t) \quad \text{with} \quad x(0) = 1.5.
@@ -721,7 +721,7 @@ Find the exact solution by hand using the method of undetermined coefficients an
 ------------------------------------------------------------------------
 
 
-::: {#exr-5.74}
+::: {#exr-8.23}
 🖋 💻 In this problem we will look at the orbit of a celestial body around the sun. The body could be a satellite, comet, planet, or any other object whose mass is negligible compared to the mass of the sun. We assume that the motion takes place in a two dimensional plane so we can describe the path of the orbit with two coordinates, $x$ and $y$ with the point $(0,0)$ being used as the reference point for the sun. According to Newton's law of universal gravitation the system of differential equations that describes the motion is 
 $$
 x''(t) = \frac{-x}{\left( \sqrt{x^2 + y^2} \right)^3} \quad \text{and} \quad y''(t) = \frac{-y}{\left( \sqrt{x^2 + y^2} \right)^3}.
@@ -742,7 +742,7 @@ $$
 
 ------------------------------------------------------------------------
 
-::: {#exr-5.75}
+::: {#exr-8.24}
 💬 💻 In this problem we consider the pursuit and evasion problem where $E(t)$ is the vector for an evader (e.g. a rabbit or a bank robber) and $P(t)$ is the vector for a pursuer (e.g. a fox chasing the rabbit or the police chasing the bank robber) 
 $$
 E(t) = \begin{pmatrix} x_e(t) \\ y_e(t) \end{pmatrix} \quad \text{and} \quad P(t) = \begin{pmatrix} x_p(t) \\ y_p(t) \end{pmatrix}.
@@ -803,7 +803,7 @@ Note: It may be easiest to build this code from scratch instead of using one of 
 
 
 
-::: {#exr-5.77}
+::: {#exr-8.25}
 💻 (This problem is modified from [@Spindler])
 
 You just received a new long-range helicopter drone for your birthday! After a little practice, you try a long-range test of it by having it carry a small package to your home. A friend volunteers to take it 5 miles east of your home with the goal of flying directly back to your home. So you program and guide the drone to always head directly toward home at a speed of 6 miles per hour. However, a wind is blowing from the south at a steady 4 miles per hour. The drone, though, always attempts to head directly home. We will assume the drone always flies at the same height. What is the drone's flight path? Does it get the package to your home? What happens if the speeds are different? What if the initial distance is different? How much time does the drone's battery have to last to get home? When you make plots of your solution they must be animated.
@@ -812,7 +812,7 @@ You just received a new long-range helicopter drone for your birthday! After a l
 
 ------------------------------------------------------------------------
 
-::: {#exr-5.78}
+::: {#exr-8.26}
 🖋 💻 A trebuchet catapult throws a cow vertically into the air. The differential equation describing its acceleration is 
 $$
 \frac{d^2x}{dt^2} = -g - c \frac{dx}{dt} \left| \frac{dx}{dt} \right|
@@ -823,7 +823,7 @@ $$
 
 ------------------------------------------------------------------------
 
-::: {#exr-5.79}
+::: {#exr-8.27}
 #### Scipy ODEINT
 💻 It should come as no surprise that the `scipy` library has some built-in tools to solve differential equations numerically. One such tool is `scipy.integrate.odeint()`. The code below shows how to use the `.odeint()` tool to solve the differential equation $x' = -\frac{1}{3}x + \sin(t)$ with $x(0) =1$. Take note that the `.odeint()` function expects a Python function (or `lambda` function), an initial condition, and an array of times.
 
@@ -879,7 +879,7 @@ plt.show()
 
 4.  Build a numerical experiment to determine the relationship between your choice of $\Delta t$ and the absolute maximum error between the solution from `.odeint()` and a known analytic solution to a scalar ODE. Support your work with appropriate plots and discussion.
 
-5.  Solve the system of differential equations from @exr-5.74 using `scipy.integrate.odeint()`. Show appropriate plots of your solution.
+5.  Solve the system of differential equations from @exr-8.23 using `scipy.integrate.odeint()`. Show appropriate plots of your solution.
 :::
 
 

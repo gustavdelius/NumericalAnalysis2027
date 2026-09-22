@@ -14,7 +14,7 @@ While working through this chapter on finding optima you will often be reminded 
 
 Let us start with solving optimisation problems where the quantity to be optimised is a function of a single variable. We'll later optimise over multiple variables in @sec-multiopt.
 
-::: {#exr-3.48}
+::: {#exr-6.1}
 🖋 Here is an atypically easy optimisation problem that you can quickly do by hand:
 
  A piece of cardboard measuring 20 cm by 20 cm is to be cut so that it can be folded into a box without a lid (see @fig-3.8). We want to find the size of the cut, $x$, that maximises the volume of the box.
@@ -47,7 +47,7 @@ In the above example it was easy to find the value of $x$ that maximised the fun
 
 ### Brute Force Search
 
-::: {#exr-3.49c}
+::: {#exr-6.2}
 
 💻 Consider the function 
 $$f(x) = -e^{-x^2} - \sin(x^2)$$ 
@@ -102,7 +102,7 @@ Unfortunately by just looking at the function values at two points there is no w
 
 -------------------------------------------------------------------
 
-::: {#exr-3.51a}
+::: {#exr-6.3}
 🖋 Make a sketch of a function and choose three points on the function such that the middle point is lower than the two outer points. Use this to illustrate that there must be at least a local minimum between the two outer points.
 :::
 
@@ -112,13 +112,13 @@ The idea now is to choose a new point between the two outer points, compare the 
 
 --------------------------------------------------------------------
 
-::: {#exr-3.51b}
+::: {#exr-6.4}
 🖋 🎓 You want to find a minimum of a continuous function $f$ using the golden section search method. You start with the three points $a=1,c=3,b=5$ where the function takes the values $f(1)=5, f(3)=2,f(5)=3$. For the next step you decided to add the point $d=2.5$ and find that $f(2.5)=1$. Which three points should you choose to continue the search?
 :::
 
 -------------------------------------------------------------------
 
-::: {#exr-golden-section-code}
+::: {#exr-6.5}
 
 💻 Complete the following function to implement this method. If you have done the previous two exercises you will have a good idea of what to do and this is mostly a coding task. So it would be alright to delegate this to just the group members who enjoy coding the most.
 
@@ -192,13 +192,13 @@ The intuition behind more efficient numerical optimisation schemes is typically 
 
 ------------------------------------------------------------------------
 
-::: {#exr-3.49}
+::: {#exr-6.6}
 💬 If you were blindfolded and standing on a hillside, could you find the top of the hill? (assume no trees and no cliffs ...this is not supposed to be dangerous) How would you do it? Explain your technique clearly.
 :::
 
 ------------------------------------------------------------------------
 
-::: {#exr-3.50}
+::: {#exr-6.7}
 💬 If you were blindfolded and standing in a crater on the moon could you find the lowest point? How would you do it? Remember that you can hop as far as you like ... because gravity ... but sometimes that's not a great thing because you could hop too far.
 :::
 
@@ -231,14 +231,14 @@ Let $f(x)$ be the objective function which you are seeking to minimise.
 
 ------------------------------------------------------------------------
 
-::: {#exr-3.57}
+::: {#exr-6.8}
 💬 What is the Gradient Descent algorithm doing geometrically? Draw a picture and be prepared to explain to your peers. Discuss what would be a good stopping rule. 
 :::
 
 ------------------------------------------------------------------------
 
-::: {#exr-3.53}
-💻 Write code to implement the 1D gradient descent algorithm. Note that gradient descent is a fixed-point iteration method. So you can adapt the code for Newton's method from @exr-2.38. Just be sure to change the iteration formula.
+::: {#exr-6.9}
+💻 Write code to implement the 1D gradient descent algorithm. Note that gradient descent is a fixed-point iteration method. So you can adapt the code for Newton's method from @exr-4.7. Just be sure to change the iteration formula.
 
 ``` python
 def gradient_descent_1d(df, x0, alpha, 
@@ -280,13 +280,13 @@ def gradient_descent_1d(df, x0, alpha,
     #    return a message that method did not converge
 ```
 
-Use your function to solve @exr-3.48. Compare your answer to the analytic solution.
+Use your function to solve @exr-6.1. Compare your answer to the analytic solution.
 Also test your function to find the minimum of the function in @fig-opt-1
 :::
 
 ------------------------------------------------------------------------
 
-::: {#exr-3.56b}
+::: {#exr-6.10}
 💻 🎓 Use your gradient descent function to find the minimum of the function 
 $$f(x) = (\sin(4x)+1)((x-5)^2-25)$$
 on the domain $0 \le x \le 8$. Figure @fig-opt-2 shows a graph of the function with its multiple
@@ -311,7 +311,7 @@ If you choose $x_0=3$ as your starting point and a learning rate of $0.001$, wha
 
 ------------------------------------------------------------------------
 
-::: {#exr-3.55}
+::: {#exr-6.11}
 💻 🎓 Experiment with different values of the learning rate for the previous question, assuming that you can only specify it with up to 3 digits after the decimal point. Which choice of learning rate requires the smallest number of steps to reach the required tolerance of $10^{-12}$? 
 
 :::
@@ -319,10 +319,10 @@ If you choose $x_0=3$ as your starting point and a learning rate of $0.001$, wha
 
 ------------------------------------------------------------------------
 
-::: {#exr-3.54}
+::: {#exr-6.12}
 💻 You will now explore how the error decreases as the number of gradient descent steps increases.
 
-1. Write a Python function `gradient_descent_with_error_tracking()` that returns a list of absolute errors between the iterates and the exact minimum. You can adapt your `newton_with_error_tracking()` function from @exr-newton_error_tracking. 
+1. Write a Python function `gradient_descent_with_error_tracking()` that returns a list of absolute errors between the iterates and the exact minimum. You can adapt your `newton_with_error_tracking()` function from @exr-4.14. 
 2. Use this to print the errors when applied to the function $f(x)=\cos(x)$ with a starting value of $x_0=3$, a learning rate of $\alpha = 0.1$ and a tolerance of $10^{-12}$. Make sure you use the correct exact minimum in your error calculations, namely the one that you expect gradient descent to find.
 3. Use your `plot_error_progression()` function that we wrote in @exm-2.1b to make a plot of the log of the absolute error at iteration $n+1$ against the log of the absolute error at iteration $n$. You should observe that the points line up approximately along a straight line.
 4. 🎓 Read off the slope of the straight line fitted to the points.
@@ -339,7 +339,7 @@ $$
 
 ### Order of Convergence of Gradient Descent
 
-You will by now have observed in @exr-3.54 that the error progression plots for gradient descent show a straight line with slope approximately equal to 1 in the log-log plot of $E_{n+1}$ against $E_n$. This means that gradient descent has **linear** convergence. In this section we consolidate your observations theoretically. As in @sec-roots2, this section is presented as a lecture rather than containing further explorations.
+You will by now have observed in @exr-6.12 that the error progression plots for gradient descent show a straight line with slope approximately equal to 1 in the log-log plot of $E_{n+1}$ against $E_n$. This means that gradient descent has **linear** convergence. In this section we consolidate your observations theoretically. As in @sec-roots2, this section is presented as a lecture rather than containing further explorations.
 
 Recall from @def-a that a convergent sequence $\{x_n\}$ has **order of convergence** $\alpha$ if there exists a constant $\lambda > 0$ such that
 $$
@@ -424,7 +424,7 @@ plt.show()
 Finding the minima of multivariable functions is a bit more complicated than finding the minima of single-variable functions. The reason is that there are many more directions in which to move. But the basic intuition that we want to move downhill to move towards a minimum of course still works. The gradient descent method is still a good choice for finding the minimum of a multivariable function. The only difference is that the gradient is now a vector and the step is in the direction of the negative gradient.
 
 
-::: {#exr-wgrad}
+::: {#exr-6.13}
 In your group, answer each of the following questions to remind yourselves of multivariable calculus. 
 
 1.  What is a partial derivative (explain geometrically). For the function $f(x,y) = \sin(x)\exp\left(-\sqrt{x^2+y^2}\right)$ what is $\frac{\partial f}{\partial x}$ and what is $\frac{\partial f}{\partial y}$? (When writing the answer you need to specify the value of the partial derivatives at $(x,y) = (0,0)$ separately.)
@@ -493,7 +493,7 @@ $$
 \|\boldsymbol{x}_{n+1}-\boldsymbol{x}_{n}\|_2=\sqrt{\sum_{i=0}^{k-1}(x_{n+1,i}-x_{n,i})^2} < \text{tol}
 $$
 
-::: {#exr-3.58}
+::: {#exr-6.14}
 💻 🎓 Write code to implement the gradient descent algorithm for a function $f(\boldsymbol{x})$.
 
 ```python
@@ -521,7 +521,7 @@ def gradient_descent(df, x0, alpha, tol=1e-12, max_iter=1000):
     
     # Here comes your code.
 ```
-You can build on your code for the single-variable gradient descent from @exr-3.53.
+You can build on your code for the single-variable gradient descent from @exr-6.9.
 To calculate the Euclidean distance between two points $\boldsymbol{x}$ and $\boldsymbol{y}$ you can use `np.linalg.norm(x-y)`.
 
 Use your function to find the minimum of the function
@@ -532,10 +532,10 @@ You can use your gradient function from @exm-wgrad_python.
 
 ------------------------------------------------------------------------
 
-::: {#exr-gd-difficulties}
+::: {#exr-6.15}
 💻 💬 The gradient descent method works well for some functions but struggles with others. In this exercise you will explore two functions that gradient descent struggles with.
 
-1. Modify your `gradient_descent` function from @exr-3.58 to create a new function `gradient_descent_path` that returns the list of all iterates, not just the final one.
+1. Modify your `gradient_descent` function from @exr-6.14 to create a new function `gradient_descent_path` that returns the list of all iterates, not just the final one.
 
 2. Consider the function $$f(x,y)=x^2+100y^2.$$ This function has a clear minimum at the origin but is much steeper in the $y$ direction than in the $x$ direction. Try the starting point $(x_0,y_0)=(1,1)$ and experiment with different learning rates. The code below will get you started. Can you find a learning rate that gives fast convergence in both variables simultaneously?
 
@@ -667,7 +667,7 @@ What we will do here is pose this machine learning problem as an optimisation pr
 
 ------------------------------------------------------------------------
 
-::: {#exr-3.80}
+::: {#exr-6.16}
  🖋 💬 Consider the function $f(x)$ that goes exactly through the points $(0,2)$, $(1,4)$, and $(2,12)$.
 
 1.  Find a function that goes through these points exactly. Be able to defend your work.
@@ -678,7 +678,7 @@ What we will do here is pose this machine learning problem as an optimisation pr
 
 ------------------------------------------------------------------------
 
-::: {#exr-3.81}
+::: {#exr-6.17}
  💻 💬 Now let us make a minor tweak to the previous exercise. Let us say that we have the data points $(0,2.37)$, $(1,4.14)$, $(2,12.22)$, and $(3,23.68)$. Notice that these points are *close* to the points we had in the previous exercise, but all of the $y$ values have a little noise in them and we have added a fourth point. If we suspect that a function $f(x)$ that *best* fits this data is quadratic then $f(x) = ax^2 + bx + c$ for some constants $a$, $b$, and $c$.
 
 1.  Work with your group to choose $a$, $b$, and $c$ so that you get a good visual match to the data. The Python code below will help you get started.
@@ -710,7 +710,7 @@ plt.legend()
 
 ------------------------------------------------------------------------
 
-::: {#exr-3.82}
+::: {#exr-6.18}
  💻 💬 Now let us be a bit more systematic about things from the previous exercise. Let us say that you have a pretty good guess that $b \approx 2$ and $c \approx 0.7$. We need to get a good estimate for $a$.
 
 1.  Pick an arbitrary starting value for $a$ then for each of the four points find the error between the predicted $y$ value and the actual $y$ value. These errors are called the *residuals*.
@@ -776,7 +776,7 @@ This function $L(\boldsymbol{a})$ is called the *loss function*.
 
 ------------------------------------------------------------------------
 
-::: {#exr-3.84}
+::: {#exr-6.19}
 💬 💻 The last step above is a bit vague. That was purposeful since there are many techniques that could be used to minimise the sum of the squared errors. However, if we just think about the sum of the squared residuals as a function then we can apply `scipy.optimize.minimize()` to that function in order to return the values of the parameters that best minimise the sum of the squared residuals. The following blocks of Python code implement the idea in a very streamlined way. Go through the code and comment each line to describe exactly what it does.
 
 ``` python         
@@ -822,7 +822,7 @@ plt.show()
 
 ------------------------------------------------------------------------
 
-::: {#exr-3.85b}
+::: {#exr-6.20}
 
 💻 Now I'll let you in on a little secret: the data that you have fitted the quadratic function to above was not real data. I created it with the following script.
 
@@ -867,21 +867,21 @@ This is a large and active area of research and we will not go into more detail 
 
 ## Algorithm Summaries
 
-::: {#exr-3.94}
+::: {#exr-6.21}
 💬 Explain in clear language how the Golden Section Search method works.
 
 :::
 
 ------------------------------------------------------------------------
 
-::: {#exr-3.94b}
+::: {#exr-6.22}
 💬 Explain in clear language how the Gradient Descent method works.
 
 :::
 
 ------------------------------------------------------------------------
 
-::: {#exr-3.96}
+::: {#exr-6.23}
 💬 Explain in clear language how you use the method of Least Squares to fit a function to data.
 
 :::
@@ -916,7 +916,7 @@ def gradient_descent_1d(df, x0, alpha, tol=1e-12, max_iter=10000):
 ## Problems
 
 
-::: {#exr-3.106}
+::: {#exr-6.24}
  For each of the following functions write code to numerically approximate the local maximum or minimum that is closest to $x=0$. You may want to start with a plot of the function just to get a feel for where the local extreme value(s) might be.
 
 1.  $\displaystyle f(x) = \frac{x}{1+x^4} + \sin(x)$
@@ -927,7 +927,7 @@ def gradient_descent_1d(df, x0, alpha, tol=1e-12, max_iter=10000):
 
 ------------------------------------------------------------------------
 
-::: {#exr-pig-linear}
+::: {#exr-6.25}
  (This exercise is modified from [@Meerschaert])\
 A pig weighing 200 pounds gains 5 pounds per day and costs
 45 cents a day to keep. The market price for pigs is 65 cents per pound, but is
@@ -939,9 +939,9 @@ Write the expression for the profit $P(t)$ as a function of time $t$ and maximis
 
 ------------------------------------------------------------------------
 
-::: {#exr-3.59}
+::: {#exr-6.26}
  (This exercise is modified from [@Meerschaert])\
-Reconsider the pig in @exr-pig-linear but now suppose that the weight of the pig after $t$ days is
+Reconsider the pig in @exr-6.25 but now suppose that the weight of the pig after $t$ days is
 \begin{equation}
 w = \frac{800}{1+3e^{-t/30}} \text{ pounds}.
 \end{equation}
@@ -951,14 +951,14 @@ w = \frac{800}{1+3e^{-t/30}} \text{ pounds}.
 
 ------------------------------------------------------------------------
 
-::: {#exr-3.107}
+::: {#exr-6.27}
 Go back to your old Calculus textbook or homework and find your favourite optimisation problem. State the problem, create the mathematical model, and use any of the numerical optimisation techniques in this chapter to get an approximate solution to the problem.
 
 :::
 
 ------------------------------------------------------------------------
 
-::: {#exr-3.109}
+::: {#exr-6.28}
  (**The Goat Problem**) This is a classic problem in recreational mathematics that has a great approximate solution where we can leverage some of our numerical analysis skills. Grab a pencil and a piece of paper so we can draw a picture.
 
 -   Draw a coordinate plane

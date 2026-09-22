@@ -279,7 +279,7 @@ Google Colab allows you to keep all of your Python code on your Google Drive. Th
 
 Now the time has come for the first two exercises of this module.
 
-::: {#exr-A.3}
+::: {#exr-intro-1}
 💻 Spend a bit of time poking around in Colab. Figure out how to
 
 -   Create new Colab notebooks.
@@ -303,7 +303,7 @@ Now the time has come for the first two exercises of this module.
 
 ------------------------------------------------------------------------
 
-::: {#exr-A.3b}
+::: {#exr-intro-2}
 💻 Click on this [link to a Colab notebook](https://colab.research.google.com/drive/1FSRWGvo9jsoHvT33PUm-ZMDuIxKU1tzY?usp=sharing). It should open it in Colab.
 Then save a __copy__ of it to your Google Drive. You need a copy because you will
 not have permission to edit the original. Follow the instructions in the notebook.

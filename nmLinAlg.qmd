@@ -191,7 +191,7 @@ print("Entry in the bottom right corner",A[2,2])
 
 ------------------------------------------------------------------------
 
-::: {#exr-4.1}
+::: {#exr-C.1}
 Build your own matrix in Python and practice choosing individual entries from the matrix.
 
 :::
@@ -220,7 +220,7 @@ print("The last two entries of the vector u are \n",u[-2:])
 
 ------------------------------------------------------------------------
 
-::: {#exr-4.2}
+::: {#exr-C.2}
 Define the matrix $A$ and the vector $u$ in Python. Then perform all of the tasks below. 
 \begin{equation}
  A = \begin{pmatrix} 1 & 3 & 5 & 7 \\ 2 & 4 & 6 & 8 \\ -3 & -2 & -1 & 0 \end{pmatrix} \quad \text{and} \quad \boldsymbol{u} = \begin{pmatrix} 10\\20\\30 \end{pmatrix} 
@@ -248,7 +248,7 @@ Now let us start doing some numerical linear algebra. We start our discussion wi
 
 ### The Dot Product
 
-::: {#exr-4.3}
+::: {#exr-C.3}
 This problem is meant to jog your memory about dot products, how to compute them, and what you might use them for. If your linear algebra is a bit rusty then read ahead a bit and then come back to this problem.
 
 Consider two vectors $\boldsymbol{u}$ and $\boldsymbol{v}$ defined as 
@@ -314,7 +314,7 @@ The **magnitude** of a vector $\boldsymbol{u} \in \mathbb{R}^n$ is defined as ^[
 
 ------------------------------------------------------------------------
 
-::: {#exr-4.5}
+::: {#exr-C.4}
 Write a Python function that accepts two vectors (defined as `numpy` arrays) and returns the dot product. Write this code without the use any loops.
 
 ``` python         
@@ -327,7 +327,7 @@ def myDotProduct(u,v):
 
 ------------------------------------------------------------------------
 
-::: {#exr-4.6}
+::: {#exr-C.5}
 Test your `myDotProduct()` function on several dot products to make sure that it works. Example code to find the dot product between 
 \begin{equation}
  \boldsymbol{u} = \begin{pmatrix} 1 \\ 2\\ 3\end{pmatrix} \quad \text{and} \quad \boldsymbol{v} = \begin{pmatrix} 4\\5\\6\end{pmatrix} 
@@ -344,7 +344,7 @@ myDotProduct(u,v)
 
 ------------------------------------------------------------------------
 
-::: {#exr-4.7}
+::: {#exr-C.6}
 Try sending Python lists instead of `numpy` arrays into your `myDotProduct` function. What happens? Why does it happen? What is the cautionary tale here? Modify your `myDotProduct()` function one more time so that it starts by converting the input vectors into `numpy` arrays.
 
 ``` python         
@@ -357,7 +357,7 @@ myDotProduct(u,v)
 
 ------------------------------------------------------------------------
 
-::: {#exr-4.8}
+::: {#exr-C.7}
 The `numpy` library in Python has a built-in command for doing the dot product: `np.dot()`. Test the `np.dot()` command and be sure that it does the same thing as your `myDotProduct()` function.
 
 :::
@@ -368,7 +368,7 @@ The `numpy` library in Python has a built-in command for doing the dot product: 
 
 Next we will blow the dust off of your matrix multiplication skills.
 
-::: {#exr-4.9}
+::: {#exr-C.8}
 Verify that the product of $A$ and $B$ is indeed what we show below. Work out all of the details by hand. 
 \begin{equation}
  A = \begin{pmatrix} 1 & 2 \\ 3 & 4 \\ 5 & 6 \end{pmatrix} \qquad B = \begin{pmatrix} 7 & 8 & 9 \\ 10 & 11 & 12 \end{pmatrix} 
@@ -404,8 +404,8 @@ A moment's reflection reveals that each entry in the matrix product is actually 
 
 ------------------------------------------------------------------------
 
-::: {#exr-4.10}
-The definition of matrix multiplication above contains the cryptic phrase *a moment's reflection reveals that each entry in the matrix product is actually a dot product.* Let us go back to the matrices $A$ and $B$ defined in @exr-4.9 above and re-evaluate the matrix multiplication algorithm to make sure that you see each entry as the end result of a dot product.
+::: {#exr-C.9}
+The definition of matrix multiplication above contains the cryptic phrase *a moment's reflection reveals that each entry in the matrix product is actually a dot product.* Let us go back to the matrices $A$ and $B$ defined in @exr-C.8 above and re-evaluate the matrix multiplication algorithm to make sure that you see each entry as the end result of a dot product.
 
 We want to find the product of matrices $A$ and $B$ using dot products. 
 \begin{equation}
@@ -461,7 +461,7 @@ A = \begin{pmatrix} 1 & 2 \\ 3 & 4 \\ 5 & 6 \end{pmatrix} \qquad B = \begin{pmat
 
 ------------------------------------------------------------------------
 
-::: {#exr-4.11}
+::: {#exr-C.10}
 The observation that matrix multiplication is just a bunch of dot products is what makes the code for doing matrix multiplication very fast and very streamlined. We want to write a Python function that accepts two `numpy` matrices and returns the product of the two matrices. Inside the code we will leverage the `np.dot()` command to do the appropriate dot products.
 
 Partial code is given below. Fill in all of the details and give ample comments showing what each line does.
@@ -500,14 +500,14 @@ print(AB)
 
 ------------------------------------------------------------------------
 
-::: {#exr-4.12}
+::: {#exr-C.11}
 Try your `myMatrixMult()` function on several other matrix multiplication problems.
 
 :::
 
 ------------------------------------------------------------------------
 
-::: {#exr-4.13}
+::: {#exr-C.12}
 Build in an error catch so that your `myMatrixMult()` function catches when the input matrices do not have compatible sizes for multiplication. Write your code so that it returns an appropriate error message in this special case.
 
 :::
@@ -518,7 +518,7 @@ Now that you have been through the exercise of building a matrix multiplication 
 
 ------------------------------------------------------------------------
 
-::: {#exr-4.14}
+::: {#exr-C.13}
 #### Matrix Multiplication with Python
 Python will handle matrix multiplication easily so long as the matrices are defined as `numpy` arrays. For example, with the matrices $A$ and $B$ from above if you can just type `A @ B` (or `np.dot(A, B)`) in Python and you will get the correct result. Pretty nice!! Let us take another moment to notice, though, that regular Python lists do not behave in the same way. Can you guess what happens if you run the following Python code? (Note: `*` does strictly element-wise multiplication for numpy arrays, which we will see in a moment).
 
@@ -571,7 +571,7 @@ Let us blow the dust off your row reduction skills before we look at something b
 
 ------------------------------------------------------------------------
 
-::: {#exr-4.15}
+::: {#exr-C.14}
 Solve the following system of equations by hand. 
 \begin{equation}
  \begin{array}{rl} x_0 + 2x_1 + 3x_2 &= 1 \\ 4x_0 + 5x_1 + 6x_2 &= 0 \\ 7x_0 + 8x_1 &= 2 \end{array} 
@@ -588,7 +588,7 @@ If you need a nudge to get started then jump ahead to the next problem.
 
 ------------------------------------------------------------------------
 
-::: {#exr-4.16}
+::: {#exr-C.15}
 We want to solve the system of equations 
 \begin{equation}
  \begin{pmatrix} 1 & 2 & 3 \\ 4 & 5 & 6 \\ 7 & 8 & 0 \end{pmatrix} \begin{pmatrix} x_0 \\ x_1 \\ x_2 \end{pmatrix} = \begin{pmatrix} 1 \\ 0 \\ 2\end{pmatrix} 
@@ -672,7 +672,7 @@ We want to solve the system of equations
 
 ------------------------------------------------------------------------
 
-::: {#exr-4.17}
+::: {#exr-C.16}
 Summarize the process for doing Gaussian Elimination to solve a square system of linear equations.
 
 :::
@@ -695,7 +695,7 @@ That's what the next several exercises are going to lead you to. Our goal here i
 
 ------------------------------------------------------------------------
 
-::: {#exr-4.18}
+::: {#exr-C.17}
 Let $A$ be defined as 
 \begin{equation}
  A = \begin{pmatrix} 1 & 2 & 3 \\ 4 & 5 & 6 \\ 7 & 8 & 0 \end{pmatrix}. 
@@ -738,7 +738,7 @@ Let $A$ be defined as
 
 ------------------------------------------------------------------------
 
-::: {#exr-4.19}
+::: {#exr-C.18}
 Apply the same idea from the previous problem to do the first three steps of row reduction to the matrix 
 \begin{equation}
  A = \begin{pmatrix} 2 & 6 & 9 \\ -6 & 8 & 1 \\ 2 & 2 & 10 \end{pmatrix} 
@@ -749,7 +749,7 @@ Apply the same idea from the previous problem to do the first three steps of row
 
 ------------------------------------------------------------------------
 
-::: {#exr-4.20}
+::: {#exr-C.19}
 Now let us make a few observations about the two previous problems.
 
 1.  What will multiplying $A$ by a matrix of the form 
@@ -776,7 +776,7 @@ Now let us make a few observations about the two previous problems.
 
 ------------------------------------------------------------------------
 
-::: {#exr-4.21}
+::: {#exr-C.20}
 After doing all of the matrix products, $L_3 L_2 L_1 A$, the resulting matrix will have zeros in the entire lower triangle. That is, all of the non-zero entries of the resulting matrix will be on the main diagonal or above. We call this matrix $U$, for upper-triangular. Hence, we have formed a matrix 
 \begin{equation}
  L_3 L_2 L_1 A = U 
@@ -791,14 +791,14 @@ After doing all of the matrix products, $L_3 L_2 L_1 A$, the resulting matrix wi
 
 ------------------------------------------------------------------------
 
-::: {#exr-4.22}
+::: {#exr-C.21}
 It would be nice, now, if the inverses of the $L$ matrices were easy to find. Use `np.linalg.inv()` to directly compute the inverse of $L_1$, $L_2$, and $L_3$ for each of the example matrices. Then complete the statement: If $L_k$ is an identity matrix with some non-zero $c$ in row $i$ and column $j$ then $L_k^{-1}$ is what matrix?
 
 :::
 
 ------------------------------------------------------------------------
 
-::: {#exr-4.23}
+::: {#exr-C.22}
 We started this discussion with $A$ as 
 \begin{equation}
  A = \begin{pmatrix} 1 & 2 & 3 \\ 4 & 5 & 6 \\ 7 & 8 & 0 \end{pmatrix} 
@@ -848,7 +848,7 @@ def myLU(A):
 
 ------------------------------------------------------------------------
 
-::: {#exr-4.24}
+::: {#exr-C.23}
 Go to @exm-4.LU and go through every iteration of every loop **by hand** starting with the matrix 
 \begin{equation}
  A = \begin{pmatrix} 1 & 2 & 3 \\ 4 & 5 & 6 \\ 7 & 8 & 0 \end{pmatrix}. 
@@ -879,7 +879,7 @@ Go to @exm-4.LU and go through every iteration of every loop **by hand** startin
 
 ------------------------------------------------------------------------
 
-::: {#exr-4.25}
+::: {#exr-C.24}
 Apply your new `myLU` code to other square matrices and verify that indeed $A$ is the product of the resulting $L$ and $U$ matrices. You can produce a random matrix with `np.random.randn(n,n)` where `n` is the number of rows and columns of the matrix. For example, `np.random.randn(10,10)` will produce a random $10 \times 10$ matrix with entries chosen from the normal distribution with centre 0 and standard deviation 1. Random matrices are just as good as any other when testing your algorithm.
 
 :::
@@ -904,7 +904,7 @@ In the following exercises we will devise algorithms for solving triangular syst
 
 ------------------------------------------------------------------------
 
-::: {#exr-4.26}
+::: {#exr-C.25}
 Outline a fast algorithm (without formal row reduction) for solving the lower-triangular system 
 \begin{equation}
 \begin{pmatrix} 1 & 0 & 0 \\ 4 & 1 & 0 \\ 7 & 2 & 1 \end{pmatrix} \begin{pmatrix} y_0 \\ y_1 \\ y_2 \end{pmatrix} = \begin{pmatrix} 1 \\ 0 \\ 2\end{pmatrix}.
@@ -915,7 +915,7 @@ Outline a fast algorithm (without formal row reduction) for solving the lower-tr
 
 ------------------------------------------------------------------------
 
-::: {#exr-4.27}
+::: {#exr-C.26}
 As a convention we will always write our lower-triangular matrices with ones on the main diagonal. Generalize your steps from the previous exercise so that you have an algorithm for solving any lower-triangular system. The most natural algorithm that most people devise here is called **forward substitution**.
 
 :::
@@ -947,7 +947,7 @@ def lsolve(L, b):
 
 ------------------------------------------------------------------------
 
-::: {#exr-4.28}
+::: {#exr-C.27}
 Work with your partner(s) to apply the `lsolve()` code to the lower-triangular system\
 
 \begin{equation}
@@ -991,7 +991,7 @@ I will get you started.
 
 ------------------------------------------------------------------------
 
-::: {#exr-4.29}
+::: {#exr-C.28}
 Copy the code from @def-4.5 into a Python function but in your code write a comment on every line stating what it is doing. Write a test script that creates a lower-triangular matrix of the correct form and a right-hand side $\boldsymbol{b}$ and solve for $\boldsymbol{y}$. Test your code by giving it a large lower-triangular system.
 
 :::
@@ -1002,7 +1002,7 @@ Now that we have a method for solving lower-triangular systems, let us build a s
 
 ------------------------------------------------------------------------
 
-::: {#exr-4.30}
+::: {#exr-C.29}
 Outline a fast algorithm (without formal row reduction) for solving the upper-triangular system 
 \begin{equation}
 \begin{pmatrix} 1 & 2 & 3 \\ 0 & -3 & -6 \\ 0 & 0 & -9 \end{pmatrix} \begin{pmatrix} x_0 \\ x_1 \\ x_2 \end{pmatrix} = \begin{pmatrix} 1 \\ -4 \\ 3\end{pmatrix}
@@ -1013,7 +1013,7 @@ Outline a fast algorithm (without formal row reduction) for solving the upper-tr
 
 ------------------------------------------------------------------------
 
-::: {#exr-4.31}
+::: {#exr-C.30}
 Generalize your backward substitution algorithm from the previous problem so that it could be applied to any upper-triangular system.
 
 :::
@@ -1041,7 +1041,7 @@ def usolve(U, y):
 
 ------------------------------------------------------------------------
 
-::: {#exr-4.32}
+::: {#exr-C.31}
 Now we will work through the backward substitution algorithm to help fill in the blanks in the code. Consider the upper-triangular system 
 \begin{equation}
  \begin{pmatrix} 1 & 2 & 3 \\ 0 & -3 & -6 \\ 0 & 0 & -9 \end{pmatrix} \begin{pmatrix} x_0 \\ x_1 \\ x_2 \end{pmatrix} = \begin{pmatrix} 1 \\ -4 \\ 3\end{pmatrix} 
@@ -1097,7 +1097,7 @@ I will get you started.
 
 ------------------------------------------------------------------------
 
-::: {#exr-4.33}
+::: {#exr-C.32}
 Copy the code from @def-4.6 into a Python function but in your code write a comment on every line stating what it is doing. Write a test script that creates an upper-triangular matrix of the correct form and a right-hand side $\boldsymbol{y}$ and solve for $\boldsymbol{x}$. Your code needs to work on systems of arbitrarily large size.
 
 :::
@@ -1110,7 +1110,7 @@ We are finally ready for the punch line of this whole $LU$ and triangular system
 
 ------------------------------------------------------------------------
 
-::: {#exr-4.34}
+::: {#exr-C.33}
 If we want to solve $A \boldsymbol{x} = \boldsymbol{b}$ then
 
 1.  If we can, write the system of equations as $LU \boldsymbol{x} = \boldsymbol{b}$.
@@ -1125,7 +1125,7 @@ Pick a matrix $A$ and a right-hand side $\boldsymbol{b}$ and solve the system us
 
 ------------------------------------------------------------------------
 
-::: {#exr-4.35}
+::: {#exr-C.34}
 Try the process again on the $3\times 3$ system of equations 
 \begin{equation}
 \begin{pmatrix} 3 & 6 & 8\\ 2 & 7 & -1 \\ 5 & 2 & 2 \end{pmatrix} \begin{pmatrix} x_0 \\ x_1 \\ x_2 \end{pmatrix} = \begin{pmatrix} -13 \\ 4 \\ 1 \end{pmatrix}
@@ -1170,14 +1170,14 @@ Let $A$ be a square matrix in $\mathbb{R}^{n \times n}$ and let $\boldsymbol{x},
 
 ------------------------------------------------------------------------
 
-::: {#exr-4.37}
+::: {#exr-C.35}
 The $LU$ decomposition is not perfect. Discuss where the algorithm will fail.
 
 :::
 
 ------------------------------------------------------------------------
 
-::: {#exr-4.38}
+::: {#exr-C.36}
 What happens when you try to solve the system of equations 
 \begin{equation}
  \begin{pmatrix} 0 & 0 & 1 \\ 0 & 1 & 0 \\ 1 & 0 & 0 \end{pmatrix} \begin{pmatrix} x_0 \\ x_1 \\ x_2 \end{pmatrix} = \begin{pmatrix} 7 \\ 9\\-3\end{pmatrix} 
@@ -1191,7 +1191,7 @@ In this section we will try to find an improvement on the $LU$ factorization sch
 
 ------------------------------------------------------------------------
 
-::: {#exr-4.39}
+::: {#exr-C.37}
 We want to solve the system of equations 
 \begin{equation}
  \begin{pmatrix} 1/3 & 2/3 & 2/3 \\ 2/3 & 1/3 & -2/3 \\ -2/3 & 2/3 & -1/3 \end{pmatrix} \begin{pmatrix} x_0 \\ x_1 \\ x_2 \end{pmatrix} = \begin{pmatrix} 6 \\ 12\\ -9 \end{pmatrix}. 
@@ -1236,7 +1236,7 @@ What we will study in this section is a new matrix factorization called the $QR$
 
 ------------------------------------------------------------------------
 
-::: {#exr-4.40}
+::: {#exr-C.38}
 Let us say that we have a matrix $A$ and we know that it can be factored into $A = QR$ where $Q$ is an orthonormal matrix and $R$ is an upper-triangular matrix. How would we then leverage this factorization to solve the system of equation $A \boldsymbol{x} = \boldsymbol{b}$ for $\boldsymbol{x}$?
 
 :::
@@ -1293,7 +1293,7 @@ Now we return to our goal of finding a way to factor a matrix $A$ into an orthon
 
 ------------------------------------------------------------------------
 
-::: {#exr-4.41}
+::: {#exr-C.39}
 We want to build a $QR$ factorization of the matrix $A$ in the matrix equation $A \boldsymbol{x} = \boldsymbol{b}$ so that we can leverage the fact that solving the equation $QR\boldsymbol{x} = \boldsymbol{b}$ is easy. Consider the matrix $A$ defined as 
 \begin{equation}
  A = \begin{pmatrix} 3 & 1 \\ 4 & 1 \end{pmatrix}. 
@@ -1345,7 +1345,7 @@ We want to build a $QR$ factorization of the matrix $A$ in the matrix equation $
 
 ------------------------------------------------------------------------
 
-::: {#exr-4.42}
+::: {#exr-C.40}
 Keeping track of all of the arithmetic in the $QR$ factorization process is quite challenging, so let us leverage Python to do some of the work for us. The following block of code walks through the previous exercise without any looping (that way we can see every step transparently). Some of the code is missing so you will need to fill it in.
 
 ``` python         
@@ -1381,21 +1381,21 @@ print("The product QR is\n",Q @ R)
 
 ------------------------------------------------------------------------
 
-::: {#exr-4.43}
+::: {#exr-C.41}
 You should notice that the code in the previous exercise does not depend on the specific matrix $A$ that we used? Put in a different $2 \times 2$ matrix and verify that the process still works. That is, verify that $Q$ is orthonormal, $R$ is upper-triangular, and $A = QR$. Be sure, however, that your matrix $A$ is full rank.
 
 :::
 
 ------------------------------------------------------------------------
 
-::: {#exr-4.44}
+::: {#exr-C.42}
 Draw two generic vectors in $\mathbb{R}^2$ and demonstrate the process outlined in the previous problem to build the vectors for the $Q$ matrix starting from your generic vectors.
 
 :::
 
 ------------------------------------------------------------------------
 
-::: {#exr-4.45}
+::: {#exr-C.43}
 Now we will extend the process from the previous exercises to three dimensions. This time we will seek a matrix $Q$ that has three orthonormal vectors starting from the three original columns of a $3 \times 3$ matrix $A$. Perform each of the following steps **by hand** on the matrix 
 \begin{equation}
  A = \begin{pmatrix} 1 & 1 & 0 \\ 1 & 0 & 1 \\ 0 & 1 & 1 \end{pmatrix}. 
@@ -1418,7 +1418,7 @@ The result should be the matrix $Q$ which contains orthonormal columns. To build
 
 ------------------------------------------------------------------------
 
-::: {#exr-4.46}
+::: {#exr-C.44}
 Repeat the previous exercise but write code for each step so that Python can handle all of the computations. Again use the matrix 
 \begin{equation}
  A = \begin{pmatrix} 1 & 1 & 0 \\ 1 & 0 & 1 \\ 0 & 1 & 1 \end{pmatrix}. 
@@ -1456,7 +1456,7 @@ and
 
 ------------------------------------------------------------------------
 
-::: {#exr-4.47}
+::: {#exr-C.45}
 #### The QR Factorization
 Now we are ready to build general code for the $QR$ factorization. The following Python function definition is partially complete. Fill in the missing pieces of code and then test your code on square matrices of many different sizes. The easiest way to check if you have an error is to find the normed difference between $A$ and $QR$ with `np.linalg.norm(A - Q*R)`.
 
@@ -1501,7 +1501,7 @@ We now have a robust algorithm for doing $QR$ factorization of square matrices w
 
 ------------------------------------------------------------------------
 
-::: {#exr-4.48}
+::: {#exr-C.46}
 Solve the system of equations 
 \begin{equation}
  \begin{pmatrix} 1 & 2 & 3 \\ 4 & 5 & 6 \\ 7 & 8 & 0 \end{pmatrix} \begin{pmatrix} x_0 \\ x_1 \\ x_2 \end{pmatrix} = \begin{pmatrix} 1 \\ 0 \\ 2 \end{pmatrix} 
@@ -1512,7 +1512,7 @@ Solve the system of equations
 
 ------------------------------------------------------------------------
 
-::: {#exr-4.49}
+::: {#exr-C.47}
 Write code that builds a random $n \times n$ matrix and a random $n \times 1$ vector. Solve the equation $A \boldsymbol{x} = \boldsymbol{b}$ using the $QR$ factorization and compare the answer to what we find from `np.linalg.solve()`. Do this many times for various values of $n$ and create a plot with $n$ on the horizontal axis and the normed error between Python's answer and your answer from the $QR$ algorithm on the vertical axis. It would be wise to use a `plt.semilogy()` plot. To find the normed difference you should use `np.linalg.norm()`. What do you notice?
 
 :::
@@ -1521,7 +1521,7 @@ Write code that builds a random $n \times n$ matrix and a random $n \times 1$ ve
 
 ## Over-determined Systems and Curve Fitting
 
-::: {#exr-4.50}
+::: {#exr-C.48}
 Consider the problem of finding the quadratic function $f(x) = ax^2 + bx + c$ that *best fits* the points 
 \begin{equation}
  (0, 1.07), (1, 3.9), (2, 14.8), (3, 26.8). 
@@ -1582,7 +1582,7 @@ The equation $(A^T A) \boldsymbol{x} = A^T \boldsymbol{b}$ is called **the norma
 
 ------------------------------------------------------------------------
 
-::: {#exr-4.51}
+::: {#exr-C.49}
 Fit a linear function to the following data. Solve for the slope and intercept using the technique outlined in @thm-4.3. Make a plot of the points along with your best fit curve.
 
 | $x$ | $y$ |
@@ -1604,7 +1604,7 @@ Fit a linear function to the following data. Solve for the slope and intercept u
 
 ------------------------------------------------------------------------
 
-::: {#exr-4.52}
+::: {#exr-C.50}
 Fit a quadratic function to the following data using the technique outlined in @thm-4.3. Make a plot of the points along with your best fit curve.
 
 | $x$ | $y$  |
@@ -1637,7 +1637,7 @@ data = np.array( pd.read_csv(URL+'Exercise4_52.csv') )
 
 ------------------------------------------------------------------------
 
-::: {#exr-4.53}
+::: {#exr-C.51}
 The Statistical technique of curve fitting is often called "linear regression." This even holds when we are fitting quadratic functions, cubic functions, etc to the data ... we still call that linear regression! Why?
 
 :::
@@ -1688,7 +1688,7 @@ Recall that to solve the eigen-problem for a square matrix $A$ we complete the f
 
 ------------------------------------------------------------------------
 
-::: {#exr-4.54}
+::: {#exr-C.52}
 Find the eigenvalues and eigenvectors of 
 \begin{equation}
  A = \begin{pmatrix} 1 & 2 \\ 4 & 3 \end{pmatrix}. 
@@ -1697,7 +1697,7 @@ Find the eigenvalues and eigenvectors of
 
 ------------------------------------------------------------------------
 
-::: {#exr-4.55}
+::: {#exr-C.53}
 In the matrix 
 \begin{equation}
  A = \begin{pmatrix} 1 & 2 & 3 \\ 4 & 5 & 6 \\ 7 & 8 & 9 \end{pmatrix} 
@@ -1718,7 +1718,7 @@ OK. Now that you have recalled some of the basics, let us play with a little lim
 
 ------------------------------------------------------------------------
 
-::: {#exr-4.56}
+::: {#exr-C.54}
 Consider the matrix 
 \begin{equation}
  A = \begin{pmatrix} 8 & 5 & -6 \\ -12 & -9 & 12 \\ -3 & -3 & 5 \end{pmatrix}. 
@@ -1778,7 +1778,7 @@ print(result / np.linalg.norm(result) )
 
 ------------------------------------------------------------------------
 
-::: {#exr-4.57}
+::: {#exr-C.55}
 If a matrix $A$ has eigenvectors $\boldsymbol{v}_1$, $\boldsymbol{v}_2$, $\boldsymbol{v}_3$, $\cdots,$ $\boldsymbol{v}_n$ with eigenvalues $\lambda_1, \lambda_2, \lambda_3, \ldots, \lambda_n$ and $\boldsymbol{x}$ is in the column space of $A$ then what will we get, approximately, if we evaluate $A^k \boldsymbol{x} / \max_{j}(\lambda_j)^k$ for very large values of $k$?
 
 Discuss your conjecture with your peers. Then try to verify it with several numerical examples.
@@ -1787,21 +1787,21 @@ Discuss your conjecture with your peers. Then try to verify it with several nume
 
 ------------------------------------------------------------------------
 
-::: {#exr-4.58}
+::: {#exr-C.56}
 Explain your result from the previous exercise geometrically.
 
 :::
 
 ------------------------------------------------------------------------
 
-::: {#exr-4.59}
+::: {#exr-C.57}
 The algorithm that we have been toying with will find the dominant eigenvector of a matrix fairly quickly. Why might you be only interested in the dominant eigenvector of a matrix? Discuss.
 
 :::
 
 ------------------------------------------------------------------------
 
-::: {#exr-4.60}
+::: {#exr-C.58}
 In this problem we will formally prove the conjecture that you just made. This conjecture will lead us to the **power method** for finding the dominant eigenvector and eigenvalue of a matrix.
 
 1.  Assume that $A$ has $n$ linearly independent eigenvectors $\boldsymbol{v}_1, \boldsymbol{v}_2, \dots, \boldsymbol{v}_n$ and choose $\boldsymbol{x} = \sum_{j=1}^n c_j \boldsymbol{v}_j$. You have proved in the past that 
@@ -1852,7 +1852,7 @@ The following algorithm, called **the power method** will quickly find the eigen
 
 ------------------------------------------------------------------------
 
-::: {#exr-4.61}
+::: {#exr-C.59}
 Go through @thm-4.5 carefully and describe what we need to do in each step and why we are doing it. Then complete all of the missing pieces of the following Python function.
 
 ``` python         
@@ -1878,30 +1878,30 @@ def myPower(A, tol = 1e-8):
 
 ------------------------------------------------------------------------
 
-::: {#exr-4.62}
+::: {#exr-C.60}
 Test your `myPower()` function on several matrices where you know the eigenstructure. Then try the `myPower()` function on larger random matrices. You can check that it is working using `np.linalg.eig()` (be sure to normalize the vectors in the same way so you can compare them.)
 
 :::
 
 ------------------------------------------------------------------------
 
-::: {#exr-4.63}
+::: {#exr-C.61}
 In the Power Method iteration you may end up getting a different sign on your eigenvector as compared to `np.linalg.eig()`. Why might this happen? Generate a few examples so you can see this. You can avoid this issue if you use a `while` loop in your Power Method code and the logical check takes advantage of the fact that we are trying to solve the equation $A\boldsymbol{x} = \lambda \boldsymbol{x}$. Hint: $A\boldsymbol{x} = \lambda \boldsymbol{x}$ is equivalent to $A\boldsymbol{x} - \lambda \boldsymbol{x} = \boldsymbol{0}$.
 
 :::
 
 ------------------------------------------------------------------------
 
-::: {#exr-4.64}
+::: {#exr-C.62}
 What happens in the power method iterations when $\lambda_1$ is complex. The maximum eigenvalue can certainly be complex if $|\lambda_1|$ (the modulus of the complex number) is larger than all of the other eigenvalues. It may be helpful to build a matrix specifically with complex eigenvalues.^[To build a matrix with specific eigenvalues it may be helpful to recall the matrix factorization $A = PDP^{-1}$ where the columns of $P$ are the eigenvectors of $A$ and the diagonal entries of $D$ are the eigenvalues. If you choose $P$ and $D$ then you can build $A$ with your specific eigen-structure. If you are looking for complex eigenvalues then remember that the eigenvectors may well be complex too.]
 
 :::
 
 ------------------------------------------------------------------------
 
-::: {#exr-4.65}
+::: {#exr-C.63}
 #### Convergence Rate of the Power Method
-The proof that the power method will work hinges on the fact that $|\lambda_1| > |\lambda_2| \geq |\lambda_3| \geq \cdots \geq |\lambda_n|$. In @exr-4.60 we proved that the limit 
+The proof that the power method will work hinges on the fact that $|\lambda_1| > |\lambda_2| \geq |\lambda_3| \geq \cdots \geq |\lambda_n|$. In @exr-C.58 we proved that the limit 
 \begin{equation}
  \lim_{k \to \infty} \frac{A^k \boldsymbol{x}}{\lambda_1^k} 
 \end{equation}
@@ -1916,56 +1916,56 @@ Hint: To build a matrix with specific eigen-structure use the matrix factorizati
 
 ## Algorithm Summaries
 
-::: {#exr-4.66}
+::: {#exr-C.64}
 Explain in clear language how to efficiently solve an upper-triangular system of linear equations.
 
 :::
 
 ------------------------------------------------------------------------
 
-::: {#exr-4.67}
+::: {#exr-C.65}
 Explain in clear language how to efficiently solve a lower-triangular system of linear equations.
 
 :::
 
 ------------------------------------------------------------------------
 
-::: {#exr-4.68}
+::: {#exr-C.66}
 Explain in clear language how to solve the equation $A \boldsymbol{x} = \boldsymbol{b}$ using an $LU$ decomposition.
 
 :::
 
 ------------------------------------------------------------------------
 
-::: {#exr-4.69}
+::: {#exr-C.67}
 Explain in clear language how to solve an overdetermined system of linear equations (more equations than unknowns) numerically.
 
 :::
 
 ------------------------------------------------------------------------
 
-::: {#exr-4.70}
+::: {#exr-C.68}
 Explain in clear language the algorithm for finding the columns of the $Q$ matrix in the $QR$ factorization. Give all of the mathematical details.
 
 :::
 
 ------------------------------------------------------------------------
 
-::: {#exr-4.71}
+::: {#exr-C.69}
 Explain in clear language how to find the upper-triangular matrix $R$ in the $QR$ factorization. Give all of the mathematical details.
 
 :::
 
 ------------------------------------------------------------------------
 
-::: {#exr-4.72}
+::: {#exr-C.70}
 Explain in clear language how to solve the equation $A \boldsymbol{x} = \boldsymbol{b}$ using a $QR$ decomposition.
 
 :::
 
 ------------------------------------------------------------------------
 
-::: {#exr-4.73}
+::: {#exr-C.71}
 Explain in clear language how the power method works to find the dominant eigenvalue and eigenvector of a square matrix. Give all of the mathematical details.
 
 :::
@@ -1976,7 +1976,7 @@ Explain in clear language how the power method works to find the dominant eigenv
 
 ## Problems
 
-::: {#exr-4.74}
+::: {#exr-C.72}
 As mentioned much earlier in this chapter, there is an `rref()` command in Python, but it is in the `sympy` library instead of the `numpy` library -- it is implemented as a symbolic computation instead of a numerical computation. OK. So what? In this problem we want to compare the time to solve a system of equations $A \boldsymbol{x} = \boldsymbol{b}$ with each of the following techniques:
 
 -   row reduction of an augmented matrix $\begin{pmatrix} A & | & b\end{pmatrix}$ with `sympy`,
@@ -2021,7 +2021,7 @@ print("Total computation time=",total_time)
 
 ------------------------------------------------------------------------
 
-::: {#exr-4.75}
+::: {#exr-C.73}
 Imagine that we have a 1 meter long thin metal rod that has been heated to 100$^\circ$ on the left-hand side and cooled to 0$^\circ$ on the right-hand side. We want to know the temperature every 10 cm from left to right on the rod.
 
 1.  First we break the rod into equal 10cm increments as shown. See @fig-4.2. How many unknowns are there in this picture?
@@ -2040,7 +2040,7 @@ T_1 = \frac{T_0 + T_2}{2}.
 
 ------------------------------------------------------------------------
 
-::: {#exr-4.76}
+::: {#exr-C.74}
 Write code to solve the following systems of equations via both LU and QR decompositions. If the algorithm fails then be sure to explain exactly why.
 
 1.  
@@ -2065,21 +2065,21 @@ Write code to solve the following systems of equations via both LU and QR decomp
 
 ------------------------------------------------------------------------
 
-::: {#exr-4.77}
+::: {#exr-C.75}
 Give a specific example of a non-zero matrix which will NOT have an $LU$ decomposition. Give specific reasons why $LU$ will fail on your matrix.
 
 :::
 
 ------------------------------------------------------------------------
 
-::: {#exr-4.78}
+::: {#exr-C.76}
 Give a specific example of a non-zero matrix which will NOT have an $QR$ decomposition. Give specific reasons why $QR$ will fail on your matrix.
 
 :::
 
 ------------------------------------------------------------------------
 
-::: {#exr-4.79}
+::: {#exr-C.77}
 Have you ever wondered how scientific software computes a determinant? The formula that you learned for [calculating determinants by hand](https://en.wikipedia.org/wiki/Determinant) is horribly cumbersome and computationally intractable for large matrices. This problem is meant to give you glimpse of what is *actually* going on under the hood.^[Actually, the determinant computation uses LU with partial pivoting which we did not cover here in the text. What we are looking at in this exercise is a smaller sub-case of what happens when you have a matrix $A$ that does not require any row swaps in the row reduction process.]
 
 If $A$ has an $LU$ decomposition then $A = LU$. Use properties that you know about determinants to come up with a simple way to find the determinant for matrices that have an $LU$ decomposition. Show all of your work in developing your formula.
@@ -2090,7 +2090,7 @@ Once you have your formula for calculating $\det(A)$, write a Python function th
 
 ------------------------------------------------------------------------
 
-::: {#exr-4.80}
+::: {#exr-C.78}
 For this problem we are going to run a numerical experiment to see how the process of solving the equation $A \boldsymbol{x} = \boldsymbol{b}$ using the $LU$ factorization performs on random coefficient matrices $A$ and random right-hand sides $\boldsymbol{b}$. We will compare against Python's algorithm for solving linear systems.
 
 We will do the following:
@@ -2117,14 +2117,14 @@ Create a loop that does the following:
 
 ------------------------------------------------------------------------
 
-::: {#exr-4.81}
-Repeat @exr-4.80 for the $QR$ decomposition. Your final plot should show both the behaviour of $QR$ and of $LU$ throughout the experiment. What do you notice?
+::: {#exr-C.79}
+Repeat @exr-C.78 for the $QR$ decomposition. Your final plot should show both the behaviour of $QR$ and of $LU$ throughout the experiment. What do you notice?
 
 :::
 
 ------------------------------------------------------------------------
 
-::: {#exr-4.82}
+::: {#exr-C.80}
 Find a least squares solution to the equation $A \boldsymbol{x} = \boldsymbol{b}$ in two different ways with 
 \begin{equation}
 A = \begin{pmatrix} 1 & 3 & 5 \\ 4 & -2 & 6 \\ 4 & 7 & 8 \\ 3 & 7 & 19 \end{pmatrix} \quad \text{and} \quad \boldsymbol{b} = \begin{pmatrix} 5 \\ 2 \\ -2 \\ 8\end{pmatrix}.
@@ -2135,7 +2135,7 @@ A = \begin{pmatrix} 1 & 3 & 5 \\ 4 & -2 & 6 \\ 4 & 7 & 8 \\ 3 & 7 & 19 \end{pmat
 
 ------------------------------------------------------------------------
 
-::: {#exr-4.83}
+::: {#exr-C.81}
 Let $A$ be defined as 
 \begin{equation}
  A = \begin{pmatrix} 10^{-20} & 1 \\ 1 & 1 \end{pmatrix} 
@@ -2157,7 +2157,7 @@ Notice that $A$ has a tiny, but non-zero, value in the first entry.
 
 ------------------------------------------------------------------------
 
-::: {#exr-4.84}
+::: {#exr-C.82}
 #### Hilbert Matrices
 A Hilbert Matrix is a matrix of the form $H_{ij} = 1 / (i+j+1)$ where both $i$ and $j$ both start indexed at $0$. For example, a $4 \times 4$ Hilbert Matrix is 
 \begin{equation}
@@ -2183,7 +2183,7 @@ A Hilbert Matrix is a matrix of the form $H_{ij} = 1 / (i+j+1)$ where both $i$ a
 
 ------------------------------------------------------------------------
 
-::: {#exr-4.85}
+::: {#exr-C.83}
 Now that you have $QR$ and $LU$ code we are going to use both of them! The problem is as follows:\
 We are going to find the polynomial of degree 4 that best fits the function 
 \begin{equation}
@@ -2197,7 +2197,7 @@ Build the $t$ vector and the $y$ vector (these are your data). We need to set up
 
 ------------------------------------------------------------------------
 
-::: {#exr-4.86}
+::: {#exr-C.84}
 Find the largest eigenvalue and the associated eigenvector of the matrix $A$ WITHOUT using `np.linalg.eig()`. (Do not do this by hand either) 
 \begin{equation}
 A = \begin{pmatrix} 1 & 2 & 3 & 4 \\ 5 & 6 & 7 & 8 \\ 9 & 0 & 1 & 2 \\ 3 & 4 & 5 & 6 \end{pmatrix}
@@ -2208,14 +2208,14 @@ A = \begin{pmatrix} 1 & 2 & 3 & 4 \\ 5 & 6 & 7 & 8 \\ 9 & 0 & 1 & 2 \\ 3 & 4 & 5
 
 ------------------------------------------------------------------------
 
-::: {#exr-4.87}
-It is possible in a matrix that the eigenvalues $\lambda_1$ and $\lambda_2$ are equal but with the corresponding eigenvectors not equal. Before you experiment with matrices of this sort, write a conjecture about what will happen to the power method in this case (look back to our proof in @exr-4.60 of how the power method works). Now build several specific matrices where this is the case and see what happens to the power method.
+::: {#exr-C.85}
+It is possible in a matrix that the eigenvalues $\lambda_1$ and $\lambda_2$ are equal but with the corresponding eigenvectors not equal. Before you experiment with matrices of this sort, write a conjecture about what will happen to the power method in this case (look back to our proof in @exr-C.58 of how the power method works). Now build several specific matrices where this is the case and see what happens to the power method.
 
 :::
 
 ------------------------------------------------------------------------
 
-::: {#exr-4.88}
+::: {#exr-C.86}
 Will the power method fail, slow down, or be unaffected if one (or more) of the non-dominant eigenvalues is zero? Give sufficient mathematical evidence or show several numerical experiments to support your answer.
 
 :::
@@ -2230,7 +2230,7 @@ If $A$ is a symmetric matrix with eigenvalues $\lambda_1, \lambda_2, \ldots, \la
 
 ------------------------------------------------------------------------
 
-::: {#exr-4.90}
+::: {#exr-C.87}
 #### The Deflation Method
 For symmetric matrices we can build an extension to the power method in order to find the second most dominant eigen-pair for a matrix $A$. @thm-4.6 suggests the following method for finding the second dominant eigen-pair for a symmetric matrix. This method is called the **deflation method**.
 
@@ -2260,7 +2260,7 @@ A = np.transpose(A) @ A # why should this build a symmetric matrix
 
 ------------------------------------------------------------------------
 
-::: {#exr-4.91}
+::: {#exr-C.88}
 (This concept for this problem is modified from [@Meerschaert]). The data is taken from [NOAA and the National Weather Service](https://www.weather.gov/arx/mississippi_river) with the specific values associated with La Crosse, WI.)
 
 Floods in the Mississippi River Valleys of the upper Midwest have somewhat predictable day-to-day behaviour in that the flood stage today has high predictive power for the flood stage tomorrow. Assume that the flood stages are:
@@ -2305,14 +2305,14 @@ If we want to advance this model forward in time then we just need to iterate. I
 
 ------------------------------------------------------------------------
 
-::: {#exr-4.92}
+::: {#exr-C.89}
 The $LU$ factorization as we have built it in this chapter is not *smart* about the way that it uses the memory on your computer. In the $LU$ factorization the 1's on the main diagonal do not actually need to be stored since we know that they will always be there. The zeros in the lower triangle of $U$ do not need to be stored either. If you store the upper triangle values in the $U$ matrix on top of the upper triangle of the $L$ matrix then we still store a full matrix for $L$ which contains both $L$ and $U$ simultaneously, but we do not have to store $U$ separately and hence save computer memory. The modifications to the existing code for an $LU$ solve is minimal -- every time you call on an entry of the $U$ matrix it is stored in the upper triangle of $L$ instead. Write code to implement this new data storage idea and demonstrate your code on a few examples.
 
 :::
 
 ------------------------------------------------------------------------
 
-::: {#exr-4.93}
+::: {#exr-C.90}
 In the algorithm that we used to build the $QR$ factorization we built the $R$ matrix as $R = Q^T A$ The trouble with this step is that it fills in a lot of redundant zeros into the $R$ matrix -- some of which may not be exactly zero. First explain why this will be the case. Then rewrite your $QR$ factorization code so that the top triangle of $R$ is filled with all of the projections (do this with a double `for` loop). Demonstrate that your code works on a few examples.
 :::
 
@@ -2401,7 +2401,7 @@ Note: We can assume that the eigenvalues are ordered such that $|\lambda_1| > |\
 
 ------------------------------------------------------------------------
 
-::: {#exr-4.94}
+::: {#exr-C.91}
 Prove the preceding theorem.
 
 :::
@@ -2425,28 +2425,28 @@ Some of the following tasks will ask you to *prove* a statement or a theorem. Th
 
 ------------------------------------------------------------------------
 
-::: {#exr-4.95}
+::: {#exr-C.92}
 Finish writing the hyperlink matrix $H$ from @fig-4.3.
 
 :::
 
 ------------------------------------------------------------------------
 
-::: {#exr-4.96}
+::: {#exr-C.93}
 Write code to implement the iterative process defined previously. Make a plot that shows how the rank evolves over the iterations.
 
 :::
 
 ------------------------------------------------------------------------
 
-::: {#exr-4.97}
+::: {#exr-C.94}
 What must be true about a collection of $n$ pages such that an $n\times n$ hyperlink matrix $H$ is a stochastic matrix.
 
 :::
 
 ------------------------------------------------------------------------
 
-::: {#exr-4.98}
+::: {#exr-C.95}
 The statement of the next theorem is incomplete, but the proof is given to you. Fill in the blank in the statement of the theorem and provide a few sentences supporting your answer.
 
 :::
@@ -2468,14 +2468,14 @@ First note that $A$ is an $n \times n$ stochastic matrix so from @thm-4.8 we kno
 
 ------------------------------------------------------------------------
 
-::: {#exr-4.99}
+::: {#exr-C.96}
 Discuss how @thm-4.9 greatly simplifies the PageRank iterative process described previously. In other words: there is no reason to iterate at all. Instead, just find ... what?
 
 :::
 
 ------------------------------------------------------------------------
 
-::: {#exr-4.100}
+::: {#exr-C.97}
 Now use the previous two problems to find the resulting PageRank vector from the web in @fig-4.3? Be sure to rank the pages in order of importance. Compare your answer to the one that you got in problem 2.
 
 :::
@@ -2484,7 +2484,7 @@ Now use the previous two problems to find the resulting PageRank vector from the
 
 ![A second example web graph.](figures/LinAlg/Ch04_GoogleGraph2.png){#fig-4.4 alt="A second example web graph."}
 
-::: {#exr-4.101}
+::: {#exr-C.98}
 Consider the web in @fig-4.4.
 
 1.  Write the $H$ matrix and find the initial state $\boldsymbol{x}_0$,
@@ -2497,7 +2497,7 @@ Consider the web in @fig-4.4.
 
 ------------------------------------------------------------------------
 
-::: {#exr-4.102}
+::: {#exr-C.99}
 One thing that we did not consider in this version of the Google Page Rank algorithm is the random behaviour of humans. One, admittedly slightly naive, modification that we can make to the present algorithm is to assume that the person surfing the web will randomly jump to any other page in the web at any time. For example, if someone is on page 1 in @fig-4.4 then they could randomly jump to any page 2 - 8. They also have links to pages 2, 3, and 7. That is a total of 10 possible next steps for the web surfer. There is a $2/10$ chance of heading to page 2. One of those is following the link from page 1 to page 2 and the other is a random jump to page 2 without following the link. Similarly, there is a $2/10$ chance of heading to page 3, $2/10$ chance of heading to page 7, and a $1/10$ chance of randomly heading to any other page.
 
 Implement this new algorithm, called the *random surfer algorithm*, on the web in @fig-4.4. Compare your ranking to the non-random surfer results from the previous problem.

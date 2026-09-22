@@ -12,7 +12,7 @@ Root finding is really the process of finding the $x$-intercept of the function.
 
 ------------------------------------------------------------------------
 
-::: {#exr-2.32}
+::: {#exr-4.1}
 🖋 A tangent line approximation to a function $f(x)$ near a point $x_0$ is
 $$
  y = f(x_0) + f'(x_0) \left( x - x_0 \right).
@@ -43,28 +43,28 @@ The graphical method illustrated in @fig-2.8 was introduced by Sir Isaac Newton 
 
 ------------------------------------------------------------------------
 
-::: {#exr-2.34}
+::: {#exr-4.2}
 💬 If we had started not at $x_0$ in @fig-2.8 but instead at the very end of the $x$-axis in that figure, what would have happened? Would this initial guess have worked to eventually approximate the root?
 
 :::
 
 ------------------------------------------------------------------------
 
-::: {#exr-2.34b}
+::: {#exr-4.3}
 🖋 💬 Sketch some other function $f(x)$ with a root and choose an initial point $x_0$ and graphically perform the Newton iteration a few times, similar to @fig-2.8. Does the algorithm appear to converge to the root in your example? Do you think that this will generally take more or fewer steps than the bisection method?
 
 :::
 
 ------------------------------------------------------------------------
 
-::: {#exr-2.35}
+::: {#exr-4.4}
 🖋 🎓 Consider the function $f(x)=\sin(x)+1$. It has roots at $x=2n\pi+3\pi/2$ for $n\in\mathbb{Z}.$ However, at the roots we have $f'(x)=0$. Make yourself a sketch to see why. What will happen when you apply Newton's method with a starting value of $x_0=\pi$? You should be able to answer this just by looking at the sketch.
 :::
 
 ------------------------------------------------------------------------
 
-::: {#exr-2.34c}
-🖋 Using your result from @exr-2.32, write the formula for the $x$-intercept of the tangent line to $f(x)$ at the point $(x_n, f(x_n))$. This is the formula for the next guess $x_{n+1}$ in Newton's method. Newton's method is a fixed-point iteration method of the form $x_{n+1} = g(x_{n})$ with
+::: {#exr-4.5}
+🖋 Using your result from @exr-4.1, write the formula for the $x$-intercept of the tangent line to $f(x)$ at the point $(x_n, f(x_n))$. This is the formula for the next guess $x_{n+1}$ in Newton's method. Newton's method is a fixed-point iteration method of the form $x_{n+1} = g(x_{n})$ with
 $$
 g(x)= \dots.
 $$
@@ -73,7 +73,7 @@ Fill in the blank in the above formula.
 
 ------------------------------------------------------------------------
 
-::: {#exr-2.34d}
+::: {#exr-4.6}
 🖋 💻 🎓 Apply Newton's method to find the root of the function $f(x) = x^2 - 2$ with an initial guess of $x_0=1$. Calculate the first two iterations of the sequence by hand (you do not need a calculator or computer for this). Use a calculator or computer to calculate the next two iterations and fill in the following table:
 
 | $n$      | $x_n$                                  | $f(x_n)$     | $f'(x_n)$    |
@@ -89,7 +89,7 @@ Fill in the blank in the above formula.
 
 ### Implementation
 
-::: {#exr-2.38}
+::: {#exr-4.7}
 💻 The following is an outline of a Python function called `newton()` for Newton's method. Complete the function definition by copying your code from your `fixed_point_iteration()` function and modifying it to implement Newton's method.
 
 ```python
@@ -115,8 +115,8 @@ def newton(f, fprime, x0, tol=1e-10, N=30):
 
 ------------------------------------------------------------------------
 
-::: {#exr-2.39}
-💻 🎓 Use your implementation from @exr-2.38 to approximate the root of the function $f(x) = x^2 - 2$ with an initial guess of $x_0=1$. Use a tolerance of $10^{-10}$.
+::: {#exr-4.8}
+💻 🎓 Use your implementation from @exr-4.7 to approximate the root of the function $f(x) = x^2 - 2$ with an initial guess of $x_0=1$. Use a tolerance of $10^{-10}$.
 :::
 
 ------------------------------------------------------------------------
@@ -133,14 +133,14 @@ $$
 
 ------------------------------------------------------------------------
 
-::: {#exr-2.41}
+::: {#exr-4.9}
 💻 One of the failures of Newton's method is that it requires a division by $f'(x_n)$. If $f'(x_n)$ is zero then the algorithm completely fails. Go back to your Python function and put an `if` statement in the function that catches instances when Newton's method fails in this way.
 
 :::
 
 ------------------------------------------------------------------------
 
-::: {#exr-2.42}
+::: {#exr-4.10}
 🖋 An interesting failure can occur with Newton's method that you might not initially expect. Consider the function $f(x) = x^3 - 2x + 2$. This function has a root near $x=-1.77$. Fill in the table below with pen and paper. You really do not need a computer for this. Then draw the tangent lines into @fig-2.9 for approximating the solution to $f(x) = 0$ with a starting point of $x=0$.
 
 | $n$      | $x_n$                                  | $f(x_n)$     | $f'(x_n)$    |
@@ -158,7 +158,7 @@ $$
 
 ------------------------------------------------------------------------
 
-::: {#exr-2.44}
+::: {#exr-4.11}
 🖋 Repeat the previous exercise with the function $f(x) = x^3 - 5x$ with the starting point $x_0 = -1$. Again this is easy to do with pen and paper.
 
 ![Another surprising Newton's method failure when $f(x) = x^3 - 5x$.](figures/Roots/Newton04.png){#fig-2.11 alt="Another surprising Newton's method failure."}
@@ -167,7 +167,7 @@ $$
 
 ------------------------------------------------------------------------
 
-::: {#exr-2.43}
+::: {#exr-4.12}
 🖋 Now let us consider the function $f(x) = \sqrt[3]{x}$. This function has a root $x=0$. Furthermore, it is differentiable everywhere except at $x=0$ since
 $$
 f'(x) = \frac{1}{3} x^{-2/3} = \frac{1}{3x^{2/3}}.
@@ -201,7 +201,7 @@ $$
 
 ------------------------------------------------------------------------
 
-::: {#exr-2.40}
+::: {#exr-4.13}
 💬 You have now seen several reasons why Newton's method could fail. Work with your group to come up with a list of reasons. Support each of your reasons with a sketch or an example.
 
 :::
@@ -213,23 +213,23 @@ In this section we will look at the convergence rate of Newton's method and we w
 
 We saw in @exm-2.1b how we could empirically determine the rate of convergence of the bisection method by plotting the error in the new iterate on the $y$-axis and the error in the old iterate on the $x$-axis of a log-log plot. Take a look at that example again and make sure you understand the code and the explanation of the plot. Then, to investigate the rate of convergence of Newton's method you can do the same thing.
 
-::: {#exr-newton_error_tracking}
+::: {#exr-4.14}
 💻 🎓 Write a Python function `newton_with_error_tracking()` that returns a list of absolute errors between the iterates and the exact solution.
-You can start with your code from `newton()` from @exr-2.38 and add the collection of the errors in a list as in the `bisection_with_error_tracking()` function that we wrote in @exm-2.1.
+You can start with your code from `newton()` from @exr-4.7 and add the collection of the errors in a list as in the `bisection_with_error_tracking()` function that we wrote in @exm-2.1.
 Your new function should accept a Python function for $f(x)$, a Python function for $f'(x)$, the exact root, an initial guess, an optional error tolerance and an optional maximum number of iterations.
 
 Then, use this function to list the error progression for Newton's method for finding the root of $f(x) = x^2 - 2$ with the initial guess $x_0 = 1$ and tolerance $10^{-10}$. You should find that the error goes down extremely quickly and that for the final iteration Python can no longer detect a difference between the new iterate and its own value for $\sqrt{2}$.
 :::
 
-::: {#exr-2.45}
+::: {#exr-4.15}
 
-1.  💻 Plot the errors you calculated in @exr-newton_error_tracking using the `plot_error_progression()` function that we wrote in @exm-2.1b. Note that you will first need to remove the zeros from the error list, otherwise you will get an error. You can remind yourself of how to work with lists in @sec-lists.
+1.  💻 Plot the errors you calculated in @exr-4.14 using the `plot_error_progression()` function that we wrote in @exm-2.1b. Note that you will first need to remove the zeros from the error list, otherwise you will get an error. You can remind yourself of how to work with lists in @sec-lists.
 
 2.  💬 Give a thorough explanation for how to interpret the plot that you just made.
 
 :::
 
-::: {#exr-2.46}
+::: {#exr-4.16}
 
 💻 🎓 You will have observed that the points in your log-log plot lie approximately on a straight line, i.e.,
 $$
@@ -246,12 +246,12 @@ $$
 
 ------------------------------------------------------------------------
 
-::: {#exr-2.45b}
+::: {#exr-4.17}
 💻 Reproduce plots like those in the previous example but for the function
 $$
 f(x)=e^{x-3}+\sqrt{x+6}-4
 $$
-that you used in @exr-2.20 with the initial guess $x_0=1$ and tolerance $10^{-10}$. Again check that the plots have the expected shape. What is the approximate relationship between $\epsilon_{n+1}$ and $\epsilon_n$ in this case?
+that you used in @exr-3.15 with the initial guess $x_0=1$ and tolerance $10^{-10}$. Again check that the plots have the expected shape. What is the approximate relationship between $\epsilon_{n+1}$ and $\epsilon_n$ in this case?
 :::
 
 ------------------------------------------------------------------------
@@ -274,7 +274,7 @@ The first, and most obvious, way to approximate the derivative is just to use th
 
 ------------------------------------------------------------------------
 
-::: {#exr-2.48}
+::: {#exr-4.18}
 🖋 Use the backward difference
 $$
 f'(x_n) \approx \frac{f(x_n) - f(x_{n-1})}{x_n - x_{n-1}}
@@ -288,7 +288,7 @@ $$
 
 -------------------------------------------------
 
-::: {#exr-2.47}
+::: {#exr-4.19}
 🖋 Notice that the iteration formula for $x_{n+1}$ that you derived depends on both $x_n$ and $x_{n-1}$. So to start the iteration you need to choose two points $x_0$ and $x_1$ before you can calculate $x_2, x_3, \dots$.
 Draw several pictures showing what the secant method does pictorially.
 Discuss whether it is important to choose these starting points close to the root and close to each other.
@@ -296,7 +296,7 @@ Discuss whether it is important to choose these starting points close to the roo
 
 ------------------------------------------------------------------------
 
-::: {#exr-2.49}
+::: {#exr-4.20}
 💻 🎓 Write a Python function for solving equations of the form $f(x) = 0$ with the secant method. Your function should accept a Python function, two starting points, and an optional error tolerance. Also write a test script that clearly shows that your code is working.
 :::
 
@@ -310,9 +310,9 @@ Up to this point we have done analysis work on the bisection method and Newton's
 
 ------------------------------------------------------------------------
 
-::: {#exr-2.50}
+::: {#exr-4.21}
 💻 Write a function `secant_with_error_tracking()` that returns a list of absolute errors between the iterates and the exact solution.
-You can start with your code from `secant()` from @exr-2.49 and add the collection of the errors in a list as in the `bisection_with_error_tracking()` function from @exm-2.1.
+You can start with your code from `secant()` from @exr-4.20 and add the collection of the errors in a list as in the `bisection_with_error_tracking()` function from @exm-2.1.
 Your new function should accept a Python function, the exact root, two starting points, and an optional error tolerance.
 
 Use this function to list the error progression for the secant method for finding the root of $f(x) = x^2 - 2$ with the starting points $x_0 = 1$ and $x_1 = 3$. Use a tolerance of $10^{-10}$. Use the `plot_error_progression()` function that we wrote in @exm-2.1b to plot the error progression.
@@ -320,13 +320,13 @@ Use this function to list the error progression for the secant method for findin
 
 ------------------------------------------------------------------------
 
-::: {#exr-2.50b}
-💻 🎓 Using the `np.polyfit` function, extract the slope of the line that you had fit to the log-log plot of the error progression in @exr-2.50. What does this slope tell you about how the error at each iteration is related to the error at the previous iteration?
+::: {#exr-4.22}
+💻 🎓 Using the `np.polyfit` function, extract the slope of the line that you had fit to the log-log plot of the error progression in @exr-4.21. What does this slope tell you about how the error at each iteration is related to the error at the previous iteration?
 :::
 
 ------------------------------------------------------------------------
 
-::: {#exr-2.50c}
+::: {#exr-4.23}
 💻 Make error progression plots for a few different functions and look at the slopes. What do you notice?
 :::
 
@@ -571,28 +571,28 @@ Further reading: Section 2.4 of [@Burden_Faires].
 
 ## Problems {#sec-nonlinear-problems}
 
-::: {#exr-2.62}
+::: {#exr-4.24}
 Can the bisection method or Newton's method be used to find the roots of the function $f(x) = \cos(x) + 1$? Explain why or why not for each technique. What is the rate of convergence? Be careful here, the answer is surprising.
 
 :::
 
 ------------------------------------------------------------------------
 
-::: {#exr-2.55}
+::: {#exr-4.25}
 How many iterations of the bisection method are necessary to approximate $\sqrt{3}$ to within $10^{-3}$, $10^{-4}$, $\ldots$, $10^{-15}$ using the initial interval $[a,b]=[0,2]$? See @thm-2.2.
 
 :::
 
 ------------------------------------------------------------------------
 
-::: {#exr-2.56}
+::: {#exr-4.26}
 Refer back to @exm-2.1 and demonstrate that you get the same results for the order of convergence when solving the problem $x^3 - 3 = 0$. Generate versions of all of the plots from that example and give thorough descriptions of what you learn from each plot.
 
 :::
 
 ------------------------------------------------------------------------
 
-::: {#exr-2.57}
+::: {#exr-4.27}
 In this problem you will demonstrate that all of your root-finding code works. At the beginning of this chapter we proposed the equation-solving problem
 $$
 3\sin(x) + 9 = x^2 - \cos(x).
@@ -603,7 +603,7 @@ $$
 
 ------------------------------------------------------------------------
 
-::: {#exr-2.58}
+::: {#exr-4.28}
 In @fig-2.12 you see six different log-log plots of the new error against the old error for different root-finding techniques. What is the order of the approximate convergence rate for each of these methods?
 
 ![Six Error Plots](figures/Roots/ErrorsExercise2.png){#fig-2.12 alt="Six Error Plots"}
@@ -615,7 +615,7 @@ In @fig-2.12 you see six different log-log plots of the new error against the ol
 ------------------------------------------------------------------------
 
 
-::: {#exr-2.60}
+::: {#exr-4.29}
 There are many other root-finding techniques beyond the four that we have studied thus far. We can build these methods using Taylor series as follows:
 
 Near $x=x_0$ the function $f(x)$ is approximated by the Taylor series
@@ -644,7 +644,7 @@ $$
 
 ------------------------------------------------------------------------
 
-::: {#exr-2.61}
+::: {#exr-4.30}
 (modified from [@Burden_Faires]) An object falling vertically through the air is subject to friction due to air resistance as well as gravity. The function describing the position of such an object is
 $$
 s(t) = s_0 - \frac{mg}{k} t + \frac{m^2 g}{k^2}\left( 1- e^{-kt/m} \right),
@@ -661,7 +661,7 @@ where $m$ is the mass measured in kg, $g$ is gravity measured in metres per seco
 
 ------------------------------------------------------------------------
 
-::: {#exr-2.63}
+::: {#exr-4.31}
 In Single Variable Calculus you studied methods for finding local and global extrema of functions. You likely recall that part of the process is to set the first derivative to zero and to solve for the independent variable (remind yourself why you are doing this). The trouble with this process is that it may be very challenging to solve by hand. This is a perfect place for Newton's method or any other root-finding technique!\
 Find the local extrema for the function $f(x) = x^3(x-3)(x-6)^4$ using numerical techniques where appropriate.
 
@@ -669,7 +669,7 @@ Find the local extrema for the function $f(x) = x^3(x-3)(x-6)^4$ using numerical
 
 ------------------------------------------------------------------------
 
-::: {#exr-2.65}
+::: {#exr-4.32}
 (`scipy.optimize.fsolve()`) The `scipy` library in Python has many built-in numerical analysis routines much like the ones that we have built in this chapter. Of particular interest to the task of root finding is the `fsolve` command in the `scipy.optimize` library.
 
 1.  Go to the [help documentation](https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.fsolve.html) for `scipy.optimize.fsolve` and make yourself familiar with how to use the tool.
