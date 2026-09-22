@@ -778,13 +778,13 @@ d.  Try the same experiment using your `midpoint_1d` function. Does the midpoint
 
 ## Truncation Errors {#sec-truncation-ode}
 
-Many of the approximation methods in Numerical Analysis are based on Taylor series expansions and then dropping higher-order terms in the series. The error that is introduced by truncating a Taylor series in this way is called the truncation error. We have seem that in @sec-truncation.
+Many of the approximation methods in Numerical Analysis are based on Taylor series expansions and then dropping higher-order terms in the series. The error that is introduced by truncating a Taylor series in this way is called the truncation error. We have seen that in @sec-truncation.
 
 The material in this section will be covered by lectures. You will not need to have read this section before the assessment quiz for this week.
 
-We recall from @sec-truncation Taylor's formula: for a function $x$ that is $p$ times differentiable,
+We will use Taylor's theorem (@thm-taylor) in its step-size form, but now for a function $x(t)$ of the time variable $t$: if $x$ is $n+1$ times differentiable on an interval containing $t$ and $t+h$, then
 $$
-x(t+h) = x(t) + h x'(t) + \frac{h^2}{2!}x''(t) + \cdots + \frac{h^{p-1}}{(p-1)!}x^{(p-1)}(t) + \frac{h^p}{p!}x^{(p)}(\xi)
+x(t+h) = x(t) + x'(t)\,h + \frac{x''(t)}{2!}h^2 + \cdots + \frac{x^{(n)}(t)}{n!}h^n + \frac{x^{(n+1)}(\xi)}{(n+1)!}h^{n+1}
 $$
 for some $\xi$ between $t$ and $t+h$.
 
@@ -804,7 +804,7 @@ Starting from the exact solution value $x(t_n)$, the method gives
 $$
 x_{n+1} = x(t_n) + h f(t_n, x(t_n)) = x(t_n) + h x'(t_n).
 $$
-We compare this to the exact value at the next grid point by expanding $x(t_{n+1}) = x(t_n + h)$ in a Taylor series around $t_n$:
+We compare this to the exact value at the next grid point by expanding $x(t_{n+1}) = x(t_n + h)$ around $t_n$, using Taylor's theorem with remainder after the first-degree term:
 $$
 x(t_{n+1}) = x(t_n) + h x'(t_n) + \frac{h^2}{2} x''(\xi_n)
 $$
@@ -818,7 +818,7 @@ $$
 $$
 We see that the local truncation error is of order $h$ and that Euler's method is a **first-order** approximation. This means that halving the step size halves the error.
 
-The **global truncation error** is obtained by summing the local errors over all $N = (b-a)/h$ steps. For some $\xi$ between $a$ and $b$,
+The **global truncation error** is obtained by summing the local errors over all $N = (b-a)/h$ steps:
 $$
 \tau = \left|\sum_{n=0}^{N-1} \frac{h^2}{2} x''(\xi_n)\right| \leq N \frac{h^2}{2}\max_{t\in[a,b]}|x''(t)| = \frac{b-a}{2}\, h \max_{t\in[a,b]}|x''(t)|.
 $$
@@ -855,19 +855,19 @@ We compare this to the Taylor expansion of the exact solution:
 $$
 x(t_{n+1}) = x(t_n) + h x'(t_n) + \frac{h^2}{2} x''(t_n) + \frac{h^3}{6} x'''(\xi_n)
 $$
-for some $\xi_n$ between $t_n$ and $t_{n+1}$. The local error in one step is
+for some $\xi_n$ between $t_n$ and $t_{n+1}$. The terms up to $h^2$ agree, so the local error in one step is
 $$
-x(t_{n+1}) - x_{n+1} = \frac{h^3}{6} x'''(\xi_n),
+x(t_{n+1}) - x_{n+1} = \mathcal{O}(h^3).
 $$
-so the local truncation error is
+Note that, unlike for Euler's method, this error is not simply $\frac{h^3}{6}x'''(\xi_n)$, because $x_{n+1}$ itself also contains terms of order $h^3$ that we did not compute. So the local truncation error is
 $$
-\tau_n = \frac{1}{h}\left|\frac{h^3}{6} x'''(\xi_n)\right| = \frac{h^2}{6}|x'''(\xi_n)|.
+\tau_n = \frac{1}{h}\left|x(t_{n+1}) - x_{n+1}\right| = \mathcal{O}(h^2).
 $$
 We see that the local truncation error is of order $h^2$ and that the midpoint method is a **second-order** approximation. This means that halving the step size reduces the error by a factor of four.
 
-The **global truncation error** is obtained by summing over all $N = (b-a)/h$ steps:
+The **global truncation error** is obtained by summing over all $N = (b-a)/h$ steps: if the local error in each step is bounded by $C h^3$ for some constant $C$ then
 $$
-\tau \leq N\, \frac{h^3}{6}\max_{t\in[a,b]}|x'''(t)| = \frac{b-a}{6}\, h^2 \max_{t\in[a,b]}|x'''(t)|,
+\tau \leq N\, C h^3 = (b-a)\, C\, h^2,
 $$
 which is of order $h^2$, confirming that the midpoint method is a second-order method.
 

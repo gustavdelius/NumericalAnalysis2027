@@ -52,7 +52,7 @@ $$
 
 What you have seen here are just a few examples of why you might need to use numerical calculus instead of the classical routines that you learned earlier in your mathematical career. Another typical need for numerical derivatives and integrals arises when we approximate the solutions to differential equations later in the module.
 
-Throughout this chapter we will make heavy use of Taylor's Theorem to build approximations of derivatives and integrals. This has become a recurring scheme in this module: Taylor's Theorem is your all-purpose approximation tool. It suggests the approximation methods and it allows you to understand the error that comes with the approximation.
+Throughout this chapter we will make heavy use of Taylor's theorem (@thm-taylor) to build approximations of derivatives and integrals. This has become a recurring scheme in this module: Taylor's theorem is your all-purpose approximation tool. It suggests the approximation methods and it allows you to understand the error that comes with the approximation.
 
 ## Differentiation with Finite Differences {#sec-differentiation}
 
@@ -162,11 +162,11 @@ While this is the simplest and most obvious approximation for the first derivati
 ### Truncation Error
 
 ::: {#exr-3.10}
-🖋 From Taylor's Theorem we know that, for a sufficiently smooth function $f(x)$ whose Taylor series represents it locally,
+🖋 Recall from @def-1.3 that, for a function $f(x)$ that is analytic at $x_0$ (so that its Taylor series represents it near $x_0$),
 $$
 f(x) = f(x_0) + \frac{f'(x_0)}{1!} (x-x_0)^1 + \frac{f''(x_0)}{2!}(x-x_0)^2 + \frac{f^{(3)}(x_0)}{3!}(x-x_0)^3 + \cdots.
 $$
- What do we get if we replace every "$x$" in the Taylor Series with "$x+h$" and replace every "$x_0$" in the Taylor Series with "$x$?" In other words, in @fig-3.1 we want to centre the Taylor series at $x$ and evaluate the resulting series at the point $x+h$.
+ What do we get if we replace every "$x$" in the Taylor series with "$x+h$" and replace every "$x_0$" in the Taylor series with "$x$?" In other words, in @fig-3.1 we want to centre the Taylor series at $x$ and evaluate the resulting series at the point $x+h$.
 $$
 f(x+h) = \underline{\hspace{3in}}
 $$
@@ -195,7 +195,7 @@ What is the power of $h$ in the first term of the remainder from @exr-3.11?
 
 ::: {#def-3.1}
 #### Order of a Numerical Differentiation Scheme
-The **order** of a numerical derivative is the power of the step size in the first term of the remainder of the rearranged Taylor Series. For example, a first-order method will have "$h^1$" in the first term of the remainder. A second-order method will have "$h^2$" in the first term of the remainder. Etc.
+The **order** of a numerical derivative is the power of the step size in the first term of the remainder of the rearranged Taylor series. For example, a first-order method will have "$h^1$" in the first term of the remainder. A second-order method will have "$h^2$" in the first term of the remainder. Etc.
 
 For sufficiently small step size $h$, the error that you make by truncating the series is dominated by the first term in the remainder, which is proportional to the power of $h$ in that term. Hence, the **order** of a numerical differentiation scheme tells you how the error you are making by using the approximation scheme decreases as you decrease the step size $h$.
 :::
@@ -537,19 +537,19 @@ Next we will build a more accurate numerical first derivative scheme. The deriva
 ------------------------------------------------------------------------
 
 ::: {#exr-3.20}
-🖋 Consider again the Taylor series for a sufficiently smooth function $f(x)$ whose Taylor series represents it locally:
+🖋 Consider again the Taylor series of a function $f(x)$ that is analytic at $x_0$:
 $$
  f(x) = f(x_0) + \frac{f'(x_0)}{1!} (x-x_0)^1 + \frac{f''(x_0)}{2!}(x-x_0)^2 + \frac{f^{(3)}(x_0)}{3!}(x-x_0)^3 + \cdots .
 $$
 
 
-1.  Replace the "$x$" in the Taylor Series with "$x+h$" and replace the "$x_0$" in the Taylor Series with "$x$" and simplify.
+1.  Replace the "$x$" in the Taylor series with "$x+h$" and replace the "$x_0$" in the Taylor series with "$x$" and simplify.
 $$
 f(x+h) = \underline{\hspace{3in}}.
 $$
 
 
-2.  Now replace the "$x$" in the Taylor Series with "$x-h$" and replace the "$x_0$" in the Taylor Series with "$x$" and simplify.
+2.  Now replace the "$x$" in the Taylor series with "$x-h$" and replace the "$x_0$" in the Taylor series with "$x$" and simplify.
 $$
 f(x-h) = \underline{\hspace{3in}}.
 $$
@@ -1349,29 +1349,33 @@ $$
 ## Truncation Errors {#sec-truncation}
 Many of the approximation methods in Numerical Analysis are based on Taylor series expansions and then dropping higher-order terms in the series. The error that is introduced by truncating a Taylor series in this way is called the truncation error. The material in this section will be covered by lectures. You will not need to have read this section before the assessment quiz for this week.
 
-Let us recall Taylor's formula for a function $f$ that is $p$ times differentiable on the interval between $x$ and $x_0$:
+Let us recall Taylor's theorem (@thm-taylor) from @sec-truncation_error: for a function $f$ that is $n+1$ times differentiable on an interval containing $x$ and $x_0$,
 $$
 \begin{split}
 f(x)=f(x_0)&+f'(x_0)(x-x_0)+\frac{f''(x_0)}{2!}(x-x_0)^2+\cdots\\
-&+\frac{f^{(p-1)}(x_0)}{(p-1)!}(x-x_0)^{p-1}+\frac{f^{(p)}(\xi)}{p!}(x-x_0)^{p}
+&+\frac{f^{(n)}(x_0)}{n!}(x-x_0)^{n}+R_n(x),
 \end{split}
 $$
-for some $\xi$ between $x$ and $x_0$. The error introduced by truncating the series after the term of degree $p-1$ is thus
+with remainder
 $$
-|R_p(x)|=\left|\frac{f^{(p)}(\xi)}{p!}(x-x_0)^{p}\right|.
+R_n(x)=\frac{f^{(n+1)}(\xi)}{(n+1)!}(x-x_0)^{n+1}
 $$
-We had first discussed this in @sec-functions.
+for some $\xi$ between $x_0$ and $x$. The error introduced by truncating the series after the term of degree $n$ is thus $|R_n(x)|$. In the step-size form, with $x_0$ replaced by $x$ and $x$ replaced by $x+h$,
+$$
+f(x+h)=f(x)+f'(x)\,h+\cdots+\frac{f^{(n)}(x)}{n!}h^n+\frac{f^{(n+1)}(\xi)}{(n+1)!}h^{n+1}
+$$
+for some $\xi$ between $x$ and $x+h$.
 
 ### Truncation Error in Finite-Difference Formulae
 In the finite-difference formulae for derivatives that we discussed in @sec-differentiation, we approximated the derivative of a function $f$ at a point $x$ by a linear combination of function values at points close to $x$. For example, the forward difference formula for the first derivative is
 $$
 \begin{split}
 f'(x)&\approx \frac{f(x+h)-f(x)}{h}\\
-&=\frac{f(x)+hf'(x)+\frac{h^2}{2}f''(x)+\cdots-f(x)}{h}\\
+&=\frac{f(x)+hf'(x)+\frac{h^2}{2}f''(\xi)-f(x)}{h}\\
 &=f'(x)+\frac{h}{2}f''(\xi).
 \end{split}
 $$
-for some $\xi$ between $x$ and $x+h$. We see that the truncation error is proportional to the step size $h$. We say that the truncation error is of order $h$ and that this forward-difference approximation is a first-order approximation. This means that in order to halve the size of the error we need to halve the step size.
+for some $\xi$ between $x$ and $x+h$, where we used Taylor's theorem with $n=1$. We see that the truncation error is proportional to the step size $h$. We say that the truncation error is of order $h$ and that this forward-difference approximation is a first-order approximation. This means that in order to halve the size of the error we need to halve the step size.
 
 You can now do a similar analysis for the other finite-difference formulae that we discussed in @sec-differentiation.
 
@@ -1394,12 +1398,12 @@ For the right Riemann sum we have
 $$
 \begin{split}
 I_j-A_j&=\int_{x_{j-1}}^{x_{j}}\left(f(x)-f(x_j)\right)dx\\
-&=\int_{x_{j-1}}^{x_{j}}\left(f(x_j)+f'(\xi_j)(x-x_j)-f(x_j)\right)dx\\
+&=\int_{x_{j-1}}^{x_{j}}\left(f(x_j)+f'(\xi_x)(x-x_j)-f(x_j)\right)dx\\
 &=f'(\xi_j)\int_{x_{j-1}}^{x_{j}}(x-x_j)dx\\
 &=-f'(\xi_j)\frac{h^2}{2}\\
 \end{split}
 $$
-for some $\xi_j$ between $x_{j-1}$ and $x_j$. So the local truncation error is
+for some $\xi_j$ between $x_{j-1}$ and $x_j$. Here we first used Taylor's theorem with $n=0$ (which is just the mean value theorem), centred at $x_j$, where $\xi_x$ lies between $x$ and $x_j$ and depends on $x$. In the next step we used the mean value theorem for integrals to take $f'$ out of the integral, which is allowed because $(x-x_j)$ does not change sign on the interval. So the local truncation error is
 $$
 \tau_j=\frac{1}{h}\left|-f'(\xi_j)\frac{h^2}{2}\right|=\frac{h}{2}|f'(\xi_j)|.
 $$
@@ -1428,7 +1432,7 @@ I_j-A_j&=\int_{x_{j-1}}^{x_{j}}\left(f(x)-f(m_j)\right)dx\\
 &=f'(m_j)\int_{x_{j-1}}^{x_{j}}(x-m_j)dx+\frac{1}{2}f''(\xi_j)\int_{x_{j-1}}^{x_{j}}(x-m_j)^2dx\\
 \end{split}
 $$
-for some $\xi_j$ between $x_{j-1}$ and $x_j$. Since $\int_{x_{j-1}}^{x_{j}}(x-m_j)dx=0$ and $\int_{x_{j-1}}^{x_{j}}(x-m_j)^2dx=\frac{h^3}{12}$, we have
+for some $\xi_j$ between $x_{j-1}$ and $x_j$. Here we used Taylor's theorem with $n=1$, centred at $m_j$, with $\xi_x$ between $x$ and $m_j$, and then, as for the right Riemann sum, the mean value theorem for integrals (using that $(x-m_j)^2\geq 0$). Since $\int_{x_{j-1}}^{x_{j}}(x-m_j)dx=0$ and $\int_{x_{j-1}}^{x_{j}}(x-m_j)^2dx=\frac{h^3}{12}$, we have
 $$
 I_j-A_j=\frac{1}{2}f''(\xi_j)\frac{h^3}{12}=f''(\xi_j)\frac{h^3}{24}.
 $$
