@@ -312,6 +312,8 @@ $$
 
 2.  Compare now to what we found for the midpoint method on this problem as well.
 
+3.  Draw a picture, similar to @fig-euler-midpoint, that shows what one step of the backward Euler method does. Start at the point $(t_0,x_0)=(0,6)$ and draw the line segment to the backward Euler approximation $(t_1,x_1)=(1,4)$. Also sketch the exact solution $x(t)=6e^{-t/2}$ and the Euler step. At which point is the slope of the backward Euler line segment equal to the slope $f(t,x)=-0.5x$ given by the differential equation? Compare this to the Euler method and the midpoint method.
+
 :::
 
 ------------------------------------------------------------------------
@@ -684,7 +686,7 @@ Note that while Backward Euler is stable for large $h$, it is still only a first
 ------------------------------------------------------------------------
 
 ::: {#exr-5.66}
-🖋 Explain in clear language what the Backward Euler method does geometrically.
+🖋 Explain in clear language what the Backward Euler method does geometrically. Draw a picture to support your explanation.
 
 :::
 
