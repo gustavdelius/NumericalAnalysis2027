@@ -282,9 +282,9 @@ Euler's method is a first order method for approximating the solution to the dif
  m x'' = -b x' - k x.
 \end{equation}
 
-1. 🎓 If we want to solve a second order differential equation numerically we need to convert it to first order differential equations (Euler's method is only designed to deal with first order differential equations, not second order). To do so we can introduce a new variable, $x_1$, such that $x_1 = x'$. For the sake of notational consistency we define $x_0 = x$. The result is a system of first-order differential equations.
+1. 🎓 If we want to solve a second order differential equation numerically we need to convert it to first order differential equations (Euler's method is only designed to deal with first order differential equations, not second order). To do so we introduce the two variables $u = x$ (the position) and $v = x'$ (the velocity). The result is a system of first-order differential equations for $u$ and $v$.
 \begin{equation}
-\begin{aligned} x_0' &= x_1 \\ x_1' &= \underline{\hspace{2in}}\end{aligned}
+\begin{aligned} u' &= v \\ v' &= \underline{\hspace{2in}}\end{aligned}
 \end{equation}
 
 
@@ -294,7 +294,7 @@ Euler's method is a first order method for approximating the solution to the dif
 \end{equation}
  where $F$ is a function that accepts a vector of inputs, plus time, and returns a vector of outputs. In the context of this particular problem,
 \begin{equation}
- F(t,\boldsymbol{x}) = \begin{pmatrix} x_0' \\ x_1' \end{pmatrix} = \begin{pmatrix} x_1 \\ \underline{\hspace{1in}} \end{pmatrix}
+ F(t,\boldsymbol{x}) = \begin{pmatrix} u' \\ v' \end{pmatrix} = \begin{pmatrix} v \\ \underline{\hspace{1in}} \end{pmatrix} \quad \text{where} \quad \boldsymbol{x} = \begin{pmatrix} u \\ v \end{pmatrix}.
 \end{equation}
 
 
@@ -349,13 +349,15 @@ def euler(F, x0, t0, tmax, dt):
     return t, x
 ```
 
-5.  To use the `euler()` function to solve the system of equations from part (1), complete the following code. Use a mass of $m=2$kg, a damping force of $b=40$kg/s, and a spring constant of $k=128$N/m. Consider an initial position of $x=0$ (equilibrium) and an initial velocity of $x_1 = 0.6$m/s.
+5.  To use the `euler()` function to solve the system of equations from part (1), complete the following code. Use a mass of $m=2$kg, a damping force of $b=40$kg/s, and a spring constant of $k=128$N/m. Consider an initial position of $u = 0$ (equilibrium) and an initial velocity of $v = 0.6$m/s. Note that inside the function `F` the vector `x` holds the two variables, `x[0]` $= u$ and `x[1]` $= v$.
 
 ``` python
 m = 2
 b = 40
 k = 128
-F = lambda t, x: np.array([x[1], ???])
+def F(t, x):
+    u, v = x  # unpack the vector x into position and velocity
+    return np.array([v, ???])
 x0 = [???, ???] # initial conditions
 t0 = 0
 tmax = 5  # pick something reasonable here
