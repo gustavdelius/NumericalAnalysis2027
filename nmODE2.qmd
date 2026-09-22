@@ -551,7 +551,7 @@ This is almost the entire complex plane, except for the disk of radius 1 centred
 The following exercises let you practise the stability analysis from these lecture notes.
 
 ::: {#exr-lect-stab-midpoint-real}
-🖋 Show that for real $z$ the amplification factor $Q(z)=1+z+\frac{z^2}{2}$ of the midpoint method is always positive and that $|Q(z)|<1$ if and only if $-2<z<0$. Deduce that for real $\lambda<0$ the midpoint method is stable if and only if $h<2/|\lambda|$, the same condition as for Euler's method. Use this to explain the critical step size that you found for the midpoint method in part (d) of @exr-5.41.
+🖋 Show that for real $z$ the amplification factor $Q(z)=1+z+\frac{z^2}{2}$ of the midpoint method is always positive and that $|Q(z)|\leq 1$ if and only if $-2\leq z\leq 0$. Deduce that for real $\lambda<0$ the midpoint method is stable if and only if $h\leq 2/|\lambda|$, the same condition as for Euler's method. Use this to explain the critical step size that you found for the midpoint method in part (d) of @exr-5.41.
 :::
 
 ------------------------------------------------------------------------
@@ -567,7 +567,7 @@ $$
 Q(z)=\frac{1+z/2}{1-z/2}.
 $$
 
-b.  Show that $|Q(z)|<1$ if and only if $\text{Re}(z)<0$, so that the region of absolute stability is exactly the left half-plane. Is the method unconditionally stable? (Hint: $|Q(z)|<1$ means that $z$ is closer to $-2$ than to $2$.)
+b.  Show that $|Q(z)|\leq 1$ if and only if $\text{Re}(z)\leq 0$, so that the region of absolute stability is exactly the left half-plane (including the imaginary axis). Is the method unconditionally stable? (Hint: $|Q(z)|\leq 1$ means that $z$ is at least as close to $-2$ as to $2$.)
 
 c.  Find $\lim_{z\to-\infty}Q(z)$ for real $z$ and compare with the corresponding limit for the backward Euler method. What does this tell you about how the two methods treat a very rapidly decaying transient $e^{\lambda t}$ with $\lambda\ll 0$ when $h$ is not small?
 
@@ -585,11 +585,11 @@ Q(z)=1+z+\frac{z^2}{2}+\frac{z^3}{6}+\frac{z^4}{24}.
 $$
 Compare this with the Taylor series of the factor $e^{z}$ by which the exact solution changes over one step. Do the same comparison for the amplification factors of Euler's method and the midpoint method. How is the number of terms that agree related to the order of the method?
 
-b.  💻 Find numerically the interval of the negative real axis on which $|Q(z)|<1$, for example by using `np.roots()` to find the real roots of $Q(z)-1$ and $Q(z)+1$. This confirms the hint given in @exr-5.56. What is the resulting maximum step size for RK4 applied to $x'=-100x+\sin t$?
+b.  💻 Find numerically the interval of the negative real axis on which $|Q(z)|\leq 1$, for example by using `np.roots()` to find the real roots of $Q(z)-1$ and $Q(z)+1$. This confirms the hint given in @exr-5.56. What is the resulting maximum step size for RK4 applied to $x'=-100x+\sin t$?
 
 c.  💻 Plot the boundaries of the regions of absolute stability of Euler's method, the midpoint method and RK4 in the complex $z$-plane. (Hint: evaluate $|Q(z)|$ on a grid of complex numbers $z=x+iy$ created with `np.meshgrid()` and use `plt.contour()` to draw the curve where $|Q(z)|=1$.)
 
-You should find that $|Q(z)|<1$ for $-2.785<z<0$, so the maximum step size is about $0.0279$.
+You should find that $|Q(z)|\leq 1$ for $-2.785\leq z\leq 0$, so the maximum step size is about $0.0279$.
 :::
 
 ------------------------------------------------------------------------
