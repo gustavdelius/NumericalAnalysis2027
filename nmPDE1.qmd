@@ -269,7 +269,7 @@ Check that your function works by using it to calculate the same solution as in 
 ------------------------------------------------------------------------
 
 ::: {#exr-6.31a}
-💻 💬 Now run your `heat1d` function from @exr-heat1d with the same diffusion coefficient $D=0.1$, the same number `N_t = 100` of time steps and the same initial and boundary conditions but double the number of spatial steps to `N_x=40`. Plot the solution on the domain $t\in[0,1]$ and $x\in[0,1]$. Do you believe what you see? What is happening to the solution?
+💻 💬 Now run your `heat1d` function from @exr-heat1d with the same diffusion coefficient $D=0.1$, the same number `N_t = 100` of time steps and the same initial and boundary conditions but double the number of spatial steps to `N_x=40`. Plot the solution at the final time step $t=1$, as you did at the end of @exr-6.30. Do you believe what you see? What is happening to the solution? Compare with the plot of the final time step for `N_x=20`.
 :::
 
 ------------------------------------------------------------------------
