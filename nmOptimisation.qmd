@@ -337,7 +337,7 @@ $$
 
 ------------------------------------------------------------------------
 
-### Order of Convergence of Gradient Descent
+### Order of Convergence of Gradient Descent {#sec-gd-order}
 
 You will by now have observed in @exr-3.54 that the error progression plots for gradient descent show a straight line with slope approximately equal to 1 in the log-log plot of $E_{n+1}$ against $E_n$. This means that gradient descent has **linear** convergence. In this section we consolidate your observations theoretically. As in @sec-roots2, this section is presented as a lecture rather than containing further explorations.
 
@@ -777,46 +777,91 @@ This function $L(\boldsymbol{a})$ is called the *loss function*.
 ------------------------------------------------------------------------
 
 ::: {#exr-3.84}
-💬 💻 The last step above is a bit vague. That was purposeful since there are many techniques that could be used to minimise the sum of the squared errors. However, if we just think about the sum of the squared residuals as a function then we can apply `scipy.optimize.minimize()` to that function in order to return the values of the parameters that best minimise the sum of the squared residuals. The following blocks of Python code implement the idea in a very streamlined way. Go through the code and comment each line to describe exactly what it does.
+🖋 💻 💬 The last step above is a bit vague. That was purposeful since there are many techniques that could be used to minimise the sum of the squared residuals. But the loss function $L(\boldsymbol{a})$ is just a function of the parameters, so we can minimise it with the tool that we built in @sec-multiopt: gradient descent. Let us do that for the quadratic $f(x) = ax^2 + bx + c$ and the data from @exr-3.81.
 
-``` python         
+1.  🖋 Write the loss function as
+$$
+L(a,b,c) = \sum_{i=0}^{3} \left( y_i - (a x_i^2 + b x_i + c) \right)^2
+$$
+and calculate its gradient
+$$
+\nabla L(a,b,c) = \left( \frac{\partial L}{\partial a}, \frac{\partial L}{\partial b}, \frac{\partial L}{\partial c} \right).
+$$
+Hint: use the chain rule. Each of the three partial derivatives is a sum over the data points of the residual $y_i - (a x_i^2 + b x_i + c)$ multiplied by something.
+
+2.  💻 Complete the code below so that the function `dSSRes()` returns the gradient of the loss function. Go through the code and comment each line to describe exactly what it does.
+
+``` python
 import numpy as np
 import matplotlib.pyplot as plt
-from scipy.optimize import minimize
 xdata = np.array([0, 1, 2, 3])
 ydata = np.array([2.37, 4.14, 12.22, 23.68])
 
 def SSRes(parameters):
-  # In the next line of code we want to build our 
-  # quadratic approximation y = ax^2 + bx + c
-  # We are sending in a list of parameters so 
-  # a = parameters[0], b = parameters[1], and c = parameters[2]
-  yapprox = parameters[0]*xdata**2 + \
-            parameters[1]*xdata + \
-            parameters[2]
-  residuals = np.abs(ydata-yapprox)
-  return np.sum(residuals**2)
+    """
+    Sum of the squared residuals for the quadratic y = ax^2 + bx + c
 
+    Parameters:
+    parameters (NumPy array): The parameters a = parameters[0],
+                              b = parameters[1] and c = parameters[2]
 
-BestParameters = minimize(SSRes,[1,1,1])
-print("The best values of a, b, and c are: \n",BestParameters.x)
-# If you want to print the diagnostics then use the line below:
-# print("The minimisation diagnostics are: \n",BestParameters)
+    Returns:
+    float: The sum of the squared residuals
+    """
+    yapprox = parameters[0]*xdata**2 + \
+              parameters[1]*xdata + \
+              parameters[2]
+    residuals = ydata - yapprox
+    return np.sum(residuals**2)
+
+def dSSRes(parameters):
+    """
+    Gradient of the sum of the squared residuals with respect to
+    the parameters a, b and c
+
+    Parameters:
+    parameters (NumPy array): The parameters a = parameters[0],
+                              b = parameters[1] and c = parameters[2]
+
+    Returns:
+    NumPy array: The three partial derivatives of SSRes
+    """
+    yapprox = parameters[0]*xdata**2 + \
+              parameters[1]*xdata + \
+              parameters[2]
+    residuals = ydata - yapprox
+    gradient = np.zeros(3)
+    gradient[0] = ??? # partial derivative with respect to a
+    gradient[1] = ??? # partial derivative with respect to b
+    gradient[2] = ??? # partial derivative with respect to c
+    return gradient
 ```
 
-``` python         
-plt.plot(xdata,ydata,'bo')
-x = np.linspace(0,4,100)
-y = BestParameters.x[0]*x**2 + \
-    BestParameters.x[1]*x + \
-    BestParameters.x[2]
-plt.plot(x,y,'r--')
+3.  💻 Now use your `gradient_descent()` function from @exr-3.58 to find the parameters that minimise the loss function. Start from the parameters $(a,b,c) = (1,1,1)$ and use a learning rate of $\alpha = 0.008$, a tolerance of $10^{-8}$ and a maximum of $10\,000$ iterations. Then plot the best-fit quadratic together with the data.
+
+``` python
+best_parameters = gradient_descent(dSSRes, np.array([1.0, 1.0, 1.0]), 0.008,
+                                   tol=1e-8, max_iter=10000)
+print("The best values of a, b, and c are: \n", best_parameters)
+
+plt.plot(xdata, ydata, 'bo')
+x = np.linspace(0, 4, 100)
+y = best_parameters[0]*x**2 + \
+    best_parameters[1]*x + \
+    best_parameters[2]
+plt.plot(x, y, 'r--')
 plt.grid()
 plt.xlabel('x')
 plt.ylabel('y')
 plt.title('Best Fit Quadratic')
 plt.show()
 ```
+
+You should find $a \approx 2.4225$, $b \approx -0.0665$ and $c \approx 2.2235$.
+
+4.  💬 Now try the learning rate $\alpha = 0.01$. What happens? Try a few values in between. Relate what you observe to the condition on the learning rate that we derived for single-variable gradient descent in @sec-gd-order, see @eq-gd-rate. (For a function of several variables the role of $f''(p)$ is played by the largest eigenvalue of the matrix of second derivatives, which here is approximately $227$.)
+
+5.  💬 How many iterations does gradient descent need to reach the tolerance with $\alpha = 0.008$? Compare this with the number of steps that gradient descent needed for the functions in @exr-gd-difficulties. Why do you think it needs so many steps here?
 
 :::
 
@@ -847,6 +892,8 @@ Such fake data that is generated from a known function with a known error distri
 You will notice that the parameters that we estimated with the least squares method are not at all the same as the parameters that I used to generate the data. This is because we had only 4 noisy data points to estimate 3 parameters.
 
 Adjust the above script so that it generates 100 values for $x$ between 0 and 3 and corresponding noisy $y$ values. Then try to estimate the parameters of the quadratic function that generated the data. Does the estimate get closer to the original parameter values?
+
+If you use gradient descent with the learning rate from @exr-3.84 on the 100 data points you will find that it diverges. You will need a learning rate that is more than ten times smaller, for example $\alpha = 0.0003$, and more iterations. Can you explain why the learning rate needs to be smaller when there are more data points?
 :::
 
 ------------------------------------------------------------------------
