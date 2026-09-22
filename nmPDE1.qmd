@@ -385,7 +385,11 @@ The diffusion term usually arises from random spatial motion of particles. Howev
 $$
  u_t = 0.1 u_{xx} - u_x
 $$
-Use the forward difference formula for the $u_x$ term and the centred difference formula for the $u_{xx}$ term. Use the initial condition $u(0,x) = \sin(\pi x)$, Dirichlet boundary conditions $u(t,0) = 0$ and $u(t,1) = 0$, and $t\in[0,1]$. Use $20$ spatial steps and $100$ time steps. Make a plot and an animation of the solution.
+Use the centred difference formula
+$$
+u_x(t_n,x_i) \approx \frac{U_{i+1}^n - U_{i-1}^n}{2\Delta x}
+$$
+for the $u_x$ term and the centred difference formula for the $u_{xx}$ term, so that both spatial derivatives are approximated to second order. Use the initial condition $u(0,x) = \sin(\pi x)$, Dirichlet boundary conditions $u(t,0) = 0$ and $u(t,1) = 0$, and $t\in[0,1]$. Use $20$ spatial steps and $100$ time steps. Make a plot and an animation of the solution.
 
 :::
 ## Stability of Forward Difference Method {#sec-stability-heat}
