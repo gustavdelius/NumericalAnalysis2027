@@ -165,6 +165,21 @@ U[?,?]
 
 ------------------------------------------------------------------------
 
+::: {.callout-tip}
+#### Creating the grid of times
+In @exr-6.30 the number of time steps was given. Often you will instead be given the step size $\Delta t$. Be careful when the length of the time interval is not an exact multiple of $\Delta t$. For example `np.arange(0, 2 + 0.3, 0.3)` produces times that end at $t=2.1$ instead of $t=2$, and because of rounding errors `np.arange` can also sometimes produce one point more or fewer than you expect. It is best to first determine an integer number of intervals, then create the vector of times with `np.linspace`, and then determine the updated step size, just as we did in the ODE solvers like `euler_1d()` in @exr-5.12:
+
+``` python
+N_t = round((t_max - t_0) / dt)       # integer number of time steps
+t = np.linspace(t_0, t_max, N_t + 1)  # vector of times
+dt = t[1] - t[0]                      # the step size actually used
+```
+
+The same applies to the vector of $x$ values when you are given $\Delta x$.
+:::
+
+------------------------------------------------------------------------
+
 ::: {#exr-6.30_plot}
 💻  Now visualise the whole solutions over the entire time range. You can either make a plot or an animation to illustrate the time evolution of $u$. For each of these there are various Python packages you could use. Below is a function `plot_solution_1d()` using plotly to make a plot and a function `animate_solution_1d()` using matplotlib to make an animated 2D plot. You can use either of these or you can use your own plotting code.
 
@@ -515,8 +530,13 @@ def solve_heat1d(u_0, D, tmax, dt, xmax, dx):
     Solves the 1D heat equation.
     u_0 is a function giving the initial condition.
     """
-    t = np.arange(0, tmax + dt, dt)
-    x = np.arange(0, xmax + dx, dx)
+    # Set up the grids with an integer number of steps
+    N_t = round(tmax / dt)
+    t = np.linspace(0, tmax, N_t + 1)
+    dt = t[1] - t[0]
+    N_x = round(xmax / dx)
+    x = np.linspace(0, xmax, N_x + 1)
+    dx = x[1] - x[0]
 
     a = ...
 

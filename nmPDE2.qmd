@@ -502,9 +502,14 @@ def solve_heat2d(u_0, D, tmax, dt, L, dx):
     Solves the 2D heat equation on [0,L]x[0,L].
     u_0 is a function u_0(X, Y) giving the initial condition.
     """
-    t = np.arange(0, tmax + dt, dt)
-    x = np.arange(0, L + dx, dx)
-    y = np.arange(0, L + dx, dx)
+    # Set up the grids with an integer number of steps
+    N_t = round(tmax / dt)
+    t = np.linspace(0, tmax, N_t + 1)
+    dt = t[1] - t[0]
+    N_x = round(L / dx)
+    x = np.linspace(0, L, N_x + 1)
+    dx = x[1] - x[0]
+    y = x
     
     Y, X = np.meshgrid(y, x)
     
