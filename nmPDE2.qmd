@@ -374,6 +374,20 @@ Since $a > 0$ and $\sin^2(\cdot) \geq 0$, we have $\mu_k \geq 1$ for all $k$ and
 
 ------------------------------------------------------------------------
 
+::: {#exr-lect-stab-backward-Nx3}
+🖋 As in @exm-heat_stability, divide the spatial domain $[0,1]$ into $N_x=3$ subintervals.
+
+a.  Write down the $2\times2$ matrix $B$ for the backward difference method and find its eigenvalues.
+
+b.  Deduce the eigenvalues of $B^{-1}$ and show that they lie strictly between $0$ and $1$ for every $a>0$.
+
+c.  Compare with the forward difference method for the same grid, which in @exm-heat_stability we found to be stable only for $a\leq\frac23$. What happens to the eigenvalues of $B^{-1}$ as $a\to\infty$? Is this the behaviour of the exact solution of the heat equation for large $\Delta t$?
+
+You should find the eigenvalues $1+a$ and $1+3a$ for $B$.
+:::
+
+------------------------------------------------------------------------
+
 ### The Crank-Nicolson Method
 
 ::: {#exr-6.44}
@@ -479,6 +493,52 @@ g_k = \frac{\mu_k^{\mathcal{B}}}{\mu_k^{\mathcal{A}}} = \frac{1 - 4r\sin^2\!\lef
 $$
 Setting $s = 4r\sin^2(k\pi/(2N_x)) \geq 0$, we have $g_k = (1-s)/(1+s)$. Since $|1-s| \leq 1+s$ for all $s \geq 0$, we conclude $|g_k| \leq 1$ for every $k$ and every $r > 0$. Hence the Crank-Nicolson method is **unconditionally stable**, with no restriction on $\Delta t/(\Delta x)^2$.
 
+
+------------------------------------------------------------------------
+
+The following exercises let you practise the stability analysis for the implicit methods.
+
+::: {#exr-lect-stab-method-of-lines}
+🖋 In this exercise we connect the stability of the methods for the heat equation to the stability of the methods for ODEs from @sec-instability. If we only discretise space and keep time continuous, the heat equation $u_t=Du_{xx}$ with homogeneous Dirichlet boundary conditions becomes a system of ODEs for the vector $\mathbf{U}(t)=(U_1(t),\ldots,U_{N_x-1}(t))^T$:
+$$
+\mathbf{U}'=\frac{D}{(\Delta x)^2}T\,\mathbf{U},
+$$
+where $T$ is the tridiagonal matrix with $-2$ on the diagonal and $1$ on the two off-diagonals. (This approach is called the *method of lines*.)
+
+a.  Write down the $i$th row of this system of ODEs and explain where it comes from.
+
+b.  Using the eigenvectors from @sec-stability-heat, the eigenvalues of $T$ are $-4\sin^2\left(\frac{k\pi}{2N_x}\right)$. So the eigenvalues of the ODE system are $\lambda_k=-\frac{4D}{(\Delta x)^2}\sin^2\left(\frac{k\pi}{2N_x}\right)$. Show that with $z_k=\Delta t\,\lambda_k$ we have $z_k=-4a\sin^2\left(\frac{k\pi}{2N_x}\right)$.
+
+c.  Show that applying the Euler method to this system of ODEs gives exactly the forward difference method, and that applying the backward Euler method gives exactly the backward difference method. Check that the eigenvalues $1-4a\sin^2\left(\frac{k\pi}{2N_x}\right)$ and $1/\mu_k$ of the amplification matrices are the amplification factors $Q(z_k)$ of these two ODE methods.
+
+d.  Which ODE method gives the Crank-Nicolson method? (Hint: see @exr-lect-stab-trapezoidal.) Check that its amplification factor $Q(z_k)$ is the eigenvalue $g_k$ given above.
+
+e.  💬 Estimate the most negative eigenvalue $\lambda_{N_x-1}$ and the least negative eigenvalue $\lambda_1$ when $x\in[0,1]$ and $N_x$ is large. (Use $\sin(\theta)\approx\theta$ for small $\theta$.) Explain why the system of ODEs is stiff (see @sec-stiff) when $\Delta x$ is small, and hence why implicit methods are useful for the heat equation.
+
+In part (e) you should find $\lambda_{N_x-1}\approx-\frac{4D}{(\Delta x)^2}$ and $\lambda_1\approx -D\pi^2$.
+:::
+
+------------------------------------------------------------------------
+
+::: {#exr-lect-stab-CN-modes}
+🖋 In @exr-CN1 you solved $u_t=0.2u_{xx}$ on $[0,1]$ with the Crank-Nicolson method using $\Delta x=0.05$ and $\Delta t=0.5$.
+
+a.  Calculate $r$ and the eigenvalues $g_1$ and $g_{19}$ of the amplification matrix.
+
+b.  The mode $\sin(k\pi x)$ of the exact solution decays by the factor $e^{-Dk^2\pi^2\Delta t}$ during one time step. Compare this factor with $g_1$ and with $g_{19}$.
+
+c.  Compute the corresponding eigenvalues $1/\mu_1$ and $1/\mu_{19}$ for the backward difference method with the same step sizes.
+
+d.  💬 Both methods are unconditionally stable. Based on your results, describe the difference in how the two methods treat high-frequency errors (such as rounding errors or a non-smooth initial condition) when $\Delta t$ is large.
+
+You should find $r=20$, $g_1\approx 0.340$ (compared to the exact factor $0.373$), $g_{19}\approx-0.975$ (compared to the exact factor, which is practically $0$), $1/\mu_1\approx 0.504$ and $1/\mu_{19}\approx 0.006$.
+:::
+
+------------------------------------------------------------------------
+
+::: {#exr-lect-stab-implicit-numerical}
+💻 For $N_x=20$ construct the matrices $B$, $\mathcal{A}$ and $\mathcal{B}$. For $a=D\Delta t/(\Delta x)^2\in\{0.1, 1, 10, 100\}$ (remember that $r=a/2$) compute the eigenvalues of $B^{-1}$ and of $\mathcal{A}^{-1}\mathcal{B}$ with `np.linalg.eigvals()` and check that they agree with the formulas given above. Print the largest absolute value of the eigenvalues in each case and compare with the forward difference matrix $A$ for the same values of $a$. What happens to the largest absolute eigenvalue for the Crank-Nicolson method as $a$ becomes large?
+:::
 
 ------------------------------------------------------------------------
 
