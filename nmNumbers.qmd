@@ -49,7 +49,7 @@ In the previous exercise it seems like the computer has failed you! What do you 
 
 ------------------------------------------------------------------------
 
-::: {#exr-1.5}
+::: {#exr-1.4}
 🖋 💻 Now calculate the sequence that you get when starting with $x_0 = 1/8$? Do you again get a different answer from the computer than when doing the calculations by hand?
 :::
 
@@ -82,7 +82,7 @@ $$101,101_2 = 32 + 0 + 8 + 4 + 0 + 1 = 45_{10}.$$
 
 ------------------------------------------------------------------------
 
-::: {#exr-1.6}
+::: {#exr-1.5}
 🖋 Express the following binary numbers in base-10.
 
 1.  $111_2$
@@ -96,19 +96,19 @@ For the last one you can save yourself some work by noticing that $1,111,111,111
 
 ------------------------------------------------------------------------
 
-::: {#exr-1.7}
+::: {#exr-1.6}
 💬 Explain the joke: *There are 10 types of people. Those who understand binary and those who do not.*
 :::
 
 ------------------------------------------------------------------------
 
-::: {#exr-1.8}
+::: {#exr-1.7}
 💬 🖋 Discussion: With your group, discuss how you would convert a base-10 number into its binary representation, without using a calculator or computer. Once you have a proposed method put it into action on the number $237_{10}$ to show that the base-2 expression is $11,101,101_2$.
 :::
 
 ------------------------------------------------------------------------
 
-::: {#exr-1.9}
+::: {#exr-1.8}
 🖋 By hand, using the methods you developed above, convert the following numbers from base 10 to base 2 or vice versa.
 
 -   Write $12_{10}$ in binary
@@ -126,7 +126,7 @@ The 🎓 icons indicate that you should enter your answers into the feedback qui
 
 ------------------------------------------------------------------------
 
-::: {#exr-1.10}
+::: {#exr-1.9}
 🖋 💬 Write down an explanation of the technique that your group has come up with to do the conversion from base 10 to base 2.
 :::
 
@@ -147,7 +147,7 @@ We can do a similar thing with binary decimals.
 
 ------------------------------------------------------------------------
 
-::: {#exr-1.11}
+::: {#exr-1.10}
 🖋 The base-2 number $1,101.01_2$ can be expanded in powers of $2$. Fill in the question marks below and observe the pattern in the powers.
 
 $$1,101.01_2 = ? \times 2^3 + 1 \times 2^2 + 0 \times 2^1 + ? \times 2^0 + 0 \times 2^{?} + 1 \times 2^{-2}.$$
@@ -164,7 +164,7 @@ $$\begin{aligned} 11.01011_2 &= 2 + 1 + \frac{0}{2} + \frac{1}{4} + \frac{0}{8} 
 
 ------------------------------------------------------------------------
 
-::: {#exr-1.14}
+::: {#exr-1.11}
 💬 🖋 🎓 Convert the base $10$ decimal $0.15625_{10}$ to binary using the following steps.
 
 1.  Multiply $0.15625$ by $2$. The whole number part of the result is the first binary digit to the right of the decimal point.
@@ -179,7 +179,7 @@ Explain to each other in the group why each step gives the binary digit that it 
 
 ------------------------------------------------------------------------
 
-::: {#exr-1.16}
+::: {#exr-1.12}
 🖋 Convert the base $10$ fraction $0.1$ into binary. Use this to explain why the computer made errors when it calculated with this number in @exr-1.3.
 :::
 
@@ -252,7 +252,7 @@ In the last part of the previous example we saw that the number $(0.1)_{10}$ is 
 
 For all practical purposes the computer cannot tell the difference between two numbers if the relative difference is smaller than machine precision. It is important to remember this when you want to check the equality of two numbers in a computer.
 
-::: {#exr-1.18}
+::: {#exr-1.13}
 🖋 🎓 To make all of these ideas concrete let us play with a small computer system where each number is stored in the following format, using 6 bits:
 
 $$s \, e_1\, e_2 \, b_1 \, b_2 \, b_3$$
@@ -284,25 +284,25 @@ According to the IEEE 754 standard:
 :::
 ------------------------------------------------------------------------
 
-::: {#exr-1.19}
+::: {#exr-1.14}
 🖋 What are the largest numbers that can be stored in single and double precision?
 :::
 
 ------------------------------------------------------------------------
 
-::: {#exr-1.20}
+::: {#exr-1.15}
 🖋 What is machine precision for the single- and double-precision standards?
 :::
 
 ------------------------------------------------------------------------
 
-::: {#exr-1.20b}
+::: {#exr-1.16}
 🖋 🎓 What is the gap between $2^n$ and the next largest number that can be stored in double precision?
 :::
 
 ------------------------------------------------------------------------
 
-::: {#exr-1.20c}
+::: {#exr-1.17}
 🖋 Computers contain hardware that can perform the basic operations of addition, subtraction, multiplication, and division on floating-point numbers. To get a feel for what goes on under the hood, figure out how to add the numbers $x = 1.010_2 \times 2^3$ and $y = 1.110_2 \times 2^1$. How do you deal with the different exponents? What do you do so that the result is in the correct floating-point format?
 :::
 
@@ -335,7 +335,7 @@ If we want to store the number $1.625 = 1.101_2$ in a floating-point number syst
 
 To dive a little deeper into what happened in @exr-1.3, simplify the detailed analysis by working with only a 4-bit mantissa:
 
-::: {#exr-1.21}
+::: {#exr-1.18}
 
 🖋 Write down how the number $1/10$ is represented in a floating-point number system where the mantissa has only 4 bits. Then calculate the first 10 terms of the sequence
 \begin{equation}
@@ -348,7 +348,7 @@ using this number system.
 
 ------------------------------------------------------------------------
 
-::: {#exr-1.51}
+::: {#exr-1.19}
 (This problem is modified from [@Greenbaum])\
 💻 Sometimes floating-point arithmetic does not work like we would expect (and hope) as compared to exact mathematics. In each of the following problems we have a mathematical problem that the computer gets wrong. Explain why the computer is getting these wrong.
 
@@ -389,7 +389,7 @@ This is known as the loss of significant digits. It can occur whenever you subtr
 
 ------------------------------------------------------------------------
 
-::: {#exr-concept-4}
+::: {#exr-1.20}
 🖋 Consider these two mathematically equivalent ways to compute the same thing:
 
 1) $(a + b) - c$
@@ -401,7 +401,7 @@ b) If $a$ is very small compared to $b$ and $c$, which form would you expect to 
 
 ------------------------------------------------------------------------
 
-::: {#exr-r.1}
+::: {#exr-1.21}
 
 💻 Consider the trigonometric identity
 
@@ -415,7 +415,7 @@ It gives us two different methods to calculate the same quantity. Ask Python to 
 
 ------------------------------------------------------------------------
 
-::: {#exr-r.2}
+::: {#exr-1.22}
 💻 🖋 💬 You know how to find the solutions to the quadratic equation
 $$
 a x^2+bx+c=0.
@@ -439,7 +439,7 @@ Can you see why this expression will work better for the given parameter values?
 
 ------------------------------------------------------------------------
 
-::: {#exr-concept-5}
+::: {#exr-1.23}
 💻 💬 Google the term "catastrophic cancellation" to find more examples of this phenomenon of loss of significant digits.
 :::
 
@@ -484,7 +484,7 @@ These problem exercises will let you consolidate what you have learned so far an
 
 ------------------------------------------------------------------------
 
-::: {#exr-1.52}
+::: {#exr-1.24}
 (This problem is modified from [@Greenbaum])\
 🖋 💻 In the 1999 film *Office Space*, a character creates a program that takes fractions of cents that are truncated in a bank's transactions and deposits them to his own account. This idea has been attempted in the past and now banks look for this sort of thing. In this problem you will build a simulation of the program to see how long it takes to become a millionaire.
 
@@ -517,7 +517,7 @@ accounts = np.floor(100*accounts)/100;
 
 ------------------------------------------------------------------------
 
-::: {#exr-1.53}
+::: {#exr-1.25}
 (This problem is modified from [@Greenbaum])\
 🖋 In the 1991 Gulf War, the Patriot missile defence system failed due to rounding error. The trouble stemmed from a computer that performed the tracking calculations with an internal clock whose integer values in tenths of a second were converted to seconds by multiplying by a 24-bit binary approximation to $\frac{1}{10}$:
 \begin{equation}
@@ -535,7 +535,7 @@ accounts = np.floor(100*accounts)/100;
 
 ------------------------------------------------------------------------
 
-::: {#exr-1.58}
+::: {#exr-1.26}
 #### The Python Caret Operator
 🖋 💻 Now that you're used to using Python to do some basic computations you are probably comfortable with the fact that the caret, `^`, does NOT do exponentiation like it does in many other programming languages. But what does the caret operator do? That's what we explore here.
 

@@ -9,7 +9,7 @@ How does a computer *understand* a function like $f(x) = e^x$ or $f(x) = \sin(x)
 
 A class of functions that computers are very good at working with are polynomial functions. This is because to evaluate a polynomial function at any point we only need addition and multiplication operations. In this section we will explore how we can use polynomial functions to approximate other functions.
 
-::: {#exr-1.22}
+::: {#exr-2.1}
 💬 In this exercise you are going to make a bit of a wish list for all of the things that a computer will do when approximating a function. We are going to complete the following sentence:\
 *If we are going to approximate* a smooth function $f(x)$ near the point $x=x_0$ with a simpler function $g(x)$ then ...
 
@@ -30,13 +30,13 @@ A class of functions that computers are very good at working with are polynomial
 
 ------------------------------------------------------------------------
 
-::: {#exr-1.23}
+::: {#exr-2.2}
 💬 Discuss: Could a polynomial function with a high enough degree satisfy everything in the wish list from the previous problem? Explain your reasoning.
 :::
 
 ------------------------------------------------------------------------
 
-::: {#exr-1.24}
+::: {#exr-2.3}
 🖋 🎓 Let us put some parts of the wish list into action. If $f(x)$ is a differentiable function at $x=x_0$ and if $g(x) = A + B (x-x_0) + C (x-x_0)^2 + D (x-x_0)^3$ then
 
 1.  What is the value of $A$ such that $f(x_0) = g(x_0)$? *(Hint: substitute* $x=x_0$ into the $g(x)$ function)
@@ -59,7 +59,7 @@ In the next several problems you will unpack the polynomial approximations of $f
 
 ### Approximating the Exponential Function
 
-::: {#exr-1.26}
+::: {#exr-2.4}
 🖋 What is Euler's number $e$? You have been using this number often in Calculus and Differential Equations. Do you know the decimal approximation for this number? Moreover, is there a way that we could approximate something like $\sqrt{e} = e^{0.5}$ or $e^{-1}$ without actually having access to the full decimal expansion?
 
 For all of the questions below let us work with the function $f(x) = e^x$.
@@ -106,7 +106,7 @@ plt.show()
 
 :::
 
-::: {#exr-1.27}
+::: {#exr-2.5}
 🖋 Let us extend the idea from the previous problem to much better approximations of the function $f(x) = e^x$.
 
 1.  Let us build a function $g_2(x)$ that matches $f(x)$ exactly at $x=0$, has exactly the same first derivative as $f(x)$ at $x=0$, AND has exactly the same second derivative as $f(x)$ at $x=0$. To do this we will use a quadratic function. For a quadratic approximation of a function we just take a slight extension to the point-slope form of a line and use the equation $$
@@ -133,7 +133,7 @@ plt.show()
 
 ------------------------------------------------------------------------
 
-::: {#exr-1.29b}
+::: {#exr-2.6}
 
 💻 Write a function that takes the arguments `x` and `n` and returns the `n`th order Taylor series approximation of $f(x) = e^x$. To remind yourself of how functions are defined in Python, you may want to look at @sec-python_functions in the Python chapter. You will also need a loop, see @sec-control_flow. Please start from the following skeleton and put your code where it says "TODO".
 
@@ -164,13 +164,13 @@ Make sure you perfectly understand the code. Use the AI to explain everything to
 
 ------------------------------------------------------------------------
 
-::: {#exr-1.30}
-🎓 💻 Use the function `exp_approx` that you have built in @exr-1.29b to approximate $\frac{1}{e} = e^{-1}$. Check the accuracy of your answer using `np.exp(-1)` in Python.
+::: {#exr-2.7}
+🎓 💻 Use the function `exp_approx` that you have built in @exr-2.6 to approximate $\frac{1}{e} = e^{-1}$. Check the accuracy of your answer using `np.exp(-1)` in Python.
 :::
 
 ------------------------------------------------------------------------
 
-::: {#exr-1.29d}
+::: {#exr-2.8}
 
 💻 💬 Brainstorm within your group to see if you can make your function more efficient by writing it without using exponentiation and the factorial function, coding all multiplications and divisions explicitly. Try to minimise the number of arithmetic operations that you need to perform? Can you make it so that it only needs $n-1$ multiplications, $n-1$ divisions and $n$ additions?
 
@@ -221,7 +221,7 @@ Moreover, Taylor Series are built out of the easiest types of functions: polynom
 
 ------------------------------------------------------------------------
 
-::: {#exr-1.32}
+::: {#exr-2.9}
 🖋 Do all of the calculations to show that the Taylor Series centred at $x_0 = 0$ for the function $f(x) = \sin(x)$ is indeed
 $$
  \sin(x) = x - \frac{x^3}{3!} + \frac{x^5}{5!} - \frac{x^7}{7!} + \cdots .
@@ -230,13 +230,13 @@ $$
 
 ------------------------------------------------------------------------
 
-::: {#exr-1.33}
+::: {#exr-2.10}
 💻 Write a Python function `sin_approx(x, n)` that computes the $n$th order Taylor Series approximation of $\sin(x)$ centred at $x_0 = 0$. Test your function by comparing its output to `np.sin(x)` for a few values of $x$ and $n$. Use it to make a plot of the first three approximations for $x$ in the range $[-\pi, \pi]$ similar to the plots you made for approximations of $e^x$ above.
 :::
 
 ------------------------------------------------------------------------
 
-::: {#exr-1.34}
+::: {#exr-2.11}
 🖋 Let us compute a Taylor Series that is not centred at $x_0 = 0$. For example, let us approximate the function $f(x) = \log (x)$ near $x_0 = 1$. Near the point $x_0 = 1$, the Taylor Series approximation will take the form
 $$
  f(x) = f\left( 1 \right) + f'\left( 1 \right)\left( x - 1 \right) + \frac{f''\left( 1 \right)}{2!}\left( x - 1 \right)^2 + \frac{f'''\left( 1 \right)}{3!}\left( x - 1 \right)^3 + \cdots
@@ -247,7 +247,7 @@ Write the first several terms of the Taylor Series for $f(x) = \log x$ centred a
 
 ------------------------------------------------------------------------
 
-::: {#exr-1.34b}
+::: {#exr-2.12}
 💻 Write a Python function `log_approx(x, n)` that computes the $n$th order Taylor Series approximation of $\log(x)$ centred at $x_0 = 1$. Use it to build the plot below showing the approximations.
 
 ```{python}
@@ -408,7 +408,7 @@ Keep in mind that this sort of analysis is only good for values of $x$ that are 
 
 ------------------------------------------------------------------------
 
-::: {#exr-1.38}
+::: {#exr-2.13}
 🎓 💻 Now make the previous discussion a bit more concrete. You know the Taylor Series for $f(x) = e^x$ around $x=0$ quite well at this point so use it to approximate the values of $f(0.1) = e^{0.1}$ and $f(0.2)=e^{0.2}$ by truncating the Taylor series at different orders. Because $x=0.1$ and $x=0.2$ are pretty close to the centre of the Taylor Series $x_0 = 0$, this sort of approximation is reasonable.
 
 Then compare your approximate values to Python's values $f(0.1)=e^{0.1} \approx$ `np.exp(0.1)` $=1.1051709180756477$ and $f(0.2)=e^{0.2} \approx$ `np.exp(0.2)` $=1.2214027581601699$ to calculate the truncation errors $\epsilon_n(0.1)=|f(0.1)-f_n(0.1)|$ and $\epsilon_n(0.2)=|f(0.2)-f_n(0.2)|$.
@@ -456,7 +456,7 @@ You will find that, as expected, the truncation errors $\epsilon_n(x)$ decrease 
 
 ------------------------------------------------------------------------
 
-::: {#exr-1.39b}
+::: {#exr-2.14}
 💻 To investigate the dependence of the truncation error $\epsilon_n(x)$ on $n$ and $x$ a bit more, add an extra column to the table from the previous exercise with the ratio $\epsilon_n(0.2) / \epsilon_n(0.1)$.
 
 ```{python}
@@ -499,7 +499,7 @@ for n in range(2,6):
 
 ------------------------------------------------------------------------
 
-::: {#exr-1.39}
+::: {#exr-2.15}
 💻 To test your conjecture, examine the truncation error for the sine function near $x_0 = 0$. You know that the sine function has the Taylor Series centred at $x_0 = 0$ as
 $$
  f(x) = \sin(x) = x - \frac{x^3}{3!} + \frac{x^5}{5!} - \frac{x^7}{7!} + \cdots.
@@ -544,7 +544,7 @@ The entry in the last row of the table will almost certainly not agree with your
 
 ------------------------------------------------------------------------
 
-::: {#exr-1.40}
+::: {#exr-2.16}
 🎓 💻 Perform another check of your conjecture by approximating $\log(1.02)$ and $\log(1.1)$ from truncations of the Taylor series around $x=1$:
 $$
 \log(1+x) = x - \frac{x^2}{2} + \frac{x^3}{3} - \frac{x^4}{4} + \frac{x^5}{5} - \cdots.
@@ -553,7 +553,7 @@ $$
 
 ------------------------------------------------------------------------
 
-::: {#exr-log-truncation-observations}
+::: {#exr-2.17}
 💬 🖋 Write down your group's observations about how the truncation error changes as $x$ changes. Explain this in terms of the form of the remainder of the truncated Taylor series.
 :::
 
@@ -607,7 +607,7 @@ Similar to how a polynomial $p(x)$ is determined by giving the coefficients in f
 
 Let us start by building up the components of a neural network one piece at a time. The fundamental building block is called a **neuron**.
 
-::: {#exr-1.41}
+::: {#exr-2.18}
 🖋 Consider the simple function
 $$
 f(x) = \max(0, x).
@@ -623,7 +623,7 @@ The function $g(x) = \max(0, x)$ is called the **Rectified Linear Unit** or **Re
 
 The ReLU function is an example of what is called an **activation function** in neural networks. The idea is that the neuron "activates" (produces a non-zero output) only when the input exceeds a certain threshold.
 
-::: {#exr-nn-param-relu}
+::: {#exr-2.19}
 🖋 Now let us make our neuron a bit more interesting by allowing it to have adjustable parameters.
 
 Consider the function
@@ -649,7 +649,7 @@ where $w$ and $b$ are parameters that we can choose. These are called the **weig
 
 ------------------------------------------------------------------------
 
-::: {#exr-nn-two-inputs}
+::: {#exr-2.20}
 🖋 So far we have been working with a neuron that takes a single input $x$. In many applications, we want to work with functions of multiple variables.
 
 Suppose we have two inputs $x_1$ and $x_2$, and we define a neuron as
@@ -673,7 +673,7 @@ Shade that area in your sketch from part 2.
 
 A single neuron can detect when the input crosses a particular threshold. But to approximate more complex functions, we need to combine multiple neurons together. Let us explore this idea.
 
-::: {#exr-nn-two-neurons}
+::: {#exr-2.21}
 🖋 Suppose we have two neurons, both taking the same input $x$, but with different weights and biases:
 \begin{align}
 h_1(x) &= \max(0, w_1 x + b_1) \\
@@ -696,7 +696,7 @@ Consider the specific case where $w_1 = 1, b_1 = -1$ and $w_2 = -1, b_2 = 1$.
 
 ------------------------------------------------------------------------
 
-::: {#exr-nn-weighted-relu}
+::: {#exr-2.22}
 🖋 Rather than just adding two ReLU neurons, consider the weighted combination:
 $$
 f(x) = c_1 h_1(x) + c_2 h_2(x)
@@ -715,7 +715,7 @@ By hand, sketch the graph of this function.
 
 ------------------------------------------------------------------------
 
-::: {#exr-nn-triangular-bump}
+::: {#exr-2.23}
 🖋 In the previous exercise you created a function with a triangular bump
 but the function continued decreasing to negative values beyond $x=2$. Now
 see if you can find a way to combine three ReLU neurons to
@@ -880,7 +880,7 @@ def two_layer_network(x, biases, output_weights, output_bias=0):
 
 ------------------------------------------------------------------------
 
-::: {#exr-nn-flexibility}
+::: {#exr-2.24}
 💬 Explain in your own words why a two-layer neural network is flexible enough to approximate many different functions. How do the output weights control the shape of the approximation?
 
 How is this similar to polynomial approximation? How is it different?
@@ -889,7 +889,7 @@ How is this similar to polynomial approximation? How is it different?
 
 ------------------------------------------------------------------------
 
-::: {#exr-nn-sine}
+::: {#exr-2.25}
 💻 In this exercise we will approximate a smooth function with a neural network using a simple but powerful idea: we can create a piecewise linear approximation by using a sum of ReLU neurons, each of which activates at a new point. Each ReLU neuron that activates at a new point changes the slope of our piecewise linear approximation.
 
 Consider approximating $f(x) = \sin(x)$ on the interval $[0, \pi]$ using a two-layer neural network. We'll place ReLU neurons at several "knot points" along the curve, and each neuron will adjust the slope.
@@ -989,7 +989,7 @@ $$
 
 ------------------------------------------------------------------------
 
-::: {#exr-nn-reflection}
+::: {#exr-2.26}
 💬 Reflect on what you have learned about neural networks and compare them to Taylor series:
 
 1. What are the advantages of using neural networks for function approximation compared to Taylor series?
@@ -1168,7 +1168,7 @@ plt.show()
 
 ------------------------------------------------------------------------
 
-::: {#exr-sawtooth-shallow}
+::: {#exr-2.27}
 #### Building a Shallow Network for the Sawtooth
 
 You already know how to represent piecewise linear functions with a two-layer neural network. Each of the 5  "hinge points" (where the slope changes) requires a ReLU neuron.
@@ -1202,7 +1202,7 @@ plt.show()
 
 ------------------------------------------------------------------------
 
-::: {#exr-sawtooth-deep}
+::: {#exr-2.28}
 #### Building the Deep Network
 
 A deeper network takes a more elegant approach. Instead of directly creating all the peaks, it uses one layer to create a single peak and then another layer to duplicate this peak.
@@ -1276,7 +1276,7 @@ plt.show()
 
 ------------------------------------------------------------------------
 
-::: {#exr-sawtooth-scaling}
+::: {#exr-2.29}
 #### Scaling Analysis: The Exponential Advantage
 
 Now let's compare how the two approaches scale as we increase the number of peaks.
@@ -1334,13 +1334,13 @@ plt.show()
 ## Problems {#sec-functions_problems}
 
 
-::: {#exr-1.54}
+::: {#exr-2.30}
 Find the Taylor Series for $f(x) = \frac{1}{\log(x)}$ centred at the point $x_0 = e$. Then use the Taylor Series to approximate the number $\frac{1}{\log(3)}$ to 4 decimal places.
 :::
 
 ------------------------------------------------------------------------
 
-::: {#exr-1.55}
+::: {#exr-2.31}
 In this problem we will use Taylor Series to build approximations for the irrational number $\pi$.
 
 a.  Write the Taylor series centred at $x_0=0$ for the function
@@ -1372,7 +1372,7 @@ d.  Now recall the following from Calculus:
 
 ------------------------------------------------------------------------
 
-::: {#exr-1.56}
+::: {#exr-2.32}
 In this problem we will prove the famous formula $$
 e^{i\theta} = \cos(\theta) + i \sin(\theta).
 $$ This is known as Euler's formula after the famous mathematician Leonard Euler. Show all of your work for the following tasks.
@@ -1390,7 +1390,7 @@ $$ This is known as Euler's formula after the famous mathematician Leonard Euler
 
 ------------------------------------------------------------------------
 
-::: {#exr-1.57}
+::: {#exr-2.33}
 In physics, the *relativistic energy* of an object is defined as
 $$
  E_{rel} = \gamma mc^2

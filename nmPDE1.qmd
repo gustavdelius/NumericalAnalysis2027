@@ -37,7 +37,7 @@ $$
 $$ {#eq-heat1d}
 where the subscripts denote partial derivatives. 
 
-::: {#exr-6.29}
+::: {#exr-9.1}
 
 🖋 Just as we did in [Chapter -@sec-ode] to approximate solutions to ODEs, we will start by partitioning the spatial domain into finitely many pieces and we will partition time into finitely many pieces. We do this by introducing a grid of points $(t_n,x_i)$ where $t_n = t_0 + n\,\Delta t$ and $x_i = x_0 + i\,\Delta x$.
 Then we want to build a numerical approximation to the function $u(t,x)$ at these grid points. 
@@ -87,7 +87,7 @@ There are many different finite difference schemes due to the fact that there ar
 
 ------------------------------------------------------------------------
 
-::: {#exr-6.30}
+::: {#exr-9.2}
 💻 🎓 Now we want to implement your answer to part (d) of the previous exercise to approximate the solution to the following problem:
 $$
 u_t = 0.1u_{xx}
@@ -165,7 +165,7 @@ U[?,?]
 
 ------------------------------------------------------------------------
 
-::: {#exr-6.30_plot}
+::: {#exr-9.3}
 💻  Now visualise the whole solutions over the entire time range. You can either make a plot or an animation to illustrate the time evolution of $u$. For each of these there are various Python packages you could use. Below is a function `plot_solution_1d()` using plotly to make a plot and a function `animate_solution_1d()` using matplotlib to make an animated 2D plot. You can use either of these or you can use your own plotting code.
 
 ``` python 
@@ -232,7 +232,7 @@ def animate_solution_1d(t, x, U):
 
 ------------------------------------------------------------------------
 
-::: {#exr-heat1d}
+::: {#exr-9.4}
 💻 Now wrap up your code for solving the one-dimensional heat equation as a function so that you can easily call it with different parameters.
 
 ``` python
@@ -262,19 +262,19 @@ def heat1d(u_0, D=0.1, t_0=0, t_max=1, N_t=100, x_left=0, x_right=1, N_x=20):
     # Your code goes here
 ```
 
-Check that your function works by using it to calculate the same solution as in @exr-6.30 and plotting the solution with `plot_solution_1d()` or `animate_solution_1d()`.
+Check that your function works by using it to calculate the same solution as in @exr-9.2 and plotting the solution with `plot_solution_1d()` or `animate_solution_1d()`.
 
 :::
 
 ------------------------------------------------------------------------
 
-::: {#exr-6.31a}
-💻 💬 Now run your `heat1d` function from @exr-heat1d with the same diffusion coefficient $D=0.1$, the same number `N_t = 100` of time steps and the same initial and boundary conditions but double the number of spatial steps to `N_x=40`. Plot the solution on the domain $t\in[0,1]$ and $x\in[0,1]$. Do you believe what you see? What is happening to the solution?
+::: {#exr-9.5}
+💻 💬 Now run your `heat1d` function from @exr-9.4 with the same diffusion coefficient $D=0.1$, the same number `N_t = 100` of time steps and the same initial and boundary conditions but double the number of spatial steps to `N_x=40`. Plot the solution on the domain $t\in[0,1]$ and $x\in[0,1]$. Do you believe what you see? What is happening to the solution?
 :::
 
 ------------------------------------------------------------------------
 
-::: {#exr-6.31}
+::: {#exr-9.6}
 💻 💬 🎓 You will have found that you did not get a sensible solution from your method for the previous problem. The point of this exercise is to show that value of $a = D\frac{\Delta t}{\Delta x^2}$ controls the stability of the forward difference solution to the heat equation, and furthermore that there is a threshold for $a$ above which the forward difference scheme will be unstable. Experiment with values of $\Delta t$ and $\Delta x$ and conjecture the values of $a = D \frac{\Delta t}{\Delta x^2}$ that give a stable result. Your conjecture should take the form:
 
 *If* $a = D\frac{\Delta t}{\Delta x^2} < \underline{\hspace{0.5in}}$ then the forward difference solution for the 1D heat equation is stable. Otherwise it is unstable.
@@ -285,7 +285,7 @@ Hint: the threshold is a simple fraction. If you think you have found a value fo
 
 ------------------------------------------------------------------------
 
-::: {#exr-6.32}
+::: {#exr-9.7}
 🖋 💻 🎓 Consider the one dimensional heat equation with diffusion coefficient $D=1$: 
 $$
  u_t = u_{xx}. 
@@ -307,7 +307,7 @@ plot_solution_1d(t, x, u_exact)
 
 ------------------------------------------------------------------------
 
-::: {#exr-6.32b}
+::: {#exr-9.8}
 🖋 💻 🎓 Now let us change the initial condition to $u(0,x)=\sin(\pi x) + \sin(3 \pi x)$. We will keep the same boundary conditions as before: $u(t,0)=u(t,1)=0$.
 
 (a)   Show that the function $u(t,x) = e^{-\pi^2 t} \sin(\pi x) +  e^{-9\pi^2t}\sin(3\pi x)$ is a solution to this heat equation, matches this new initial condition, and matches the boundary conditions.
@@ -324,7 +324,7 @@ plot_solution_1d(t, x, u_exact)
 
 In any initial and boundary value problem such as the heat equation, the boundary conditions are often of Dirichlet or Neumann type. In Dirichlet boundary conditions the values of the solution at the boundary are specified. In contrast, Neumann boundary conditions specify the flux at the boundary instead of the value of the solution. 
 
-::: {#exr-6.34}
+::: {#exr-9.9}
 #### Time-dependent Dirichlet Boundary Condition
 💻 Modify your 1D heat equation code to plot and to animate an approximate solution of the diffusion equation $u_t = 0.5 u_{xx}$ with $x \in (0,1)$, $u(0,x) = \sin(2\pi x)$, $u(t,0) = 0$ and $u(t,1) = \sin(5\pi t)$. See if everyone in your group gets the same plot and animation.
 
@@ -332,7 +332,7 @@ In any initial and boundary value problem such as the heat equation, the boundar
 
 ------------------------------------------------------------------------
 
-::: {#exr-6.33}
+::: {#exr-9.10}
 #### Neumann Boundary Condition
 🖋 💻 🎓 Consider the 1D heat equation $u_t = u_{xx}$ with boundary conditions $u_x(t,0)=0$ and $u(t,1)=0$ with initial condition $u(0,x) = \cos(\pi x/2)$. So at $x=0$ we are imposing a Neumann boundary condition and at $x=1$ we are imposing a Dirichlet boundary condition. Check that the initial condition satisfies these boundary conditions. As the heat profile evolves in time the Neumann boundary condition $u_x(t,0)=0$ says that the slope of the solution needs to be fixed at 0 at the left-hand boundary.
 
@@ -357,7 +357,7 @@ can be adapted to work for other parabolic PDEs.
 
 For example, the heat equation can be modified to include a reaction term. The reaction-diffusion equation is a PDE that models the diffusion of a substance in space and time with a reaction term that describes the rate of change of the substance due to some reaction. While it has its origin in chemistry, it shows up in many other fields as well, for example in ecology and epidemiology.
 
-::: {#exr-6.35}
+::: {#exr-9.11}
 #### Fisher-KPP Equation
 💻 🎓 Modify your 1D heat equation code to calculate an approximate solution of the Fisher-KPP equation 
 $$
@@ -380,7 +380,7 @@ Use `animate_solution_1d()` to visualize the solution. How does the solution cha
 
 The diffusion term usually arises from random spatial motion of particles. However, in some cases the particles are advected by a flow field. In this case we need to add an advection term to the diffusion equation. The advection-diffusion equation is a PDE that models the diffusion of a substance in space and time with an advection term that describes the rate of change of the substance due to some flow field.
 
-::: {#exr-6.34b}
+::: {#exr-9.12}
 💻 🎓 Modify your 1D heat equation code to plot an approximate solution of the following simple advection-diffusion equation:
 $$
  u_t = 0.1 u_{xx} - u_x

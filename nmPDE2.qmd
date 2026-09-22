@@ -13,7 +13,7 @@ $$
 
 ------------------------------------------------------------------------
 
-::: {#exr-6.35}
+::: {#exr-10.1}
 🖋 Let us build a numerical solution to the 2D heat equation. We need to make a minor modification to our notation since there is now one more spatial dimension to keep track of. Let $U_{i,j}^n$ be the approximation to $u$ at the point $(t_n, x_i, y_j)$. For example, $U_{2,3}^4$ will be the approximation to the solution at the point $(t_4,x_2,y_3)$.
 
 (a)  We already know how to approximate the time derivative in the heat equation: 
@@ -57,7 +57,7 @@ The finite difference stencil for the 2D heat equation is a bit more complicated
 
 ------------------------------------------------------------------------
 
-::: {#exr-6.36}
+::: {#exr-10.2}
 💻 🎓 Now we need to implement the finite difference scheme that you developed in the previous problem. As a model problem, consider the 2D heat equation $u_t = D(u_{xx} + u_{yy})$ on the domain $(x,y) \in [0,1] \times [0,1]$ with the initial condition $u(0,x,y) = \sin(\pi x)\sin(\pi y)$, Dirichlet boundary conditions $u(t,x,0) = u(t,x,1)=u(t,0,y)=u(t,1,y)=0$, and $D=1$. Fill in the holes in the following code chunks.
 
 -   First we import the proper libraries and set up the domains for $x$, $y$, and $t$.
@@ -160,14 +160,14 @@ def animate_solution_2d(t, x, y, U):
 
 ------------------------------------------------------------------------
 
-::: {#exr-6.37}
+::: {#exr-10.3}
 💻 Time to do some experimentation with your new 2D heat equation code! Numerically solve the 2D heat equation with different boundary conditions (both Dirichlet and Neumann).
 
 :::
 
 ------------------------------------------------------------------------
 
-::: {#exr-6.2db}
+::: {#exr-10.4}
 💻 🎓 In order for the forward difference solution to the 2D heat equation on a square domain to be stable we need $D \Delta t / \Delta x^2 < \underline{\hspace{0.5in}}$.
 
 Experiment with several parameters to empirically determine the bound. It is again a simple fraction that you should be able to guess.
@@ -176,7 +176,7 @@ Experiment with several parameters to empirically determine the bound. It is aga
 
 ------------------------------------------------------------------------
 
-::: {#exr-6.38}
+::: {#exr-10.5}
 💻 Now solve the 2D heat equation on a rectangular domain. You will need to make some modifications to your code since it is unlikely that assuming that $\Delta x = \Delta y$ is a good assumption any longer.
 :::
 
@@ -189,7 +189,7 @@ Let us summarize the stability criteria for the forward difference solutions to 
 
 -   In the 2D heat equation the forward difference solution is stable if $D \Delta t / \Delta x^2 < \underline{\hspace{0.5in}}$ (assuming a square domain where $\Delta x = \Delta y$)
 
-::: {#exr-6.39}
+::: {#exr-10.6}
 #### Sawtooth Errors
 💻 💬 We have already seen that the 1D heat equation is stable if $D \Delta t / \Delta x^2 < 0.5$. The goal of this problem is to show what, exactly, occurs when we choose parameters in the unstable region. We will solve the PDE $u_t = u_{xx}$ on the domain $x \in [0,1]$ with initial conditions $u(0,x) = \sin(\pi x)$ and homogeneous Dirichlet boundary conditions $u(t,0)=u(t,1)=0$ for all $t\in[0,0.25]$. The analytic solution is $u(t,x) = e^{-\pi^2 t}\sin(\pi x)$. To build the spatial and temporal grid use 20 spatial steps and 100 time steps. This means that $\Delta x = 0.05$ and $\Delta t = 0.0025$ so the ratio $D \Delta t / \Delta x^2 = 1 > 0.5$ (certainly in the unstable region). Solve the heat equation with your `heat1d()` function using these parameters. Make plots of the approximate solution on top of the exact solution at time steps 0, 10, 20, 30, 31, 32, 33, 34, etc. Describe what you observe.
 
@@ -197,7 +197,7 @@ Let us summarize the stability criteria for the forward difference solutions to 
 
 ------------------------------------------------------------------------
 
-::: {#exr-6.40}
+::: {#exr-10.7}
 #### Hedgehog Errors
 💻 💬 Solve the 2D heat equation on the unit square with homogeneous Dirichlet boundary conditions with the following parameters: diffusion coefficient $D=1$, step sizes $\Delta x = \Delta y = 0.05$ and $\Delta t = 0.001$ and
 initial condition $u(0,x,y) = \sin(\pi x) \sin(\pi y)$.
@@ -217,7 +217,7 @@ It is actually possible to beat the stability criteria given in the previous exe
 
 ### Backward Difference Method
 
-::: {#exr-6.43}
+::: {#exr-10.8}
 🖋 💻 For the 1D heat equation $u_t = D u_{xx}$ we have been finding the numerical solution using the explicit finite difference scheme 
 $$
 \frac{U_i^{n+1} - U_i^n}{\Delta t} = D \frac{U_{i+1}^{n} - 2U_i^{n} + U_{i-1}^{n}}{\Delta x^2}
@@ -332,14 +332,14 @@ for n in range(len(t)-1):
 
 ------------------------------------------------------------------------
 
-::: {#exr-backward1}
+::: {#exr-10.9}
 💻 🎓 Solve the equation $u_t=0.2 u_{xx}$ with boundary conditions $u(t,0)=u(t,1)=0$ and initial condition $u(0,x)=\sin(\pi x)$ using the backward difference scheme with stepsizes $\Delta x=0.05$ and $\Delta t=0.5$ to determine an approximation of $u(1,0.6)$.
 
 :::
 
 ------------------------------------------------------------------------
 
-::: {#exr-backward2}
+::: {#exr-10.10}
 
 💻 🎓 Solve the equation $u_t=0.5 u_{xx}$ with boundary conditions $u(t,0)=t, u(t,2)=4-t$ and initial condition $u(0,x)=x^2$ using the backward difference scheme with stepsizes $\Delta x=0.1$ and $\Delta t=0.4$ to determine an approximation of $u(4,1)$.
 
@@ -376,7 +376,7 @@ Since $a > 0$ and $\sin^2(\cdot) \geq 0$, we have $\mu_k \geq 1$ for all $k$ and
 
 ### The Crank-Nicolson Method
 
-::: {#exr-6.44}
+::: {#exr-10.11}
 🖋 We conclude this section with one more implicit scheme: the **Crank-Nicolson Method**. In this method we take the average of the forward and backward difference schemes: 
 $$
 \frac{U_i^{n+1} - U_i^n}{\Delta t} = \frac{1}{2} \left[D \left( \frac{U_{i-1}^n - 2U_i^n + U_{i+1}^n}{\Delta x^2}\right) +D \left(\frac{U_{i-1}^{n+1} - 2U_i^{n+1} + U_{i+1}^{n+1}}{\Delta x^2} \right) \right].
@@ -420,19 +420,19 @@ $$
 $$
  Of course, we will never do a matrix inverse on a computer. Instead we can lean on tools such as `np.linalg.solve()` to do the linear solve for us.
 
-7. 💻 Finally. Write code to solve the 1D Heat Equation implementing the Crank Nicolson method described in this problem. The setup of your code should be largely the same as for the implicit method from @exr-6.43. You will need to construct the matrices $\mathcal{A}$ and $\mathcal{B}$ as well as the vector $\mathbf{d}$. Then your time stepping loop will contain the code from part 6 of this problem.
+7. 💻 Finally. Write code to solve the 1D Heat Equation implementing the Crank Nicolson method described in this problem. The setup of your code should be largely the same as for the implicit method from @exr-10.8. You will need to construct the matrices $\mathcal{A}$ and $\mathcal{B}$ as well as the vector $\mathbf{d}$. Then your time stepping loop will contain the code from part 6 of this problem.
 
 :::
 ------------------------------------------------------------------------
 
-::: {#exr-CN1}
+::: {#exr-10.12}
 💻 🎓 Solve the equation $u_t=0.2 u_{xx}$ with boundary conditions $u(t,0)=u(t,1)=0$ and initial condition $u(0,x)=\sin(\pi x)$ using the Crank-Nicolson scheme with stepsizes $\Delta x=0.05$ and $\Delta t=0.5$ to determine an approximation of $u(1,0.6)$.
 
 :::
 
 ------------------------------------------------------------------------
 
-::: {#exr-CN2}
+::: {#exr-10.13}
 
 💻 🎓 Solve the equation $u_t=0.5 u_{xx}$ with boundary conditions $u(t,0)=t, u(t,2)=4-t$ and initial condition $u(0,x)=x^2$ using the Crank-Nicolson scheme with stepsizes $\Delta x=0.1$ and $\Delta t=0.4$ to determine an approximation of $u(4,1)$.
 
@@ -440,8 +440,8 @@ $$
 
 ------------------------------------------------------------------------
 
-::: {#exr-6.45}
-🖋 To graphically represent the Crank Nicolson method we can again use a finite difference stencil to show where the information is coming from and where it is going to. In @fig-6.10 notice that there are three points at the new time step that are used to calculate the value of $U_i^{n+1}$ at the new time step. Sketch a similar image for the original implicit scheme from @exr-6.43
+::: {#exr-10.14}
+🖋 To graphically represent the Crank Nicolson method we can again use a finite difference stencil to show where the information is coming from and where it is going to. In @fig-6.10 notice that there are three points at the new time step that are used to calculate the value of $U_i^{n+1}$ at the new time step. Sketch a similar image for the original implicit scheme from @exr-10.8
 
 ![The finite difference stencil for the Crank Nicolson method.](figures/PDE/HeatStencilCrankNicolson.png){#fig-6.10 alt="The finite difference stencil for the Crank Nicolson method."}
 :::
