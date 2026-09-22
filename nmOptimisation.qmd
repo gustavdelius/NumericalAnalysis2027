@@ -805,6 +805,8 @@ print("The best values of a, b, and c are: \n",BestParameters.x)
 ```
 
 ``` python         
+import matplotlib.pyplot as plt
+
 plt.plot(xdata,ydata,'bo')
 x = np.linspace(0,4,100)
 y = BestParameters.x[0]*x**2 + \
@@ -1056,6 +1058,8 @@ You should notice that the image, `I`, is a three-dimensional array. The three l
  The output should be a two-dimensional `numpy` array which you can show with the following Python code.
 
 ``` python         
+import matplotlib.pyplot as plt
+
 plt.imshow(G, cmap='gray') # "cmap" stands for "colour map"
 plt.axis("off")
 plt.show()

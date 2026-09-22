@@ -496,6 +496,7 @@ Without @thm-2.2 it would be rather hard to tell what the exact behaviour is in 
 #| label: fig-2.3
 #| fig-cap: Iteration number vs the base-2 logarithm of the absolute error. The fitted slope is close to $-1$, reflecting the bisection error bound.
 #| fig-alt: Iteration number vs the base-2 logarithm of the absolute error.
+import matplotlib.pyplot as plt
 
 def plot_log_errors(errors):
     """
@@ -559,6 +560,7 @@ Another plot that numerical analysts use quite frequently for determining how an
 #| label: fig-2.4
 #| fig-cap: The base-2 logarithm of the absolute error at iteration $n$ vs the base-2 logarithm of the absolute error at iteration $n+1$.
 #| fig-alt: The base-2 logarithm of the absolute error at iteration $n$ vs the base-2 logarithm of the absolute error at iteration $n+1$.
+import matplotlib.pyplot as plt
 
 def plot_error_progression(errors):
     # Calculating the log2 of the absolute error at step n and n+1
@@ -739,6 +741,8 @@ So there is much for you to investigate!
 #| fig-cap: Two plots for practicing your cobweb skills.
 #| fig-alt: Two plots for practicing your cobweb skills.
 #| echo: false
+import matplotlib.pyplot as plt
+
 # Define the x range
 x = np.linspace(0, 2, 400)
 

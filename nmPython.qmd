@@ -1294,6 +1294,8 @@ y = np.sin(x)
 #| label: fig-A.1
 #| fig-cap: The sine function
 #| fig-alt: The sine function
+import matplotlib.pyplot as plt
+
 plt.plot(x,y, 'green', label='The Sine Function')
 plt.grid()
 plt.legend()
