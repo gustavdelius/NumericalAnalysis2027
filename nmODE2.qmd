@@ -437,7 +437,7 @@ Again you would like this to go towards $0$ as $n$ goes to infinity.  What condi
 
 Because the observations you made in the previous two exercises are so important, I lectured about them. Here are the lecture notes: 
 
-The stability of a numerical method is the property that, for a given step size, the numerical solution behaves qualitatively like the exact solution. In particular, if the exact solution decays to zero, the numerical solution should also decay to zero rather than grow without bound. If the numerical solution grows when the exact solution decays, we say the method is **unstable** for that step size.
+The stability of a numerical method is the property that, for a given step size, the numerical solution behaves qualitatively like the exact solution. In particular, if the exact solution decays to zero, the numerical solution should not grow without bound. If the numerical solution grows when the exact solution decays, we say the method is **unstable** for that step size.
 
 This is a different concern from convergence (which asks whether the numerical solution approaches the exact solution as $h \to 0$). Stability asks: for a fixed step size $h$, does the numerical method respect the qualitative behaviour of the exact solution? A method can be unstable for large $h$ even when it is perfectly accurate for small $h$, so choosing the step size carefully is essential.
 
@@ -454,9 +454,9 @@ $$x_{n+1} = Q(h\lambda)\, x_n$$
 for some **amplification factor** $Q(h\lambda)$, so
 $$x_n = Q(h\lambda)^n\, x_0.$$
 
-Setting $z = h\lambda$, the numerical solution decays to zero if and only if $|Q(z)| < 1$. Because the recurrence is linear, an error $\epsilon$ introduced at some step is also multiplied by $Q(h\lambda)$ at every subsequent step, so after $n$ further steps it has become $Q(h\lambda)^n\epsilon$. So errors decay if and only if $|Q(z)|<1$. We will see this argument again in @sec-stability-heat, where it is used to analyse the stability of the finite-difference method for the heat equation. The set of all $z \in \mathbb{C}$ for which $|Q(z)| < 1$ is called the **region of absolute stability** of the method. 
+Setting $z = h\lambda$, the numerical solution stays bounded if and only if $|Q(z)| \leq 1$ (and it decays to zero if and only if $|Q(z)| < 1$). Because the recurrence is linear, an error $\epsilon$ introduced at some step is also multiplied by $Q(h\lambda)$ at every subsequent step, so after $n$ further steps it has become $Q(h\lambda)^n\epsilon$. So errors do not grow if and only if $|Q(z)|\leq 1$. We will see this argument again in @sec-stability-heat, where it is used to analyse the stability of the finite-difference method for the heat equation. The set of all $z \in \mathbb{C}$ for which $|Q(z)| \leq 1$ is called the **region of absolute stability** of the method. 
 
-Since we want the numerical solution to decay whenever the exact solution does, i.e.\ whenever $\text{Re}(\lambda) < 0$ (equivalently $\text{Re}(z) < 0$), we want the region of absolute stability to cover as much of the left half-plane as possible. Note that $\lambda$ may be complex, corresponding to oscillatory decaying solutions.
+Since we want the numerical solution not to grow whenever the exact solution decays, i.e.\ whenever $\text{Re}(\lambda) < 0$ (equivalently $\text{Re}(z) < 0$), we want the region of absolute stability to cover as much of the left half-plane as possible. Note that $\lambda$ may be complex, corresponding to oscillatory decaying solutions.
 
 ------------------------------------------------------------------------
 
@@ -493,13 +493,13 @@ $$
 \infty&\text{if }|1+h\lambda|>1.
 \end{cases}
 $$
-The error grows exponentially if $|1+h\lambda|>1$ and decays if $|1+h\lambda|<1$. So $|1+h\lambda|<1$ is the stability condition for the Euler method. For real negative $\lambda$ it requires us to choose a step size
+The error grows exponentially if $|1+h\lambda|>1$, stays the same size if $|1+h\lambda|=1$ and decays if $|1+h\lambda|<1$. So $|1+h\lambda|\leq 1$ is the stability condition for the Euler method. For real negative $\lambda$ it requires us to choose a step size
 $$
-h<\frac{2}{|\lambda|}.
+h\leq\frac{2}{|\lambda|}.
 $$
 :::
 
-So the amplification factor for the Euler method is $Q(z) = 1 + z$, and its region of absolute stability is the disk $|1 + z| < 1$, centred at $z = -1$ with radius $1$. For real negative $\lambda$ this recovers the step-size constraint $h < 2/|\lambda|$ derived above.
+So the amplification factor for the Euler method is $Q(z) = 1 + z$, and its region of absolute stability is the disk $|1 + z| \leq 1$, centred at $z = -1$ with radius $1$. For real negative $\lambda$ this recovers the step-size constraint $h \leq 2/|\lambda|$ derived above.
 
 ------------------------------------------------------------------------
 
@@ -518,7 +518,7 @@ $$
 
 So the amplification factor is $Q(z) = 1 + z + \tfrac{z^2}{2}$, and the region of absolute stability is the set of $z\in\mathbb{C}$ for which
 $$
-\left|1+z+\frac{z^2}{2}\right|<1.
+\left|1+z+\frac{z^2}{2}\right|\leq 1.
 $$
 
 :::
@@ -543,13 +543,13 @@ x_{n+1}=\frac{x_n}{1-h\lambda}.
 $$
 The region of absolute stability is the set of $z\in\mathbb{C}$ for which
 $$
-\left|\frac{1}{1-z}\right|<1,
+\left|\frac{1}{1-z}\right|\leq 1,
 $$
 or, equivalently,
 $$
-|z-1|>1.
+|z-1|\geq 1.
 $$
-This is almost the entire complex plane, except for the disk of radius 1 centred at $z=1$. In particular it contains the entire left half-plane, so no upper bound on the step size is needed for stability, even when $|\lambda|$ is very large (as arises in stiff equations, discussed in @sec-stiff). We therefore say that the backward Euler method is **unconditionally stable**.
+This is almost the entire complex plane, except for the inside of the disk of radius 1 centred at $z=1$. In particular it contains the entire left half-plane, so no upper bound on the step size is needed for stability, even when $|\lambda|$ is very large (as arises in stiff equations, discussed in @sec-stiff). We therefore say that the backward Euler method is **unconditionally stable**.
 :::
 
 ## Stiff Equations {#sec-stiff}
@@ -611,7 +611,7 @@ The characteristic equation of the matrix is $\lambda^2+(\gamma+1)\lambda+\gamma
 $$
 x(t)=C_1e^{-t}+C_2e^{-\gamma t}.
 $$
-For large $\gamma$ the term $e^{-\gamma t}$ is a rapidly decaying transient and the stiffness ratio is $\gamma/1=\gamma$. An explicit method must take $h<2/\gamma$ to remain stable, even though the long-term behaviour of $x$ is governed by the much slower rate $e^{-t}$.
+For large $\gamma$ the term $e^{-\gamma t}$ is a rapidly decaying transient and the stiffness ratio is $\gamma/1=\gamma$. An explicit method must take $h\leq 2/\gamma$ to remain stable, even though the long-term behaviour of $x$ is governed by the much slower rate $e^{-t}$.
 :::
 
 ------------------------------------------------------------------------

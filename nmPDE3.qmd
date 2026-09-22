@@ -50,7 +50,7 @@ $$
 ::: {#exr-6.47}
 💻 💬 The ratio $c^2\Delta t^2 / \Delta x^2$ shows up explicitly in the finite difference scheme for the 1D wave equation. Just like in the heat equation, this parameter controls when the finite difference solution will be stable. Experiment with your finite difference solution and conjecture a value of $a = c^2 \Delta t^2 / \Delta x^2$ which divides the regions of stability versus instability. Your answer should be in the form:
 
-*If* $a = c^2\Delta t^2 / \Delta x^2 < \underline{\hspace{0.5in}}$ then the finite difference scheme for the 1D wave equation will be stable. Otherwise it will be unstable.
+*If* $a = c^2\Delta t^2 / \Delta x^2 \leq \underline{\hspace{0.5in}}$ then the finite difference scheme for the 1D wave equation will be stable. Otherwise it will be unstable.
 
 :::
 
