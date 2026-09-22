@@ -91,6 +91,25 @@ import matplotlib.pyplot as plt
 # *********
 
 def ode_new_method(f, x0, t0, tmax, dt):
+    """
+    Solves a first-order ordinary differential equation using a new
+    method that combines the four slopes m_n, m_{n+1/2}, m*_{n+1/2}
+    and m*_{n+1}.
+
+    Parameters:
+        f (function): The function defining the differential equation. It
+            should take two arguments, the independent variable t and the
+            dependent variable x, and return the derivative of x with
+            respect to t.
+        x0 (float): The initial value of the dependent variable.
+        t0 (float): The initial value of the independent variable.
+        tmax (float): The maximum value of the independent variable.
+        dt (float): The time step.
+
+    Returns:
+        t (NumPy array): Vector of time values.
+        x (NumPy array): Vector of solution values at each time value.
+    """
     N = round((tmax - t0)/dt)
     dt = (tmax - t0)/N
     t = np.linspace(t0, tmax, N+1) # set up the times
@@ -230,6 +249,24 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 def rk4_1d(f, x0, t0, tmax, dt):
+    """
+    Solves a first-order ordinary differential equation using the
+    Runge-Kutta 4 method.
+
+    Parameters:
+        f (function): The function defining the differential equation. It
+            should take two arguments, the independent variable t and the
+            dependent variable x, and return the derivative of x with
+            respect to t.
+        x0 (float): The initial value of the dependent variable.
+        t0 (float): The initial value of the independent variable.
+        tmax (float): The maximum value of the independent variable.
+        dt (float): The time step.
+
+    Returns:
+        t (NumPy array): Vector of time values.
+        x (NumPy array): Vector of solution values at each time value.
+    """
     N = round((tmax - t0)/dt)
     dt = (tmax - t0)/N
     t = np.linspace(t0, tmax, N+1)
@@ -364,6 +401,25 @@ $$
 ``` python         
 import numpy as np
 def backward_euler_1d(f, x0, t0, tmax,dt):
+    """
+    Solves a first-order ordinary differential equation using the
+    backward Euler method, solving the implicit equation at each time
+    step with the secant method.
+
+    Parameters:
+        f (function): The function defining the differential equation. It
+            should take two arguments, the independent variable t and the
+            dependent variable x, and return the derivative of x with
+            respect to t.
+        x0 (float): The initial value of the dependent variable.
+        t0 (float): The initial value of the independent variable.
+        tmax (float): The maximum value of the independent variable.
+        dt (float): The time step.
+
+    Returns:
+        t (NumPy array): Vector of time values.
+        x (NumPy array): Vector of solution values at each time value.
+    """
     N = round((tmax - t0)/dt)
     dt = (tmax - t0)/N
     t = np.linspace(t0, tmax, N+1)
@@ -637,6 +693,28 @@ import numpy as np
 from scipy import optimize
 
 def backward_euler(F,x0,t0,tmax,dt):
+    """
+    Solves a system of first-order ordinary differential equations
+    using the backward Euler method, solving the implicit equations at
+    each time step with scipy.optimize.fsolve.
+
+    Parameters:
+        F (function): The function defining the system of differential
+            equations. It should take two arguments, the independent
+            variable t and the dependent variable x (as a 1D NumPy array),
+            and return the derivative of x with respect to t (as a 1D
+            NumPy array).
+        x0 (NumPy array): The initial values of the dependent variables.
+        t0 (float): The initial value of the independent variable.
+        tmax (float): The maximum value of the independent variable.
+        dt (float): The time step.
+
+    Returns:
+        t (NumPy array): Vector of time values.
+        x (NumPy array): Array of solutions at each time value. Each row
+            of x holds the values of the dependent variables at one time
+            and each column corresponds to a different dependent variable.
+    """
     N = round((tmax - t0)/dt)
     dt = (tmax - t0)/N
     t = np.linspace(t0, tmax, N+1)

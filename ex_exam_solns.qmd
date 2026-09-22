@@ -132,6 +132,10 @@ def sin_taylor(x, n):
 
     ``` python
     def fixed_point_iteration():
+        """
+        Perform 10 iterations of the fixed-point iteration x_n = g(x_{n-1}),
+        starting from x_0 = 1.0, and return the final iterate.
+        """
         x = 1.0
         for i in range(10):
             x = (x + 2)**(1/3)

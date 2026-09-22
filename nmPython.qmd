@@ -622,6 +622,7 @@ Let us define a function for the factorial. This function is naturally going to 
 
 ``` python         
 def factorial(n):
+    """Compute n! recursively."""
     if n==0:
         return(1)
     else:
@@ -649,6 +650,7 @@ and then build a loop to find the first several elements of the sequence startin
 ``` python         
 # Define the function
 def my_seq(xn):
+    """Return the next element x_{n+1} of the sequence, given x_n."""
     if xn <= 0.5:
         return(2*xn)
     else:
@@ -675,6 +677,7 @@ We import the `math` package so that we get the square root function. More about
 ``` python         
 from math import sqrt
 def f(x):
+    """Return the next approximation x_{n+1}, given x_n."""
     return(0.5*x + 1/x)
 x = 1.1 # arbitrary starting point
 print(f"{'Approximation':<20} | {'Exact':<20} | {'Absolute error':<20}")

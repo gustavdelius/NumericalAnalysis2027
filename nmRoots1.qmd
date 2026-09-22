@@ -210,10 +210,10 @@ def bisection(f, a, b, tol=1e-5):
     Find a root of f(x) in the interval [a, b] using the bisection method.
 
     Parameters:
-        f   : function, the function for which we seek a root
-        a   : float, left endpoint of the interval
-        b   : float, right endpoint of the interval
-        tol : float, stopping tolerance
+        f (function): The function for which we seek a root
+        a (float): Left endpoint of the interval
+        b (float): Right endpoint of the interval
+        tol (float): Stopping tolerance
 
     Returns:
         float: approximate root of f(x)
@@ -472,7 +472,7 @@ def plot_errors(errors):
     """
     Plot the absolute errors.
 
-    Parameters
+    Parameters:
         errors (list): List of absolute errors
     """
     # Creating the x values for the plot (iterations)
@@ -561,6 +561,13 @@ Another plot that numerical analysts use quite frequently for determining how an
 #| fig-alt: The base-2 logarithm of the absolute error at iteration $n$ vs the base-2 logarithm of the absolute error at iteration $n+1$.
 
 def plot_error_progression(errors):
+    """
+    Plot the base-2 logarithm of the absolute error at step n+1 against
+    that at step n, together with a best fit line.
+
+    Parameters:
+        errors (list): List of absolute errors
+    """
     # Calculating the log2 of the absolute error at step n and n+1
     log_errors = np.log2(errors)
     log_errors_n = log_errors[:-1]  # log errors at step n (excluding the last one)
@@ -990,6 +997,10 @@ plt.show()
 
 ``` python
 def fixed_point_iteration():
+    """
+    Perform 10 iterations of the fixed-point iteration x_n = g(x_{n-1}),
+    starting from x_0 = 1.0, and return the final iterate.
+    """
     x = 1.0
     for i in range(...):
         x = ...
