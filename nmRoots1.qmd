@@ -292,6 +292,7 @@ def animate(i):
     # Plotting the function and the x-axis
     ax.plot(x, f(x), label="$x^2 - 2$", lw=2)
     ax.axhline(0, color='black')
+    ax.grid()
 
     # Find middle point
     midpoint = (a + b) / 2
@@ -484,6 +485,7 @@ def plot_errors(errors):
     plt.xlabel('Iteration')
     plt.ylabel('Absolute Error')
     plt.title('Absolute Error in Each Iteration')
+    plt.grid()
     plt.legend()
     plt.show()
 
@@ -522,6 +524,7 @@ def plot_log_errors(errors):
     plt.xlabel('Iteration')
     plt.ylabel('Base 2 Log of Absolute Error')
     plt.title('Absolute Error in Each Iteration')
+    plt.grid()
     plt.legend()
     plt.show()
 
@@ -578,6 +581,7 @@ def plot_error_progression(errors):
     plt.xlabel('Log2 of Absolute Error at Step n')
     plt.ylabel('Log2 of Absolute Error at Step n+1')
     plt.title('Log2 of Absolute Error at Step n+1 vs Step n')
+    plt.grid()
     plt.legend()
     plt.show()
 
@@ -666,6 +670,7 @@ def animate(n):
         x_vals = np.linspace(0, np.pi/2, 300)
         ax.plot(x_vals, g(x_vals), label='g(x)=cos(x)')
         ax.plot(x_vals, x_vals, label='y=x')
+        ax.grid()
         ax.legend(loc='upper left')
     elif n == 1:
         # On first iteration start on x axis
@@ -755,6 +760,7 @@ ax1.plot(x, g1, label='g(x) = 1.3x - 0.3')
 ax1.plot(x, diagonal, label='y = x')
 ax1.axhline(0, color='black',linewidth=0.5)
 ax1.axvline(0, color='black',linewidth=0.5)
+ax1.grid()
 ax1.legend()
 ax1.set_xlim([0, 2])
 ax1.set_ylim([-0.5, 2.5])
@@ -768,6 +774,7 @@ ax2.plot(x, g2, label='g(x) = 0.7x + 0.3')
 ax2.plot(x, diagonal, label='y = x')
 ax2.axhline(0, color='black',linewidth=0.5)
 ax2.axvline(0, color='black',linewidth=0.5)
+ax2.grid()
 ax2.legend()
 ax2.set_xlim([0, 2])
 ax2.set_ylim([-0.5, 2.5])

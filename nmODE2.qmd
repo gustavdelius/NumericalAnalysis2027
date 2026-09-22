@@ -404,6 +404,7 @@ t, x_backward = backward_euler_1d(f,x0,t0,tmax,dt)
 plt.plot(t, x_euler, 'g-.', label = "Euler")
 plt.plot(t, x_backward, 'b--', label = "Backward Euler")
 plt.plot(t, x_exact(t), 'r-', label = "Exact")
+plt.grid()
 plt.legend()
 ```
 

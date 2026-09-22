@@ -1165,6 +1165,7 @@ def setup_axes():
     ax.spines['right'].set_visible(False)
     ax.set_xlabel('x')
     ax.set_ylabel('f(x)')
+    ax.grid()
     return fig, ax
 
 fig1, ax1 = setup_axes()

@@ -67,6 +67,7 @@ f = -np.exp(-x**2) - np.sin(x**2)
 plt.xlabel('$x$')
 plt.ylabel('$f(x)$')
 plt.plot(x,f)
+plt.grid()
 ```
 :::
 
@@ -301,6 +302,7 @@ import matplotlib.pyplot as plt
 f = lambda x: (np.sin(4*x)+1)*((x-5)**2-25)
 x = np.linspace(0,8,100)
 plt.plot(x,f(x))
+plt.grid()
 ```
 
 Check that the derivative is

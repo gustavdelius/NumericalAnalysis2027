@@ -179,6 +179,7 @@ plt.xlabel('Time /days')
 plt.ylabel('Number (1000s)')
 plt.ylim(0, N)
 plt.title('SIR Model Simulation')
+plt.grid()
 plt.legend()
 plt.show()
 ```
