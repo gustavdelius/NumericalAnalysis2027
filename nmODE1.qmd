@@ -365,27 +365,53 @@ dt = 0.01 # your choice.  pick something small
 t, x = euler(F, x0, t0, tmax, dt)
 ```
 
-6. 🎓 Complete the following code to make a plot that shows both position and velocity versus time.
+6. 🎓 We will want to make the same kind of plots for many different systems, so it is a good idea to wrap the plotting code into a function. Complete the following function that makes a plot showing both components of the solution, here position and velocity, versus time.
 
 ``` python
-plt.plot(t, x[???, ???], 'b-', t, x[???, ???], 'r--')
-plt.grid()
-plt.title('Time Evolution of Position and Velocity')
-plt.legend(['which legend entry here','which legend entry here'])
-plt.xlabel('time')
-plt.ylabel('position and velocity')
-plt.show()
+def plot_time_evolution(t, x, labels=('position', 'velocity')):
+    """
+    Plot both components of the solution of a system of two
+    first-order ODEs against time
+
+    Parameters:
+    t (NumPy array): Vector of time values
+    x (NumPy array): Array of solution values with one row for each
+                     time and one column for each dependent variable
+    labels (tuple): Names of the two dependent variables, used in
+                   the legend
+    """
+    plt.plot(t, x[???, ???], 'b-', t, x[???, ???], 'r--')
+    plt.grid()
+    plt.title('Time Evolution')
+    plt.legend(labels)
+    plt.xlabel('time')
+    plt.show()
+
+plot_time_evolution(t, x)
 ```
 
-7. Complete the following code to make a second plot, called a phase plot, that shows position versus velocity. In a phase plot, time is implicit (not one of the axes).
+7. Complete the following function to make a second plot, called a phase plot, that shows position versus velocity. In a phase plot, time is implicit (not one of the axes).
 
 ``` python
-plt.plot(x[???, ???], x[???, ???])
-plt.grid()
-plt.title('Phase Plot')
-plt.xlabel('???')
-plt.ylabel('???')
-plt.show()
+def plot_phase(x, labels=('position', 'velocity')):
+    """
+    Make a phase plot of the solution of a system of two first-order
+    ODEs, i.e., plot the second component against the first
+
+    Parameters:
+    x (NumPy array): Array of solution values with one row for each
+                     time and one column for each dependent variable
+    labels (tuple): Names of the two dependent variables, used as
+                   axis labels
+    """
+    plt.plot(x[???, ???], x[???, ???])
+    plt.grid()
+    plt.title('Phase Plot')
+    plt.xlabel(labels[0])
+    plt.ylabel(labels[1])
+    plt.show()
+
+plot_phase(x)
 ```
 
 :::
@@ -404,9 +430,9 @@ plt.show()
 
 2.  Modify your code from the previous problem so that it works for this problem. Use `tmax = 20` and `dt = 0.05`. Start with initial conditions $x_0(0)=10$ rabbits and $x_1(0)=5$ foxes.
 
-3.  Create the time evolution plot. What does this plot tell you in context?
+3.  Create the time evolution plot with your `plot_time_evolution()` function from @exr-5.17, using `labels=('rabbits', 'foxes')`. What does this plot tell you in context?
 
-4.  Create a phase plot. What does this plot tell you in context?
+4.  Create a phase plot with your `plot_phase()` function. What does this plot tell you in context?
 
 5.  If you decrease the step size by a factor of 10, what do you see in the two plots? Why?
 
