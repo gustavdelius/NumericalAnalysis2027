@@ -168,7 +168,7 @@ def animate_solution_2d(t, x, y, U):
 ------------------------------------------------------------------------
 
 ::: {#exr-6.2db}
-💻 🎓 In order for the forward difference solution to the 2D heat equation on a square domain to be stable we need $D \Delta t / \Delta x^2 < \underline{\hspace{0.5in}}$.
+💻 🎓 In order for the forward difference solution to the 2D heat equation on a square domain to be stable we need $D \Delta t / \Delta x^2 \leq \underline{\hspace{0.5in}}$.
 
 Experiment with several parameters to empirically determine the bound. It is again a simple fraction that you should be able to guess.
 
@@ -185,13 +185,13 @@ Experiment with several parameters to empirically determine the bound. It is aga
 
 Let us summarize the stability criteria for the forward difference solutions to the heat equation.
 
--   In the 1D heat equation the forward difference solution is stable if $D \Delta t / \Delta x^2 < \underline{\hspace{0.5in}}$.
+-   In the 1D heat equation the forward difference solution is stable if $D \Delta t / \Delta x^2 \leq \underline{\hspace{0.5in}}$.
 
--   In the 2D heat equation the forward difference solution is stable if $D \Delta t / \Delta x^2 < \underline{\hspace{0.5in}}$ (assuming a square domain where $\Delta x = \Delta y$)
+-   In the 2D heat equation the forward difference solution is stable if $D \Delta t / \Delta x^2 \leq \underline{\hspace{0.5in}}$ (assuming a square domain where $\Delta x = \Delta y$)
 
 ::: {#exr-6.39}
 #### Sawtooth Errors
-💻 💬 We have already seen that the 1D heat equation is stable if $D \Delta t / \Delta x^2 < 0.5$. The goal of this problem is to show what, exactly, occurs when we choose parameters in the unstable region. We will solve the PDE $u_t = u_{xx}$ on the domain $x \in [0,1]$ with initial conditions $u(0,x) = \sin(\pi x)$ and homogeneous Dirichlet boundary conditions $u(t,0)=u(t,1)=0$ for all $t\in[0,0.25]$. The analytic solution is $u(t,x) = e^{-\pi^2 t}\sin(\pi x)$. To build the spatial and temporal grid use 20 spatial steps and 100 time steps. This means that $\Delta x = 0.05$ and $\Delta t = 0.0025$ so the ratio $D \Delta t / \Delta x^2 = 1 > 0.5$ (certainly in the unstable region). Solve the heat equation with your `heat1d()` function using these parameters. Make plots of the approximate solution on top of the exact solution at time steps 0, 10, 20, 30, 31, 32, 33, 34, etc. Describe what you observe.
+💻 💬 We have already seen that the 1D heat equation is stable if $D \Delta t / \Delta x^2 \leq 0.5$. The goal of this problem is to show what, exactly, occurs when we choose parameters in the unstable region. We will solve the PDE $u_t = u_{xx}$ on the domain $x \in [0,1]$ with initial conditions $u(0,x) = \sin(\pi x)$ and homogeneous Dirichlet boundary conditions $u(t,0)=u(t,1)=0$ for all $t\in[0,0.25]$. The analytic solution is $u(t,x) = e^{-\pi^2 t}\sin(\pi x)$. To build the spatial and temporal grid use 20 spatial steps and 100 time steps. This means that $\Delta x = 0.05$ and $\Delta t = 0.0025$ so the ratio $D \Delta t / \Delta x^2 = 1 > 0.5$ (certainly in the unstable region). Solve the heat equation with your `heat1d()` function using these parameters. Make plots of the approximate solution on top of the exact solution at time steps 0, 10, 20, 30, 31, 32, 33, 34, etc. Describe what you observe.
 
 :::
 

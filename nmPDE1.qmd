@@ -277,7 +277,7 @@ Check that your function works by using it to calculate the same solution as in 
 ::: {#exr-6.31}
 💻 💬 🎓 You will have found that you did not get a sensible solution from your method for the previous problem. The point of this exercise is to show that value of $a = D\frac{\Delta t}{\Delta x^2}$ controls the stability of the forward difference solution to the heat equation, and furthermore that there is a threshold for $a$ above which the forward difference scheme will be unstable. Experiment with values of $\Delta t$ and $\Delta x$ and conjecture the values of $a = D \frac{\Delta t}{\Delta x^2}$ that give a stable result. Your conjecture should take the form:
 
-*If* $a = D\frac{\Delta t}{\Delta x^2} < \underline{\hspace{0.5in}}$ then the forward difference solution for the 1D heat equation is stable. Otherwise it is unstable.
+*If* $a = D\frac{\Delta t}{\Delta x^2} \leq \underline{\hspace{0.5in}}$ then the forward difference solution for the 1D heat equation is stable. Otherwise it is unstable.
 
 Hint: the threshold is a simple fraction. If you think you have found a value for $a$ at which the method is stable, run the simulation for longer (by increasing both `t_max` and `N_t` to keep the same $\Delta t$) to check that it is really stable. Close to the threshold the errors grow more slowly (albeit still exponentially).
 
@@ -420,7 +420,7 @@ $$
 \mathbf{U}_n=A^n\mathbf{U}_0.
 $$
 
-We want to understand how errors evolve over time. If errors grow exponentially over time then we call the method unstable and the method is not useful. 
+We want to understand how errors evolve over time. If errors grow exponentially over time then we call the method unstable and the method is not useful. The argument is the same as the one we used for the stability of the Euler method for the ODE $x'=\lambda x$ in @exm-euler_stability, except that the amplification factor $1+h\lambda$ is now replaced by the matrix $A$.
 
 Let us assume that at some step, for convenience let us choose step $0$, an error $\mathbf{\epsilon}$ is introduced:
 $$
@@ -484,7 +484,7 @@ The roots of this polynomial are
 $$
 \lambda_\pm=1-2a\pm a.
 $$
-We need both of these to have a magnitude less than 1 for the method to be stable. This gives us an upper bound on the allowed $a$. The eigenvalue whose magnitude will increase above $1$ first as $a$ increases is $\lambda_-=1-3a$, which equals $-1$ when $a=2/3$ (meaning the error in that mode alternates sign every time step). So the stability condition is $a \leq 2/3$.
+We need both of these to have a magnitude of at most 1 for the method to be stable. This gives us an upper bound on the allowed $a$. The eigenvalue whose magnitude will increase above $1$ first as $a$ increases is $\lambda_-=1-3a$, which equals $-1$ when $a=2/3$ (meaning the error in that mode alternates sign every time step). So the stability condition is $a \leq 2/3$.
 
 :::
 
