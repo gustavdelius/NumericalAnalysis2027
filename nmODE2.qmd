@@ -628,9 +628,9 @@ c. For $\gamma=100$, how small must the step size $h$ be for the forward Euler m
 ::: {#exr-5.58}
 💻 Solve the stiff system from @exm-5.57 numerically with $\gamma=100$ on the interval $t\in[0,5]$.
 
-a. Solve the system with the forward Euler method and step sizes $h=0.1$, $h=0.01$, and $h=0.001$. You can use your code from @exr-5.17. At which step size does forward Euler first produce a stable solution?
+a. Solve the system with the forward Euler method and step sizes $h=0.01$, $h=0.02$, and $h=0.03$, which are just below, exactly at, and just above the stability limit that you found in @exr-5.57. You can use your code from @exr-5.17. Which of these step sizes give a stable solution? Look at the plots of both $u(t)$ and $v(t)$: what happens to the velocity $v$ exactly at the stability limit $h=0.02$?
 
-b. Solve the system with the backward Euler method using the same step sizes. Does backward Euler remain stable even for $h=0.1$? You can use the following function for the higher-dimensional backward Euler method:
+b. Solve the system with the backward Euler method using the same step sizes. Does backward Euler remain stable for all three step sizes? What about much larger step sizes such as $h=0.1$ or $h=0.5$? You can use the following function for the higher-dimensional backward Euler method:
 
 ```python
 import numpy as np
