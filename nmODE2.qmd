@@ -581,9 +581,9 @@ c. What is the maximum step size that forward Euler can use on this equation and
 ::: {#exr-5.56}
 💻 💬 Investigate the stiffness of $x'=-100x+\sin t$ with $x(0)=0$ numerically.
 
-a. Solve the equation using forward Euler with step sizes $h=0.1$, $h=0.01$, and $h=0.001$. Plot all three numerical solutions together with the exact solution on the interval $t\in[0,1]$. What do you observe?
+a. Solve the equation using forward Euler with the step sizes $h=0.01$, $h=0.02$, and $h=0.03$. These are just below, exactly at, and just above the maximum stable step size that you found in @exr-5.55. Plot the numerical solutions together with the exact solution on the interval $t\in[0,1]$. Because one of the solutions grows very large, it is best to make a separate plot for each step size. What do you observe? Look carefully at the solution for $h=0.02$: what happens to the numerical solution exactly at the stability limit?
 b. Repeat with the backward Euler method using the same step sizes. What do you observe?
-c. Repeat with the RK4 method. What is the largest step size for which RK4 remains stable on this problem? (Hint: the stability region of RK4 reaches approximately $z\approx -2.8$ along the negative real axis.) Compare with what you found for forward Euler.
+c. Repeat with the RK4 method. Is RK4 stable for all three step sizes? What is the largest step size for which RK4 remains stable on this problem? (Hint: the stability region of RK4 reaches approximately $z\approx -2.8$ along the negative real axis.) Compare with what you found for forward Euler.
 d. 💬 Explain in your own words why an implicit method is preferable for stiff equations.
 :::
 
