@@ -279,6 +279,8 @@ Check that your function works by using it to calculate the same solution as in 
 
 *If* $a = D\frac{\Delta t}{\Delta x^2} < \underline{\hspace{0.5in}}$ then the forward difference solution for the 1D heat equation is stable. Otherwise it is unstable.
 
+To judge whether a solution is stable, look at the plot of the solution at the final time step. An instability shows up there as a sawtooth pattern, alternating in sign from one grid point to the next, that is not present in the true solution and that grows as you run the simulation for longer. This is much easier to see than in a plot of the solution over the entire time range.
+
 Hint: the threshold is a simple fraction. If you think you have found a value for $a$ at which the method is stable, run the simulation for longer (by increasing both `t_max` and `N_t` to keep the same $\Delta t$) to check that it is really stable. Close to the threshold the errors grow more slowly (albeit still exponentially).
 
 :::
